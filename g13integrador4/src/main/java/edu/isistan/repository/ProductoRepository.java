@@ -6,7 +6,7 @@ import edu.isistan.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
-	@Query("SELECT p FROM Producto p WHERE p.nombre = :nombre")
+	@Query("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre%")
 	Iterable<Producto> findAllByNombre(String nombre);
 
 	@Query("SELECT COUNT(*) FROM Compra c "

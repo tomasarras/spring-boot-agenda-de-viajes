@@ -7,7 +7,7 @@ import edu.isistan.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-	@Query("SELECT c FROM Cliente c WHERE c.nombre = :nombre")
+	@Query("SELECT c FROM Cliente c WHERE c.nombre LIKE :nombre%")
 	Iterable<Cliente> findAllByNombre(String nombre);
 	
 }

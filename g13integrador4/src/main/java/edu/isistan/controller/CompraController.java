@@ -15,18 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Cliente;
 import edu.isistan.model.Compra;
 import edu.isistan.model.Producto;
-import edu.isistan.repository.ClienteRepository;
 import edu.isistan.repository.CompraRepository;
 import edu.isistan.repository.ProductoRepository;
 
 @RestController
 @RequestMapping("compras")
-public class CompraController {
+public class CompraController extends Controller {
 	@Autowired
 	private CompraRepository repository;
-	
-	@Autowired
-	private ClienteRepository repositoryCliente;
 	
 	@Autowired
 	private ProductoRepository repositoryProducto;
@@ -123,12 +119,12 @@ public class CompraController {
 	 * @return 404 si no existe la compra
 	 */
     @GetMapping("/{id}")
-    ResponseEntity<Compra> getById(@PathVariable Integer id) {
+    ResponseEntity<Object> getById(@PathVariable Integer id) {
     	try {
     		Compra compra = repository.findById(id).get();
     		return ResponseEntity.status(Response.SC_OK).body(compra);
-    	} catch (Exception e) {
-    		return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+    	} catch (Exception NoSuchElementException) {
+    		return compraNoEncontrada(id);
     	}
     	
     }
@@ -180,7 +176,7 @@ public class CompraController {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.status(Response.SC_NO_CONTENT).build();
-		} catch (Exception e) {
+		} catch (Exception NoSuchElementException) {
 			return compraNoEncontrada(id);
 		}
     }
@@ -189,42 +185,4 @@ public class CompraController {
 		return compra.getCliente() != null && compra.getProducto() != null && compra.getFecha() != null;
 	}
 	
-	private Compra getCompra(int idCompra) {
-		try {
-			return repository.findById(idCompra).get();
-		} catch (Exception e) {
-			return null;
-		}
-	}
-    
-    private Producto getProducto(int id) {
-    	try {
-    		return repositoryProducto.findById(id).get();
-    	} catch (Exception e) {
-    		return null;
-    	}
-    }
-    
-    private Cliente getCliente(int id) {
-    	try {
-    		return repositoryCliente.findById(id).get();
-    	} catch (Exception e) {
-    		return null;
-    	}
-    }
-    
-    private ResponseEntity<Object> compraNoEncontrada(int id) {
-    	String error = "La compra con el id=" + id + " no existe.";
-    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
-    }
-    
-    private ResponseEntity<Object> productoNoEncontrado(int id) {
-    	String error = "El producto con el id=" + id + " no existe.";
-    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
-    }
-    
-    private ResponseEntity<Object> clienteNoEncontrado(int id) {
-    	String error = "El cliente con el id=" + id + " no existe.";
-    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
-    }
 }
