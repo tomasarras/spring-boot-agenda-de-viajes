@@ -1,7 +1,6 @@
 package edu.isistan.controller;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,37 +31,41 @@ public class CompraController {
 	@Autowired
 	private ProductoRepository repositoryProducto;
 
+	/**
+	 * 
+	 * @return todas las compras
+	 */
 	@GetMapping("/")
     public Iterable<Compra> getCompras() {
         return repository.findAll();
     }
 
+	/**
+	 * Agrega la compra de producto hecha por un cliente
+	 * @param idCliente del cliente que hace la compra
+	 * @param idProducto del producto que se esta comprando
+	 * @return 201 si se registro la compra
+	 * @return 404 si el cliente que hace la compra no existe
+	 * @return 404 si el producto que se compra no existe
+	 * @return 502 si supero el limite de compra por producto
+	 */
 	@PostMapping("/clientes/{idCliente}/productos/{idProducto}/")
     public ResponseEntity<Object> nuevaCompra(
     		@PathVariable int idCliente,
     		@PathVariable int idProducto) {
     	
-		Cliente cliente = null;
-		Producto producto;
+		Cliente cliente = getCliente(idCliente);
+		if (cliente == null)
+			clienteNoEncontrado(idCliente);
+		
+		Producto producto = getProducto(idProducto);
+		if (producto == null)
+			productoNoEncontrado(idProducto);
+		
     	LocalDate fecha = LocalDate.now();
-
     	int anio = fecha.getYear();
     	int mes = fecha.getMonthValue();
     	int dia = fecha.getDayOfMonth();
-    	
-    	try {
-    		cliente = repositoryCliente.findById(idCliente).get();
-    	} catch (Exception e) {
-    		String error = "El cliente con el id=" + idCliente + " no existe.";
-    		return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
-    	}
-    	
-    	try {
-    		producto = repositoryProducto.findById(idProducto).get();
-    	} catch (Exception e) {
-    		String error = "El producto con el id=" + idProducto + " no existe.";
-    		return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
-    	}
     	
     	int cantidadProductos = repositoryProducto.getCantidad(producto.getId(),cliente.getId(),anio,mes,dia);
     	if (cantidadProductos < 3) {
@@ -113,28 +116,115 @@ public class CompraController {
 	    */
     }
 
+	/**
+	 * retorna una compra por id
+	 * @param id de la compra
+	 * @return 200 y la compra
+	 * @return 404 si no existe la compra
+	 */
     @GetMapping("/{id}")
-    Optional<Compra> getById(@PathVariable Integer id) {
-        return repository.findById(id);
+    ResponseEntity<Compra> getById(@PathVariable Integer id) {
+    	try {
+    		Compra compra = repository.findById(id).get();
+    		return ResponseEntity.status(Response.SC_OK).body(compra);
+    	} catch (Exception e) {
+    		return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+    	}
+    	
     }
 
-    @PutMapping("/{id}")
-    Compra replaceCompra(@RequestBody Compra nuevaCompra, @PathVariable Integer id) {
-
-        return repository.findById(id)
-                .map(compra -> {
-                	compra.setCliente(nuevaCompra.getCliente());
-                	compra.setProducto(nuevaCompra.getProducto());
-                    return repository.save(compra);
-                })
-                .orElseGet(() -> {
-                	nuevaCompra.setId(id);
-                    return repository.save(nuevaCompra);
-                });
+    /**
+     * Edita una compra
+     * @param nuevaCompra la nueva compra con los datos que cambian
+     * @param idCompra id de la compra que se quiere cambiar
+     * @return 200 y la compra modificada
+     * @return 400 si algun dato no es valido
+     * @return 404 si el cliente, producto o la compra no existe
+     */
+    @PutMapping("/{idCompra}/")
+    ResponseEntity<Object> replaceCompra(
+    		@RequestBody Compra nuevaCompra, 
+    		@PathVariable int idCompra) {
+    	
+    	if (!esValidaCompra(nuevaCompra))
+    		return ResponseEntity.status(Response.SC_BAD_REQUEST).build();
+    	
+    	Cliente cliente = getCliente(nuevaCompra.getCliente().getId());
+		if (cliente == null)
+			clienteNoEncontrado(nuevaCompra.getCliente().getId());
+		
+		Producto producto = getProducto(nuevaCompra.getProducto().getId());
+		if (producto == null)
+			productoNoEncontrado(nuevaCompra.getProducto().getId());
+		
+		Compra compra = getCompra(idCompra);
+		if (compra == null)
+			compraNoEncontrada(idCompra);
+		
+		compra.setCliente(cliente);
+		compra.setProducto(producto);
+		compra.setFecha(nuevaCompra.getFecha());
+		repository.flush();
+		
+		return ResponseEntity.status(Response.SC_OK).body(compra);
     }
 
-    @DeleteMapping("/{id}")
-    void borrarCompra(@PathVariable Integer id) {
-        repository.deleteById(id);
+    /**
+     * 
+     * @param id de la compra que se quiere borrar
+     * @return 204 si se borro la compra
+     * @return 404 si no existe la compra
+     */
+	@DeleteMapping("/{id}")
+    ResponseEntity<Object> borrarCompra(@PathVariable Integer id) {
+		try {
+			repository.deleteById(id);
+			return ResponseEntity.status(Response.SC_NO_CONTENT).build();
+		} catch (Exception e) {
+			return compraNoEncontrada(id);
+		}
+    }
+	
+	private boolean esValidaCompra(Compra compra) {
+		return compra.getCliente() != null && compra.getProducto() != null && compra.getFecha() != null;
+	}
+	
+	private Compra getCompra(int idCompra) {
+		try {
+			return repository.findById(idCompra).get();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+    
+    private Producto getProducto(int id) {
+    	try {
+    		return repositoryProducto.findById(id).get();
+    	} catch (Exception e) {
+    		return null;
+    	}
+    }
+    
+    private Cliente getCliente(int id) {
+    	try {
+    		return repositoryCliente.findById(id).get();
+    	} catch (Exception e) {
+    		return null;
+    	}
+    }
+    
+    private ResponseEntity<Object> compraNoEncontrada(int id) {
+    	String error = "La compra con el id=" + id + " no existe.";
+    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
+    }
+    
+    private ResponseEntity<Object> productoNoEncontrado(int id) {
+    	String error = "El producto con el id=" + id + " no existe.";
+    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
+    }
+    
+    private ResponseEntity<Object> clienteNoEncontrado(int id) {
+    	String error = "El cliente con el id=" + id + " no existe.";
+    	return ResponseEntity.status(Response.SC_NOT_FOUND).body(error);
     }
 }
