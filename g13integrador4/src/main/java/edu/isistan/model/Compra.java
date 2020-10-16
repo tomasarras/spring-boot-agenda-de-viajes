@@ -1,7 +1,6 @@
 package edu.isistan.model;
 
-import java.sql.Timestamp;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class Compra {
 	@ManyToOne
 	private Producto producto;
 	@Column
-	private Timestamp fecha;
+	private LocalDate fecha;
 	
 	
 	public Compra() {
@@ -28,7 +27,7 @@ public class Compra {
 	}
 
 
-	public Compra(Cliente cliente, Producto producto,Timestamp fecha) {
+	public Compra(Cliente cliente, Producto producto,LocalDate fecha) {
 		super();
 		this.cliente = cliente;
 		this.producto = producto;
@@ -65,11 +64,11 @@ public class Compra {
 		this.id = id;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	
-	public Timestamp getFecha() {
+	public LocalDate getFecha() {
 		return this.fecha;
 	}
 }

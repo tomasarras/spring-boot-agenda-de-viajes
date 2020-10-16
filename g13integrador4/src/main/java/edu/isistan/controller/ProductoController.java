@@ -37,7 +37,7 @@ public class ProductoController {
 
     @PostMapping("/")
     public Producto nuevoProducto(@RequestBody Producto producto) {
-    	Producto p = new Producto(producto.getNombre(),producto.getPrecio());
+    	Producto p = new Producto(producto.getNombre(),producto.getPrecio(),producto.getStock());
 		return repository.save(p);
     }
 

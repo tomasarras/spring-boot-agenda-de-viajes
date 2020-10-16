@@ -16,15 +16,18 @@ public class Producto {
 	private String nombre;
 	@Column
 	private float precio;
+	@Column
+	private int stock;
 	
 	public Producto() {
 		super();
 	}
 	
-	public Producto(String nombre, float precio) {
+	public Producto(String nombre, float precio,int stock) {
 		super();
 		this.nombre = nombre;
 		this.precio = precio;
+		this.stock = stock;
 	}
 
 	public String getNombre() {
@@ -50,5 +53,12 @@ public class Producto {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 }
