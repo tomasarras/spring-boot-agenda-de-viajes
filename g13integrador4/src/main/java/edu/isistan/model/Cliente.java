@@ -23,6 +23,12 @@ public class Cliente {
 		super();
 		this.nombre = nombre;
 	}
+	
+	public Cliente(Integer id, String nombre) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+	}
 
 	public String getNombre() {
 		return nombre;

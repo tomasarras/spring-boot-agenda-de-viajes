@@ -6,17 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Compra {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_producto", nullable = false)
+	@Column(name = "id_compra", nullable = false)
 	private Integer id;
 	@ManyToOne
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	@ManyToOne
+	@JoinColumn(name = "id_producto")
 	private Producto producto;
 	@Column
 	private LocalDate fecha;

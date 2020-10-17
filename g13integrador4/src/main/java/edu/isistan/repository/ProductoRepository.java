@@ -15,14 +15,5 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 		 + "EXTRACT(MONTH FROM c.fecha) = :mes AND "
 		 + "EXTRACT(DAY FROM c.fecha) = :dia")
 	int getCantidad(int idProducto,int idCliente,int anio,int mes, int dia);
-
-	/**
-	 * retorna la cantidad de ese producto que compro el cliente en un dia
-	 * 
-	 * @param producto por el cual se va a buscar
-	 * @param cliente busca los productos de este cliente
-	 * @return la cantidad de productos que tiene el cliente en ese dia
-	 */
-	//int getCantidad(Producto producto, Cliente cliente);
-
+	
 }

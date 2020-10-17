@@ -1,6 +1,10 @@
 package edu.isistan.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Cliente;
 import edu.isistan.model.Compra;
+import edu.isistan.model.FacturaCliente;
 import edu.isistan.model.Producto;
 import edu.isistan.repository.CompraRepository;
 import edu.isistan.repository.ProductoRepository;
@@ -26,6 +31,26 @@ public class CompraController extends Controller {
 	
 	@Autowired
 	private ProductoRepository repositoryProducto;
+	
+	@GetMapping("/clientes/reportes/")
+    public List<FacturaCliente> getReportes() {
+		Iterator<Object> it = repository.getReporteCompras().iterator();
+		List<FacturaCliente> facturas = new ArrayList<FacturaCliente>();
+		Object[] reporte;
+		Cliente cliente;
+		int idCliente;
+		String nombreCliente;
+		float montoTotal;
+		while (it.hasNext()) {
+			reporte = (Object[]) it.next();
+			idCliente = (int) reporte[0];
+			nombreCliente = (String) reporte[1];
+			montoTotal = ((Double) reporte[2]).floatValue();
+			cliente = new Cliente(idCliente, nombreCliente);
+			facturas.add(new FacturaCliente(cliente, montoTotal));
+		}
+		return facturas;
+	}
 
 	/**
 	 * 
@@ -37,7 +62,7 @@ public class CompraController extends Controller {
     }
 
 	/**
-	 * Agrega la compra de producto hecha por un cliente
+	 * Agrega la compra de producto hecha por un cliente y se resta en stock
 	 * @param idCliente del cliente que hace la compra
 	 * @param idProducto del producto que se esta comprando
 	 * @return 201 si se registro la compra
@@ -65,6 +90,8 @@ public class CompraController extends Controller {
     	
     	int cantidadProductos = repositoryProducto.getCantidad(producto.getId(),cliente.getId(),anio,mes,dia);
     	if (cantidadProductos < 3) {
+    		producto.setStock(producto.getStock()-1);
+    		repositoryProducto.flush();
     		Compra compra = new Compra(cliente,producto,fecha);
     		compra = repository.save(compra);
     		return ResponseEntity.status(Response.SC_CREATED).body(compra);
