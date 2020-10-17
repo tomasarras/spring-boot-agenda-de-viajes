@@ -10,7 +10,13 @@ import edu.isistan.model.Producto;
 import edu.isistan.repository.ClienteRepository;
 import edu.isistan.repository.CompraRepository;
 import edu.isistan.repository.ProductoRepository;
-
+/**
+ * Controlador con los metodos que tinen en comun los controladores,
+ * como los codigos de respuesta al no encontrar una entidad o los metodos
+ * para obtener una entidad
+ * @author Tomas
+ *
+ */
 public abstract class Controller {
 	
 	@Autowired

@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Producto;
 import edu.isistan.repository.ProductoRepository;
-
+/**
+ * Controlador de productos
+ * @author Tomas
+ *
+ */
 @RestController
 @RequestMapping("productos")
 public class ProductoController extends Controller {

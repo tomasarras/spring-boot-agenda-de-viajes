@@ -1,5 +1,6 @@
 package edu.isistan.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Cliente;
 import edu.isistan.model.Compra;
 import edu.isistan.model.FacturaCliente;
+import edu.isistan.model.FacturadoEnUnDia;
 import edu.isistan.model.Producto;
 import edu.isistan.repository.CompraRepository;
 import edu.isistan.repository.ProductoRepository;
-
+/**
+ * 
+ * Controlador de compras 
+ * @author Tomas
+ *
+ */
 @RestController
 @RequestMapping("compras")
 public class CompraController extends Controller {
@@ -32,8 +40,51 @@ public class CompraController extends Controller {
 	@Autowired
 	private ProductoRepository repositoryProducto;
 	
+	
+	/**
+	 * 
+	 * @return 200 y el producto mas se ha vendido hasta el momento
+	 * @return 404 si no hay ninguno
+	 */
+	@GetMapping("/productos/mas-vendido")
+    public ResponseEntity<Producto> gerProductoMasVendido() {
+		try {
+			Producto producto = repository.getProductosMasVendidos(PageRequest.of(0,1)).get(0);
+			return ResponseEntity.status(Response.SC_OK).body(producto);
+		} catch (Exception e) {
+			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+		}
+		
+	}
+	
+	/**
+	 * @return 200 y List<FacturadoEnUnDia> una lista con las ganancias que se 
+	 * generaron en cada dia
+	 */
+	@GetMapping("/reportes/")
+    public List<FacturadoEnUnDia> getReportesFechas() {
+		Iterator<Object> it = repository.getReporteComprasFechas().iterator();
+		List<FacturadoEnUnDia> facturas = new ArrayList<FacturadoEnUnDia>();
+		Object[] reporte;
+		Date fecha;
+		float monto;
+		while (it.hasNext()) {
+			reporte = (Object[]) it.next();
+			fecha = (Date) reporte[0];
+			monto = ((Double) reporte[1]).floatValue();
+			facturas.add(new FacturadoEnUnDia(fecha, monto));
+		}
+		return facturas;
+	}
+	
+	
+	/**
+	 * 
+	 * @return 200 y List<FacturaCliente> una lista con los gastos que lleva 
+	 * cada cliente hasta el momento
+	 */
 	@GetMapping("/clientes/reportes/")
-    public List<FacturaCliente> getReportes() {
+    public List<FacturaCliente> getFacturasClientes() {
 		Iterator<Object> it = repository.getReporteCompras().iterator();
 		List<FacturaCliente> facturas = new ArrayList<FacturaCliente>();
 		Object[] reporte;
@@ -65,6 +116,8 @@ public class CompraController extends Controller {
 	 * Agrega la compra de producto hecha por un cliente y se resta en stock
 	 * @param idCliente del cliente que hace la compra
 	 * @param idProducto del producto que se esta comprando
+	 * @param fechaJson si hay fecha se genera una compra en esa fecha, si la fecha no esta se genera
+	 * una fecha actual
 	 * @return 201 si se registro la compra
 	 * @return 404 si el cliente que hace la compra no existe
 	 * @return 404 si el producto que se compra no existe
@@ -72,6 +125,7 @@ public class CompraController extends Controller {
 	 */
 	@PostMapping("/clientes/{idCliente}/productos/{idProducto}/")
     public ResponseEntity<Object> nuevaCompra(
+    		@RequestBody Compra fechaJson,
     		@PathVariable int idCliente,
     		@PathVariable int idProducto) {
     	
@@ -83,62 +137,28 @@ public class CompraController extends Controller {
 		if (producto == null)
 			productoNoEncontrado(idProducto);
 		
-    	LocalDate fecha = LocalDate.now();
-    	int anio = fecha.getYear();
-    	int mes = fecha.getMonthValue();
-    	int dia = fecha.getDayOfMonth();
+    	LocalDate fecha = fechaJson.getFecha();
+    	if (fecha == null) 
+    		fecha = LocalDate.now();
     	
-    	int cantidadProductos = repositoryProducto.getCantidad(producto.getId(),cliente.getId(),anio,mes,dia);
-    	if (cantidadProductos < 3) {
+    	int cantidadProductos = repository.getCantidadProductoxCliente(producto.getId(),cliente.getId(),fecha);
+    	if (cantidadProductos < 3 && producto.getStock() > 0) {
     		producto.setStock(producto.getStock()-1);
     		repositoryProducto.flush();
     		Compra compra = new Compra(cliente,producto,fecha);
     		compra = repository.save(compra);
     		return ResponseEntity.status(Response.SC_CREATED).body(compra);
     	} else {
-    		String error = "El cliente alcanzo la cantidad maxima de productos diarios.";
-    		assert (cantidadProductos <= 3) : "el producto tiene mas del limite diarios";
+    		String error;
+    		if (producto.getStock() > 0)
+	    		error = "El cliente alcanzo la cantidad maxima de productos diarios.";
+    		else
+    			error = "El pruducto con el id=" + idProducto + " no tiene stock.";
+    		
     		return ResponseEntity.status(Response.SC_BAD_GATEWAY).body(error);
     	}
     }
 	
-	@PostMapping("/test/")
-    public void test() {
-		/*
-		Cliente c1 = new Cliente("tom");
-		Cliente c2 = new Cliente("juan");
-		Cliente c3 = new Cliente("pedro");
-		repositoryCliente.save(c1);
-		repositoryCliente.save(c2);
-		repositoryCliente.save(c3);
-		
-		Producto p1 = new Producto("tomato",10,1000);
-		Producto p2 = new Producto("papa",20,100);
-		Producto p3 = new Producto("lechuga",40,500);
-		repositoryProducto.save(p1);
-		repositoryProducto.save(p2);
-		repositoryProducto.save(p3);
-		
-	    LocalDate cal=	LocalDate.parse("2020-10-14");
-
-	    Compra com1 = new Compra(c1, p1, cal);
-	    Compra com2 = new Compra(c1, p1, cal);
-	    Compra com3 = new Compra(c2, p1, cal);
-	    Compra com4 = new Compra(c2, p2, cal);
-	    cal = LocalDate.parse("2020-10-15");
-	    Compra com5 = new Compra(c1, p1, cal);
-	    Compra com6 = new Compra(c1, p1, cal);
-	    Compra com7 = new Compra(c1, p1, cal);
-	    repository.save(com1);
-	    repository.save(com2);
-	    repository.save(com3);
-	    repository.save(com4);
-	    repository.save(com5);
-	    repository.save(com6);
-	    repository.save(com7);
-	    */
-    }
-
 	/**
 	 * retorna una compra por id
 	 * @param id de la compra

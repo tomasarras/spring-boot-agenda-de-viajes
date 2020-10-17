@@ -21,7 +21,12 @@ import edu.isistan.model.Compra;
 import edu.isistan.model.Producto;
 import edu.isistan.repository.ClienteRepository;
 import edu.isistan.repository.ProductoRepository;
-
+/**
+ * Test de la api, para generar datos desde los csv entrar en 
+ * http://localhost:8080/test/generar-datos
+ * @author Tomas
+ *
+ */
 @RestController
 @RequestMapping("test")
 public class ControllerTest {
@@ -39,11 +44,12 @@ public class ControllerTest {
 		List<Producto> productos = getProductosMock();
 		cargarClientes(clientes);
 		cargarProductos(productos);
-		List<Compra> compras = getComprasMock();
+		List<Compra> compras = getComprasMock();//
 		cargarCompras(compras);
-		/*clientes = repositoryCliente.findAll();
-		productos = repositoryProducto.findAll();
-		generarCSVCompras(clientes,productos);*/
+		/*clientes = repositoryCliente.findAll();// Genera el csv de compras
+		productos = repositoryProducto.findAll();// El csv de compras se pueden
+		generarCSVCompras(clientes,productos);*/ // cambiar parametros para generar
+												// mas o menos compras
     }
 	
 	@SuppressWarnings("unused")
@@ -130,13 +136,16 @@ public class ControllerTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void cargarCompras(List<Compra> compras) {
 		String url = URL + "compras/clientes/";
-		JSONObject json = new JSONObject();
+		JSONObject json;
 		Compra c;
 		for (int i = 0; i < compras.size(); i++) {
+			json = new JSONObject();
 			c = compras.get(i);
-			post(json,url + c.getCliente().getId() +  "/productos/" + c.getProducto().getId() + "/",true);
+			json.put("fecha", c.getFecha().toString());
+			post(json,url + c.getCliente().getId() +  "/productos/" + c.getProducto().getId() + "/");
 		}
 		
 	}
@@ -183,7 +192,7 @@ public class ControllerTest {
 		for (int i = 0; i < clientes.size(); i++) {
 			json = new JSONObject();
 			json.put("nombre",clientes.get(i).getNombre());
-			post(json,url,false);
+			post(json,url);
 		}
 	}
 	
@@ -196,7 +205,7 @@ public class ControllerTest {
 			json.put("nombre",productos.get(i).getNombre());
 			json.put("precio",productos.get(i).getPrecio());
 			json.put("stock",productos.get(i).getStock());
-			post(json,url,false);
+			post(json,url);
 		}
 		
 	}
@@ -257,10 +266,7 @@ public class ControllerTest {
 	}
 	
 	
-	private void post(JSONObject json, String path,boolean a) {
-		if (a) {
-			int i = 0;
-		}
+	private void post(JSONObject json, String path) {
 		String http = path;
         StringBuilder sb = new StringBuilder();
         HttpURLConnection urlConnection=null;  

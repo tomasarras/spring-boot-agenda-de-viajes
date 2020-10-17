@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Cliente;
 import edu.isistan.repository.ClienteRepository;
-
+/**
+ * Controlador de clientes
+ * @author Tomas
+ *
+ */
 @RestController
 @RequestMapping("clientes")
 public class ClienteController extends Controller {
