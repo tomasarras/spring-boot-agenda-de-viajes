@@ -10,6 +10,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import edu.isistan.repository.ProductoRepository;
  * @author Tomas
  *
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("compras")
 public class CompraController extends Controller {
@@ -61,7 +63,7 @@ public class CompraController extends Controller {
 	 * @return 200 y List<FacturadoEnUnDia> una lista con las ganancias que se 
 	 * generaron en cada dia
 	 */
-	@GetMapping("/reportes/")
+	@GetMapping("/reportes")
     public List<FacturadoEnUnDia> getReportesFechas() {
 		Iterator<Object> it = repository.getReporteComprasFechas().iterator();
 		List<FacturadoEnUnDia> facturas = new ArrayList<FacturadoEnUnDia>();
@@ -83,7 +85,7 @@ public class CompraController extends Controller {
 	 * @return 200 y List<FacturaCliente> una lista con los gastos que lleva 
 	 * cada cliente hasta el momento
 	 */
-	@GetMapping("/clientes/reportes/")
+	@GetMapping("/clientes/reportes")
     public List<FacturaCliente> getFacturasClientes() {
 		Iterator<Object> it = repository.getReporteCompras().iterator();
 		List<FacturaCliente> facturas = new ArrayList<FacturaCliente>();
@@ -123,7 +125,7 @@ public class CompraController extends Controller {
 	 * @return 404 si el producto que se compra no existe
 	 * @return 502 si supero el limite de compra por producto
 	 */
-	@PostMapping("/clientes/{idCliente}/productos/{idProducto}/")
+	@PostMapping("/clientes/{idCliente}/productos/{idProducto}")
     public ResponseEntity<Object> nuevaCompra(
     		@RequestBody Compra fechaJson,
     		@PathVariable int idCliente,
