@@ -1,0 +1,3 @@
+clientes:50
+productos:50
+compras:226

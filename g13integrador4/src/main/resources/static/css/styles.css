@@ -1,0 +1,425 @@
+footer {
+    border-radius: 15px 15px 0 0;
+}
+
+html {
+    margin: 9.6vh 0 0 0;
+}
+
+.none, p.none, h4.none,input.none {
+    display: none;
+}
+
+#input-carrera,#input-ciudad {
+    width: 150px;
+    margin: 0 2% 2% 2%;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.tablas {
+    display: flex;
+    flex-direction: column;
+}
+
+section.grande {
+    padding: 2%;
+}
+
+.botonera-admin a {
+    width: 100%;
+    margin: 3% 0;
+}
+
+#btn-reportes-ganancias,#btn-reportes-clientes {
+    margin-bottom: 3%;
+}
+
+#btn-reportes-clientes {
+    width: 100%;
+}
+
+
+button.accordion {
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+section#reportes {
+    display: flex;
+    justify-content: center;
+}
+section#reportes .reportes {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 3%;
+}
+
+.negrita {
+    font-weight: bold;
+}
+
+button.accordion:after {
+    content: '\f055';
+    font-family: "fontawesome";
+    font-size: 14px;
+    float: right;
+}
+
+button.accordion.is-open:after {
+    content: '\f056';
+}
+
+button.accordion:hover, button.accordion.is-open {
+    background-color: #ddd;
+}
+
+.accordion-content {
+    background-color: white;
+    border-left: 1px solid whitesmoke;
+    border-right: 1px solid whitesmoke;
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+}
+  
+.mitad-alto {
+    height: 50%;
+}
+.blanco,
+#btn-borrar {
+    color: white;
+}
+
+.btn-ancho {
+    width: 49%;
+}
+
+body {
+    background-image: url(./img/fondo.jpg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+    background-size: cover;
+}
+
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show>.nav-link {
+    color: white;
+    font-weight: bold;
+}
+
+.borde {
+    border-radius: 16px 16px 16px 16px;
+    -moz-border-radius: 16px 16px 16px 16px;
+    -webkit-border-radius: 16px 16px 16px 16px;
+    border: 0px solid #000000;
+}
+
+.fondo-blanco {
+    padding: 2%;
+    margin-bottom: 2%;
+    background-color: #FFF;
+}
+
+a.icon,svg {
+    display: block
+}
+
+a.icon {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+svg {
+    height: 100%;
+    width: 100%;
+}
+
+.icon {
+    background: black;
+    border-radius: 100%;
+    color: white;
+    fill: white;
+}
+
+.icon:hover {
+    background: white;
+    color: black;
+    fill: black;
+}
+
+.github {
+    background: white;
+    color: black;
+    fill: black;
+}
+
+.github:hover {
+    background: #6441a5;
+    color: white;
+    fill: white;
+}
+
+.link {
+    cursor: pointer;
+}
+
+tr.no-link th a {
+    color: white;
+}
+
+td.link {
+    cursor: pointer;
+    color: #007bff;
+}
+
+td.link:hover {
+    text-decoration: underline;
+}
+
+.min-size {
+    min-width: 500px;
+}
+
+.centrar-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.popup {
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90%;
+    opacity: 0;
+    padding: 20px;
+    text-align: center;
+    transform: scale(0.7);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 500px;
+}
+
+.popup .btn-cerrar-popup {
+    display: block;
+    color: #bbbbbb;
+    line-height: 16px;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.popup .btn-cerrar-popup:hover,
+.popup .btn-cerrar-popup:focus,
+.popup .btn-cerrar-popup:active {
+    color: #000000;
+}
+
+.popup form .btn-submit:hover,
+.popup form .btn-submit:focus,
+.popup form .btn-submit:active {
+    background-color: rgba(94, 125, 227, 0.9);
+}
+
+
+/* Animaciones */
+
+.popup.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.popup .btn-cerrar-popup {
+    display: block;
+    color: #bbbbbb;
+    line-height: 16px;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.popup .btn-cerrar-popup:hover,
+.popup .btn-cerrar-popup:focus,
+.popup .btn-cerrar-popup:active {
+    color: #000000;
+}
+.margen {
+    margin: 5%;
+}
+
+.resaltar:hover {
+    color: red;
+    cursor: pointer;
+}
+
+/* /popup */
+
+.margen-arriba {
+    margin-top: 5%;
+}
+
+.margen-abajo {
+    margin-bottom: 5%;
+}
+
+.margen-vertical {
+    margin: 5% 0;
+}
+
+.margen-horizontal {
+    margin: 0 5%;
+}
+
+.margen-der {
+    margin: 0 1% 0 0;
+}
+
+.margen-izq {
+    margin: 0 0% 0 1%;
+}
+
+.botonera-admin a {
+    width: 100%;
+    margin: 3% 0;
+}
+
+.overlay {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+.overlay.active {
+    visibility: visible;
+}
+
+.view-fixed {
+    height: 63.6vh;
+}
+
+.icono {
+    font-size: 24px;
+}
+
+.rojo {
+    color: red;
+}
+
+/* tabla bootstrap */
+
+.table {
+    box-shadow: rgba(121, 121, 121, .35) 1px 10px 20px;
+}
+
+.table tr th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 20px;
+}
+
+.table th:first-of-type {
+    border-radius: 10px 0 0 0;
+}
+
+.table th:last-of-type {
+    border-radius: 0 10px 0 0;
+}
+
+.table tbody tr:last-of-type td:last-of-type {
+    border-radius: 0 0 10px 0;
+}
+
+.table tbody tr:last-of-type td:first-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.table td {
+    background-color: white;
+}
+
+.table .thead-dark th {
+    border: none;
+    border-bottom: 2px solid #454d55;
+}
+
+.table .thead-dark th {
+    border: none;
+    border-bottom: 2px solid #454d55;
+}
+
+tr.no-link th a {
+    color: white;
+}
+
+.tabla-bandas,
+.tabla-eventos {
+    margin-top: 6%;
+}
+
+@media only screen and (min-width:1000px) {
+    .tablas {
+        flex-direction: row;
+    }
+    .tabla-bandas {
+        margin-left: 1%;
+    }
+    .tabla-eventos {
+        margin-right: 1%;
+    }
+}
+
+
+@media only screen and (max-width:800px) {
+    .table tr th,
+    .table td {
+        padding: 13px;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    .table tr th,
+    .table td {
+        font-size: 0.8em;
+        padding: 7px;
+    }
+    nav a.titulo {
+        font-size: 0.8em;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    .table tr th,
+    .table td {
+        font-size: 0.8em;
+        padding: 2px;
+    }
+}

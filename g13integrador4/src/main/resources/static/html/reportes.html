@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrador 4</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/Vue.js"></script>
+    <script src="../js/reportes.js"></script>
+</head>
+<body>
+
+    <header class="container-fluid bg-inverse fixed-top bg-dark text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar navbar-dark bg-dark container">
+            <a class="navbar-brand titulo" href="index.html">Integrador 4</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link active" href="../index.html">Inicio</a>
+                    <a class="nav-item nav-link active" href="../html/comprar-producto.html">Comprar productos</a>
+                    <a class="nav-item nav-link active" href="../html/reportes.html">Reportes</a>
+                    <a class="nav-item nav-link active" href="../html/generarDatos.html">Generar datos</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="reportes" class="margen">
+        <div class="reportes fondo-blanco borde">
+            <button class="btn btn-primary" id="btn-reportes-clientes">Reporte gastos de clientes</button>
+            <button class="btn btn-primary" id="btn-reportes-ganancias">Reporte ganancias por dia</button>
+            <button class="btn btn-primary" id="btn-producto-mas-facturado">Ver producto mas vendido</button>
+
+            <div class="none" id="producto">
+                <h3 class="centrar-contenido margen-arriba">El producto mas vendido es {{productoMasVendido.nombre}}</h3>
+            </div>
+            <div class="none" id="ganancias">
+                <h3 class="centrar-contenido margen-arriba">Reporte de ganancias por dia</h3>
+                <section class="tabla-eventos">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr class="no-link">
+                                <th scope="col">
+                                    <a>Fecha (año/mes/dia)</a>
+                                </th>
+                                <th scope="col">
+                                    <a>Monto</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="reporte of reportes">
+                                <td>{{reporte.fecha}}</td>
+                                <td>{{reporte.monto}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            
+            <div class="none" id="clientes">
+                <h3 class="centrar-contenido margen-arriba">Facturas clientes</h2>
+                <section class="tabla-eventos">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr class="no-link">
+                                <th scope="col">
+                                    <a>Nombre del cliente</a>
+                                </th>
+                                <th scope="col">
+                                    <a>Gastado hasta el momento</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="facturaCliente of facturaClientes">
+                                <td>{{facturaCliente.cliente.nombre}}</td>
+                                <td>{{facturaCliente.montoTotal}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    
+    </section>
+
+    
+    <footer class="container-fluid bg-dark text-white py-3 text-center">
+        <p>© 2015-2020 Integrador 4 | Design by Tomas Arras</p>
+    
+        <a href="https://github.com/tomasarras/" class="icon github" title="GitHub">
+            <svg viewBox="71 71 370 370">
+                <path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/>
+            </svg>
+        </a>
+    
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -36,6 +36,7 @@ import edu.isistan.repository.ProductoRepository;
 @RestController
 @RequestMapping("compras")
 public class CompraController extends Controller {
+	
 	@Autowired
 	private CompraRepository repository;
 	

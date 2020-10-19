@@ -112,15 +112,18 @@ public class ProductoController extends Controller {
      * 
      * @param id del producto que se va a borrar
      * @return 204 si el producto se borro
-     * @retunr 404 si no existe el producto
+     * @return 404 si no existe el producto
+     * @return 502 si no se borro el producto porque un cliente realizo una compra
      */
 	@DeleteMapping("/{id}")
     ResponseEntity<Object> borrarProducto(@PathVariable Integer id) {
 		try {
+			if (getProducto(id) == null)
+				return productoNoEncontrado(id);
     		repository.deleteById(id);
     		return ResponseEntity.status(Response.SC_NO_CONTENT).build();
-    	} catch (Exception NoSuchElementException) {
-    		return productoNoEncontrado(id);
+    	} catch (Exception DataIntegrityViolationException) {
+    		return ResponseEntity.status(Response.SC_BAD_GATEWAY).build();
     	}
     }
 	

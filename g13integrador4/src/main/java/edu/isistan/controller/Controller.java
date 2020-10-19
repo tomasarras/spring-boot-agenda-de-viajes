@@ -3,8 +3,6 @@ package edu.isistan.controller;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import edu.isistan.model.Cliente;
 import edu.isistan.model.Compra;
 import edu.isistan.model.Producto;
@@ -18,8 +16,8 @@ import edu.isistan.repository.ProductoRepository;
  * @author Tomas
  *
  */
-
 public abstract class Controller {
+	
 	
 	@Autowired
 	private CompraRepository repositoryCompra;

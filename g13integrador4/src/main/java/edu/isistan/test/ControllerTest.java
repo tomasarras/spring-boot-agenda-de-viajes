@@ -44,7 +44,7 @@ public class ControllerTest {
 		List<Producto> productos = getProductosMock();
 		cargarClientes(clientes);
 		cargarProductos(productos);
-		List<Compra> compras = getComprasMock();//
+		List<Compra> compras = getComprasMock();
 		cargarCompras(compras);
 		/*clientes = repositoryCliente.findAll();// Genera el csv de compras
 		productos = repositoryProducto.findAll();// El csv de compras se pueden
@@ -55,8 +55,8 @@ public class ControllerTest {
 	@SuppressWarnings("unused")
 	private void generarCSVCompras(List<Cliente> clientes, List<Producto> productos) {
 		int cantidadDeDiasAGenerar = 13;// desde el dia de inicio se crean 13 dias
-		int cantidadDeComprasxDiaAGenerar = 30;// cuantos clientes hacen compras en un dia
-		int cantidadComprasPorClienteMaximas = 7; // cantidad de productos diferentes por cliente
+		int cantidadDeComprasxDiaAGenerar = 10;// cuantos clientes hacen compras en un dia
+		int cantidadComprasPorClienteMaximas = 3; // cantidad de productos diferentes por cliente
 		List<Compra> compras = new ArrayList<Compra>();
 		
 		int diaInicio = 18;
@@ -113,7 +113,7 @@ public class ControllerTest {
 	
 	private void crearCSVCompras(List<Compra> compras) {
 		try {
-			FileWriter csvWriter = new FileWriter("src/main/java/edu/isistan/test/mock_compras.csv");
+			FileWriter csvWriter = new FileWriter("src/main/java/edu/isistan/test/csv/mock_compras.csv");
 			csvWriter.append("idCliente");
 			csvWriter.append(",");
 			csvWriter.append("idProducto");
@@ -153,7 +153,7 @@ public class ControllerTest {
 	private List<Compra> getComprasMock() {
 		List <Compra> compras = new ArrayList <>();
 		try {
-		    String fileIn = "src/main/java/edu/isistan/test/mock_compras.csv";
+		    String fileIn = "src/main/java/edu/isistan/test/csv/mock_compras.csv";
 		    String line = null;
 	
 		    // Read all lines in from CSV file and add to studentList
@@ -213,7 +213,7 @@ public class ControllerTest {
 	private List<Cliente> getClientesMock() {
 		List <Cliente> clientes = new ArrayList <>();
 		try {
-		    String fileIn = "src/main/java/edu/isistan/test/mock_clientes.csv";
+		    String fileIn = "src/main/java/edu/isistan/test/csv/mock_clientes.csv";
 		    String line = null;
 	
 		    // Read all lines in from CSV file and add to studentList
@@ -240,7 +240,7 @@ public class ControllerTest {
 	private List<Producto> getProductosMock() {
 		List <Producto> productos = new ArrayList <>();
 		try {
-		    String fileIn = "src/main/java/edu/isistan/test/mock_productos.csv";
+		    String fileIn = "src/main/java/edu/isistan/test/csv/mock_productos.csv";
 		    String line = null;
 	
 		    // Read all lines in from CSV file and add to studentList

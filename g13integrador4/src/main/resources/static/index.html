@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrador 4</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/a349ac397c.js" crossorigin="anonymous"></script>
+    <script src="js/Vue.js"></script>
+    <script type="module" src="js/script.js"></script>
+</head>
+<body>
+
+    <header class="container-fluid bg-inverse fixed-top bg-dark text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar navbar-dark bg-dark container">
+            <a class="navbar-brand titulo" href="index.html">Integrador 4</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link active" href="index.html">Inicio</a>
+                    <a class="nav-item nav-link active" href="html/comprar-producto.html">Comprar productos</a>
+                    <a class="nav-item nav-link active" href="html/reportes.html">Reportes</a>
+                    <a class="nav-item nav-link active" href="html/generarDatos.html">Generar datos</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+
+    <div class="container fondo-blanco borde min-size" id="vue-tablas"> 
+        <section class="margen-abajo">
+
+            <button class="btn btn-primary btn-ancho" id="btn-agregar-cliente">
+                <i class="fas fa-plus"></i> Agregar cliente
+            </button>
+            <button class="btn btn-primary btn-ancho" id="btn-agregar-producto">
+                <i class="fas fa-plus"></i> Agregar producto
+            </button>
+
+            <!-- section agregar producto -->
+            <section id="section-agregar-producto" class="bg-dark margen-vertical borde grande none agregar">
+                <h5 class="blanco centrar-contenido margen-abajo">Agregar producto</h5>
+                <div class="margen-abajo">
+                    <div class="input-group mb-3 col">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nombre</span>
+                        </div>
+                        <input type="text" id="agregar-nombre-producto" class="form-control campo-vacio" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+                    </div>
+    
+                    <div class="input-group mb-3 col">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Precio</span>
+                        </div>
+                        <input type="number" id="agregar-precio" class="form-control campo-vacio" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+                    </div>
+    
+                    <div class="input-group mb-3 col">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Stock</span>
+                        </div>
+                        <input type="text" id="agregar-stock" class="form-control campo-vacio" placeholder="Stock" aria-label="Stock" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-ancho" id="agregar-producto">Agregar</button>
+                <button class="btn btn-primary btn-ancho cerrar-section">Cancelar</button>
+    
+            </section>
+
+        <!-- section agregar cliente -->
+        <section id="section-agregar-cliente" class="bg-dark margen-vertical borde grande none agregar">
+            <h5 class="blanco centrar-contenido margen-abajo">Agregar cliente</h5>
+
+
+            <div class="row">
+                <div class="input-group mb-3 col">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Nombre del cliente</span>
+                    </div>
+                    <input type="text" id="agregar-nombre-cliente" class="form-control" placeholder="Nombre del cliente" aria-label="Nombre del cliente" aria-describedby="basic-addon1">
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-ancho" id="agregar-cliente">Agregar</button>
+            <button class="btn btn-primary btn-ancho cerrar-section">Cancelar</button>
+
+        </section>
+
+    </section>
+    
+    <!--tablas clientes y productos-->
+    <section id="js-form-tablas">
+        <div class="tablas">
+            <section class="tabla-eventos">
+                <div class="centrar-contenido">
+                    <h2>Clientes</h2>
+                </div>
+            
+            
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr class="no-link">
+                            <th scope="col">
+                                <a>id</a>
+                            </th>
+                            <th scope="col">
+                                <a>Nombre</a>
+                            </th>
+                            <th scope="col">
+                                <a>Editar</a>
+                            </th>
+                            <th scope="col">
+                                <a>Eliminar</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cliente of clientes">
+                            <td>{{cliente.id}}</td>
+                            <td>{{cliente.nombre}}</td>
+                            <td>
+                                <a href="#" class="btn-abrir-popup-editar-cliente" v-bind:name="cliente.id">
+                                    <i class='far fa-edit icono'></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn-eliminar-cliente" v-bind:name="cliente.id">
+                                    <i class="fa fa-trash-o rojo icono"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section class="tabla-bandas">
+                <div class="centrar-contenido">
+                    <h2>Productos</h2>
+                </div>
+            
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr class="no-link">
+                            <th scope="col">
+                                <a>Nombre</a>
+                            </th>
+                            <th scope="col">
+                                <a>Precio</a>
+                            </th>
+                            <th scope="col">
+                                <a>Stock</a>
+                            </th>
+                            <th scope="col">
+                                <a>Editar</a>
+                            </th>
+                            <th scope="col">
+                                <a>Eliminar</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="producto of productos">
+                            <td>{{producto.nombre}}</td>
+                            <td>{{producto.precio}}</td>
+                            <td>{{producto.stock}}</td>
+                            <td>
+                                <a href="#" class="btn-abrir-popup-editar-producto" v-bind:name="producto.id">
+                                    <i class='far fa-edit icono'></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn-eliminar-producto" v-bind:name="producto.id">
+                                    <i class="fa fa-trash-o rojo icono"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+    </div>
+
+
+
+
+    <!--popup editar cliente -->
+    <section id="overlay-cliente" class="overlay">
+        <div id="popup-cliente" class="popup">
+            
+            <div class="flex-end">
+                <a href="javascript:void(0);" id="btn-cerrar-popup" class="btn-cerrar-popup js-cerrar">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+            
+            <h5 class="margen-abajo">Editar cliente</h5>
+            <div class="input-group mb-3 col">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nombre</span>
+                </div>
+                <input type="text" id="editar-nombre-cliente" class="form-control" aria-describedby="basic-addon1">
+            </div>
+                
+            <button class="btn btn-primary btn-ancho" id="btn-editar-cliente">Editar</button>
+            <button class="btn btn-primary btn-ancho js-cerrar">Cancelar</button>
+            
+            
+        </div>	
+    </section>
+
+
+    <!--popup editar producto-->
+    <section id="overlay-producto" class="overlay">
+        <div id="popup-producto" class="popup">
+            
+            <div class="flex-end">
+                <a href="javascript:void(0);" class="btn-cerrar-popup js-cerrar">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+            
+            <h5 class="margen-abajo">Editar producto</h5>
+
+            <div class="margen-abajo">
+                <div class="input-group mb-3 col">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nombre producto</span>
+                    </div>
+                    <input type="text" id="editar-nombre-producto" class="form-control" placeholder="Nombre producto" aria-label="Nombre producto" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3 col">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Stock</span>
+                    </div>
+                    <input type="number" id="editar-stock" class="form-control" placeholder="Stock" aria-label="Stock" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3 col">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Precio</span>
+                    </div>
+                    <input type="number" id="editar-precio" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-ancho" id="btn-editar-producto">Editar</button>
+            <button class="btn btn-primary btn-ancho js-cerrar">Cancelar</button>
+        </div>	
+    </section>
+
+    <footer class="container-fluid bg-dark text-white py-3 text-center">
+        <p>© 2015-2020 Integrador 4 | Design by Tomas Arras</p>
+    
+        <a href="https://github.com/tomasarras/" class="icon github" title="GitHub">
+            <svg viewBox="71 71 370 370">
+                <path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/>
+            </svg>
+        </a>
+    
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

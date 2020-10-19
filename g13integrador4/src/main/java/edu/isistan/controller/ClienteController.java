@@ -109,14 +109,17 @@ public class ClienteController extends Controller {
      * @param id del cliente que se va a borrar
      * @return 204 si se borro el cliente
      * @return 404 si no existe el cliente
+     * @return 502 si no se puede borrar el cliente porque ya compro un producto
      */
     @DeleteMapping("/{id}")
     ResponseEntity<Object> borrarCliente(@PathVariable Integer id) {
     	try {
+    		if (getCliente(id) == null)
+    			return clienteNoEncontrado(id);
     		repository.deleteById(id);
     		return ResponseEntity.status(Response.SC_NO_CONTENT).build();
-    	} catch (Exception NoSuchElementException) {
-    		return clienteNoEncontrado(id);
+    	} catch (Exception DataIntegrityViolationException) {
+    		return ResponseEntity.status(Response.SC_BAD_GATEWAY).build();
     	}
     }
 }
