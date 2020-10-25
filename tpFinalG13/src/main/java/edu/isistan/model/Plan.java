@@ -18,7 +18,7 @@ public class Plan {
 	@Column(name = "nombre_plan")
 	private String nombre;
 	@ManyToOne
-	@JoinColumn(name = "id_viaje")
+	@JoinColumn(name = "id_viaje",nullable = false)
 	private Viaje viaje;
 	
 	public Plan() {
@@ -38,7 +38,6 @@ public class Plan {
 	
 	public Plan(String nombre,Viaje viaje) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.viaje = viaje;
 	}
@@ -59,10 +58,19 @@ public class Plan {
 		this.nombre = nombre;
 	}
 
+	public void setViaje(Viaje viaje) {
+		this.viaje = viaje;
+	}
+	
+	public Viaje getViaje() {
+		return this.viaje;
+	}
+
 	@Override
 	public String toString() {
-		return "Plan [id=" + id + ", nombre=" + nombre + "]";
+		return "Plan [id=" + id + ", nombre=" + nombre + ", viaje=" + viaje + "]";
 	}
+	
 	
 	
 }
