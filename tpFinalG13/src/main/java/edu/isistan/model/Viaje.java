@@ -13,13 +13,19 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
 public class Viaje {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(notes = "Identificador del viaje",name = "id",required = false,value  = "5")
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Column(name = "id_viaje", nullable = false)
 	private Integer id;
 	@Column(name = "nombre_viaje")
+	@ApiModelProperty(notes = "Nombre del viaje",name = "nombre",required = true,value  = "nombre_viaje")
 	private String nombre;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "viaje")

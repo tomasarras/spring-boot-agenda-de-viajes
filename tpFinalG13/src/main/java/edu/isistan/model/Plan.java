@@ -8,15 +8,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 @Entity
 public class Plan {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(notes = "Identificador del plan",name = "id",required = false,value = "10", readOnly = true)
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Column(name = "id_plan", nullable = false)
 	private Integer id;
+	@ApiModelProperty(notes = "Nombre del plan",name = "nombre",required = true,value = "nombre_plan")
 	@Column(name = "nombre_plan")
 	private String nombre;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_viaje",nullable = false)
 	private Viaje viaje;

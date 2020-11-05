@@ -20,6 +20,9 @@ import edu.isistan.model.Plan;
 import edu.isistan.model.Viaje;
 import edu.isistan.repository.PlanRepository;
 import edu.isistan.repository.ViajeRepository;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 /**
  * Controller de planes que contienen los viajes
  * @author Tomas
@@ -42,6 +45,11 @@ public class PlanController {
 	 * @return 404 si el viaje no existe
 	 * @return 200 y los planes del viaje
 	 */
+	@ApiOperation(value = "Obtener los planes de un viaje")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 404, message = "Not found")
+	})
 	@GetMapping("/{idViaje}/planes")
 	public ResponseEntity<List<Plan>> getPlanesDeViaje(@PathVariable int idViaje) {
 		try {
@@ -88,6 +96,7 @@ public class PlanController {
 	 * @return 201 y el plan si se creo
 	 * @return 404 si el viaje no existe
 	 */
+	
 	@PostMapping("/{idViaje}/planes")
     public ResponseEntity<Plan> crearPlan(@RequestBody Plan plan,@PathVariable int idViaje) {
 		try {
