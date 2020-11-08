@@ -2,7 +2,6 @@ package edu.isistan.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,6 +22,7 @@ import edu.isistan.repository.ViajeRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
 /**
  * Controller de planes que contienen los viajes
  * @author Tomas
@@ -54,11 +54,13 @@ public class PlanController {
 	public ResponseEntity<List<Plan>> getPlanesDeViaje(@PathVariable int idViaje) {
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
-			return ResponseEntity.
-					status(Response.SC_OK).
-					body(viaje.getPlanes());
+			return ResponseEntity
+					.status(Response.SC_OK)
+					.body(viaje.getPlanes());
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
 	}
 
@@ -83,31 +85,45 @@ public class PlanController {
     public ResponseEntity<Plan> getPlan(@PathVariable int id) {
 		try {
 			Plan p = repository.findById(id).get(); 
-			return ResponseEntity.status(Response.SC_OK).body(p);
+			return ResponseEntity
+					.status(Response.SC_OK)
+					.body(p);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
     }
 	
 	/**
-	 * Crea un plan a un viaje
-	 * @param plan el que se va a crear
+	 * Crea un plan de un vuelo a un viaje
+	 * @param PlanVuelo el que se va a crear
 	 * @param idViaje al cual se va a asignar el plan
 	 * @return 201 y el plan si se creo
 	 * @return 404 si el viaje no existe
 	 */
-	
 	@PostMapping("/{idViaje}/planes")
-    public ResponseEntity<Plan> crearPlan(@RequestBody Plan plan,@PathVariable int idViaje) {
+	private ResponseEntity<Plan> crearPlan(@PathVariable int idViaje,@RequestBody Plan plan) {
+		plan.setId(0);
+		if (!plan.esValido()) {
+			return ResponseEntity
+					.status(Response.SC_BAD_REQUEST)
+					.build();
+		}
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
-			Plan p = new Plan(plan.getNombre(),viaje);
-			p = repository.save(p);
-			return ResponseEntity.status(Response.SC_CREATED).body(p);
+			plan.setViaje(viaje);
+			plan = repository.save(plan);
+			return ResponseEntity
+					.status(Response.SC_CREATED)
+					.body(plan);
 		} catch (NoSuchElementException e ) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
-    }
+	}
+	
 	
 	/**
 	 * 
@@ -119,9 +135,13 @@ public class PlanController {
 	public ResponseEntity<Void> borrarPlan(@PathVariable int id) {
 		try {
 			repository.deleteById(id);
-			return ResponseEntity.status(Response.SC_NO_CONTENT).build();
+			return ResponseEntity
+					.status(Response.SC_NO_CONTENT)
+					.build();
 		} catch (EmptyResultDataAccessException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
 	}
 	
@@ -134,13 +154,24 @@ public class PlanController {
 	 */
 	@PutMapping("/planes/{id}")
 	public ResponseEntity<Plan> modificarPlan(@PathVariable int id,@RequestBody Plan plan) {
+		plan.setId(0);
+		if (!plan.esValido()) {
+			return ResponseEntity
+					.status(Response.SC_BAD_REQUEST)
+					.build();
+		}
+		
 		try {
 			Plan p = repository.findById(id).get();
-			p.setNombre(plan.getNombre());
+			p.modificarse(plan);
 			repository.flush();
-			return ResponseEntity.status(Response.SC_OK).body(p);
+			return ResponseEntity
+					.status(Response.SC_OK)
+					.body(plan);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
 	}
 }

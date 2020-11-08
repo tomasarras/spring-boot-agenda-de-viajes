@@ -28,7 +28,7 @@ import edu.isistan.repository.ViajeRepository;
 @AutoConfigureTestDatabase
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PlanControllerTest {
-	@Autowired
+	/*@Autowired
 	private TestRestTemplate testRestTemplate;
 	
 	@Autowired
@@ -168,5 +168,5 @@ public class PlanControllerTest {
 		ResponseEntity<Plan> response = testRestTemplate.exchange("/viajes/planes/" + id,HttpMethod.PUT,request, Plan.class);
 		assertEquals(Response.SC_NOT_FOUND,response.getStatusCodeValue());
 	}
-	
+	*/
 }

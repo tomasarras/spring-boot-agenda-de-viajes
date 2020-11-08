@@ -32,9 +32,9 @@ public class ViajeController {
 	 */
 	@GetMapping
     public ResponseEntity<List<Viaje>> getViajes() {
-		return ResponseEntity.
-				status(Response.SC_OK).
-				body(repository.findAll());
+		return ResponseEntity
+				.status(Response.SC_OK)
+				.body(repository.findAll());
     }
 	
 	/**
@@ -65,7 +65,9 @@ public class ViajeController {
     public ResponseEntity<Viaje> crearViaje(@RequestBody Viaje viaje) {
 		Viaje v = new Viaje(viaje.getNombre());
 		v = repository.save(v);
-		return ResponseEntity.status(Response.SC_CREATED).body(v);
+		return ResponseEntity
+				.status(Response.SC_CREATED)
+				.body(v);
     }
 	
 	/**
@@ -78,9 +80,13 @@ public class ViajeController {
 	public ResponseEntity<Void> borrarViaje(@PathVariable int id) {
 		try {
 			repository.deleteById(id);
-			return ResponseEntity.status(Response.SC_NO_CONTENT).build();
+			return ResponseEntity
+					.status(Response.SC_NO_CONTENT)
+					.build();
 		} catch (EmptyResultDataAccessException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
 	}
 	
@@ -97,9 +103,13 @@ public class ViajeController {
 			Viaje v = repository.findById(id).get();
 			v.setNombre(viaje.getNombre());
 			repository.flush();
-			return ResponseEntity.status(Response.SC_OK).body(v);
+			return ResponseEntity
+					.status(Response.SC_OK)
+					.body(v);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(Response.SC_NOT_FOUND).build();
+			return ResponseEntity
+					.status(Response.SC_NOT_FOUND)
+					.build();
 		}
 	}
 

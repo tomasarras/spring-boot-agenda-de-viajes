@@ -1,5 +1,6 @@
 package edu.isistan.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,14 @@ public class Viaje {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "viaje")
 	private List<Plan> planes;
+	@Column(name = "ciudad_destino")
+	private String ciudadDestino;
+	@Column(name = "fecha_inicio")
+	private LocalDate fechaInicio;
+	@Column(name = "fecha_fin")
+	private LocalDate fechaFin;
+	@Column
+	private String descripcion;
 	
 	public Viaje() {
 		super();
