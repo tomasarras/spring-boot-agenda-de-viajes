@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Integrador 4</title>
+    <script src="https://kit.fontawesome.com/a349ac397c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../js/Vue.js"></script>
@@ -49,29 +50,285 @@
         </nav>
     </header>
 
-    <section id="reporte-carreras" class=" bg-dark borde grande margen">
-        <h3 class="centrar-contenido margen-abajo blanco">Agenda de viajes</h3>
+    <section id="reporte-carreras" class="bg-dark borde grande margen">
+        <h1 class="centrar-contenido margen-abajo blanco">Agenda de viajes</h1>
         
         <div class="container flex">
             <ul class="acordeon" id="data">
                 <li>
-                    <div class="title first">
-                        <h3 class="display-flex align-center">
-                            <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g></svg>
-                            Crear nuevo vieaje
-                        </h3>
+                    <div class="title" v-on:click="abrirLista">
+                        <h2 class="display-flex align-center">
+                            <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g> </svg>
+                            Crear nuevo viaje
+                        </h2>
                     </div>
-                    <div class="content">
-                        <p>asfasfasf</p>
+                    <div class="content width-95 shadow-">
+                        <div class="padding-5 text-black">
+                            <div class="form-group">
+                                <label for="nombre-viaje">Nombre del viaje</label><br>
+                                <input type="text" id="nombre-viaje" class="form-control" name="nombre-viaje" placeholder="Nombre del viaje">
+                            </div>
+
+                            <div class="form-group width-24">
+                                <label for="fecha-inicio">Fecha de inicio</label><br>
+                                <input type="date" id="fecha-inicio" class="form-control" name="fecha-inicio" placeholder="Fecha de inicio">
+                            </div>
+                            
+                            <div class="form-group width-24">
+                                <label for="fecha-fin">Fecha de fin</label><br>
+                                <input type="date" id="fecha-fin" class="form-control" name="fecha-fin" placeholder="Fecha de fin">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ciudad-destino">Ciudad de destino</label><br>
+                                <input type="text" id="ciudad-destino" class="form-control" name="ciudad-destino" placeholder="Ciudad de destino">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="descripcion">Descripcion</label><br>
+                                <textarea type="text" id="descripcion" class="margen-abajo form-control" name="descripcion" placeholder="Descripcion" rows="3"></textarea>
+                            </div>
+
+                            <button class="btn btn-primary btn-ancho" id="btn-crear-viaje">Crear viaje</button>
+                        </div>
                     </div>
                 </li>
 
                 <li v-for="viaje in viajes">
-                    <div class="title">
-                        <h3>{{viaje.nombre}}</h3>
+                    <div class="title margen-arriba flex-row space-between" v-on:click="abrirLista">
+                        <h2 class="display-flex align-center width-80">
+                            <svg class="plane-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M497.535,14.465c-19.569-19.568-51.395-19.241-70.557,0.726L322.092,124.488L66.131,39.781L12.4,93.513l213.352,131.365 L117.796,337.372l-69.231-11.366L0,374.571l101.78,35.649L137.429,512l48.565-48.565l-11.366-69.231l112.494-107.955 L418.487,499.6l53.732-53.732l-84.706-255.961L496.808,85.022C516.776,65.86,517.103,34.034,497.535,14.465z"/> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                            {{viaje.nombre}}
+                        </h2>
+                        <a href="javascript:void(0);" class="btns-borrar margen-der" v-bind:name="viaje.id" v-on:click="borrarViaje"><i class="fa fa-trash-o rojo icono btns-borrar"></i></a>
                     </div>
-                    <div class="content">
-                        <p>asfasgajgs</p>
+                    <div class="content width-95 shadow-">
+                        <div class="padding-5 text-black">
+                            <p>{{viaje.descripcion}}</p>
+                            <p class="margen-abajo">El viaje con destino a {{viaje.ciudadDestino}} se realizara el {{formatDate(viaje.fechaInicio)}} hasta el {{formatDate(viaje.fechaFin)}}</p>
+
+                            <div class="botones-plan margen-abajo">
+                                <button class="btn btn-primary width-45 btn-agregar-plan animation-back" v-bind:name="viaje.id">Agregar plan</button>
+                                <button class="btn btn-primary width-45 btn-verplanes" v-bind:name="viaje.id">Ver planes de este viaje</button>
+                            </div>
+
+                            <div class="crear-plan oculto">
+                                <label for="select-tipo-plan">Seleccione el tipo de plan</label>
+                                <select name="select-tipo-plan" class="select-tipo-plan form-control form-control-lg margen-abajo" id="select-tipo-plan">
+                                    <option value="0">Tipo de plan...</option>
+                                    <option value="reservaHotel">Reserva de hotel</option>
+                                    <option value="viajeColectivo">Viaje en colectivo</option>
+                                    <option value="viajeTren">Viaje en tren</option>
+                                    <option value="vuelo">Vuelo</option>
+                                </select>
+
+
+
+                                <div class="tipos-de-planes">
+                                    <div class="tipo-plan" value="reservaHotel">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="compania">Compañia</label>
+                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                        </div>
+
+                                        <div class="form-group width-24">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="date" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                        </div>
+                
+                                        <div class="form-group width-24">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="date" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="habitacion">Habitacion</label>
+                                            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="direccion">Direccion</label>
+                                            <input type="text" name="direccion" class="form-control" placeholder="Direccion">
+                                        </div>
+                                    </div>
+
+                                    <div class="tipo-plan" value="viajeColectivo">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="compania">Compañia</label>
+                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                        </div>
+
+                                        <div class="form-group width-24">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="date" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                        </div>
+                
+                                        <div class="form-group width-24">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="date" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="asiento">Numero de asiento</label>
+                                            <input type="number" name="asiento" class="form-control" placeholder="Asiento">
+                                        </div>
+                                    </div>
+
+                                    <div class="tipo-plan" value="viajeTren">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="compania">Compañia</label>
+                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                        </div>
+
+                                        <div class="form-group width-24">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="date" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                        </div>
+                
+                                        <div class="form-group width-24">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="date" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="asiento">Numero de asiento</label>
+                                            <input type="number" name="asiento" class="form-control" placeholder="Asiento">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="estacion">Estacion de tren</label>
+                                            <input type="text" name="estacion" class="form-control" placeholder="Estacion">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tipo-plan" value="vuelo">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="compania">Compañia</label>
+                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                        </div>
+
+                                        <div class="form-group width-24">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="date" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                        </div>
+                
+                                        <div class="form-group width-24">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="date" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="numeroVuelo">Numero de vuelo</label>
+                                            <input type="text" name="numeroVuelo" class="form-control" placeholder="Numero vuelo">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="aeropuertoSalida">Aeropuerto de salida</label>
+                                            <input type="text" name="aeropuertoSalida" class="form-control" placeholder="Aeropuerto">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="aeropuertoEntrada">Aeropuerto de entrada</label>
+                                            <input type="text" name="aeropuertoEntrada" class="form-control" placeholder="Aeropuerto de entrada">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="codigoReserva">Codigo de reserva</label>
+                                            <input type="text" name="codigoReserva" class="form-control" placeholder="Codigo de reserva">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="tiempoEscalas">Tiempo entre escalas</label>
+                                            <input type="text" name="tiempoEscalas" class="form-control" placeholder="Tiempo entre escalas">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="aeronave">Aeronave</label>
+                                            <input type="text" name="aeronave" class="form-control" placeholder="Aeronave">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-primary display-flex align-center btn-crear-plan oculto margen-arriba" v-bind:name="viaje.id">
+                                    <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g></svg>
+                                    Crear plan
+                                </button>
+                            </div>
+
+                            <ul class="acordeon">
+                                <li v-for="plan in planes" v-if="plan.idViaje == viaje.id">
+                                    <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
+                                        <h2 class="display-flex w-80 align-center margen-izq">
+                                            <span class="nombre-plan">{{plan.nombre}}</span>
+                                            <div class="form-group oculto input-plan">
+                                                <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                                            </div>
+                                        </h2>
+                                        
+
+                                        <a href="javascript:void(0);" class="btns-borrar btns-editar-js margen-der" v-bind:name="plan.id" v-on:click="mostrarEditarPlan"><i class='far fa-edit icono icono btns-borrar'></i></a>
+                                        <a href="javascript:void(0);" class="btns-borrar btns-borrar-js" v-bind:name="plan.id"><i class="fa fa-trash-o rojo icono btns-borrar"></i></a>
+                                    </div>
+                                    <div class="content width-95 shadow-">
+                                        <div class="padding-5">
+                                            <ul v-bind:name="viaje.id">
+                                                <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                                    <span v-if="key == 'type'">
+                                                        <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
+                                                        <div hidden></div>
+                                                    </span>
+                                                    <span v-if="key == 'fechaInicio'">
+                                                        <span>Fecha de inicio: {{formatDate(value)}}</span>
+                                                        <div class="form-group oculto">
+                                                            <label for="fechaInicio">Fecha de inicio</label>
+                                                            <input type="date" name="fechaInicio" class="form-control" v-bind:value="value">
+                                                        </div>
+                                                    </span>
+                                                    <span v-if="key == 'fechaFin'">
+                                                        <span>Fecha de fin: {{formatDate(value)}}</span>
+                                                        <div class="form-group oculto">
+                                                            <label for="fechaFin">Fecha de fin</label>
+                                                            <input type="date" name="fechaFin" class="form-control" v-bind:value="value">
+                                                        </div>
+                                                    </span>
+                                                    <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
+                                                        <span>{{getPrettyKey(key)}}: {{value}}</span>
+                                                        <div class="form-group oculto">
+                                                            <label v-bind:for="key">{{getPrettyKey(key)}}</label>
+                                                            <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                                        </div>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <div class="botones-plan margen-arriba">
+                                                <button class="btn btn-primary width-45 oculto btn-editar-plan" v-on:click="editarPlan" v-bind:name="plan.id">Editar plan</button>
+                                                <button class="btn btn-primary width-45 oculto btn-cancelar" v-on:click="cancelarEdicion">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
 

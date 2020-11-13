@@ -10,6 +10,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
+@Order(3)
 public class SpringFoxConfig {
 	@Bean
 	public Docket api() {

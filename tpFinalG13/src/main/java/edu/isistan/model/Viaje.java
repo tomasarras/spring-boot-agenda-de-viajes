@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +30,10 @@ public class Viaje {
 	@Column(name = "nombre_viaje")
 	@ApiModelProperty(notes = "Nombre del viaje",name = "nombre",required = true,value  = "nombre_viaje")
 	private String nombre;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "id_usuario",nullable = false)
+	private Usuario usuario;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "viaje")
 	private List<Plan> planes;
@@ -84,4 +90,46 @@ public class Viaje {
 	public void addPlan(Plan plan) {
 		this.planes.add(plan);
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getCiudadDestino() {
+		return ciudadDestino;
+	}
+
+	public void setCiudadDestino(String ciudadDestino) {
+		this.ciudadDestino = ciudadDestino;
+	}
+
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	
 }

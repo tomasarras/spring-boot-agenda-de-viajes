@@ -8,6 +8,9 @@ import edu.isistan.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+	@Query("SELECT u FROM Usuario u WHERE u.username = :username")
+	Usuario buscarPorUsername(String username);
+	
 	@Query("SELECT u FROM Usuario u WHERE u.email = :email")
 	Usuario buscarPorEmail(String email);
 	

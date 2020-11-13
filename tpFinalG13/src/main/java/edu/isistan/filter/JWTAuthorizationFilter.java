@@ -1,4 +1,4 @@
-package edu.isistan.login;
+package edu.isistan.filter;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import edu.isistan.config.TokenConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
@@ -23,18 +24,16 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-	private final String HEADER = "Authorization";
-	private final String PREFIX = "Bearer ";
-	public final String SECRET = "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824";
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
-					throws ServletException, IOException {
+					throws ServletException, IOException {        
 		try {
 			if (existeJWTToken(request, response)) {
 				Claims claims = validateToken(request);
 				if (claims.get("authorities") != null) {
+
+					/*request.set("id", claims.get("id"));*/
 					setUpSpringAuthentication(claims);
 				} else {
 					SecurityContextHolder.clearContext();
@@ -53,10 +52,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
 
 	private Claims validateToken(HttpServletRequest request) {
-		String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-		JwtParser parser = Jwts.parser().setSigningKey(SECRET.getBytes());
+		String jwtToken = request.getHeader(TokenConfig.HEADER).replace(TokenConfig.PREFIX, "");
+		JwtParser parser = Jwts.parser().setSigningKey(TokenConfig.SECRET.getBytes());
 		System.err.println("Login " +parser.parse(jwtToken));
-		return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
+		return Jwts.parser().setSigningKey(TokenConfig.SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
 	}
 
 	/**
@@ -75,8 +74,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	}
 
 	private boolean existeJWTToken(HttpServletRequest request, HttpServletResponse res) {
-		String authenticationHeader = request.getHeader(HEADER);
-		if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
+		String authenticationHeader = request.getHeader(TokenConfig.HEADER);
+		if (authenticationHeader == null || !authenticationHeader.startsWith(TokenConfig.PREFIX))
 			return false;
 		return true;
 	}

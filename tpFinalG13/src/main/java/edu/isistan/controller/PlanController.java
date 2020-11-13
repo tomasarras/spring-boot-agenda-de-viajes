@@ -31,8 +31,8 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("viajes")
-public class PlanController {
+@RequestMapping("/usuarios/viajes")
+public class PlanController extends AbsController {
 	@Autowired
 	private PlanRepository repository;
 	
@@ -54,9 +54,15 @@ public class PlanController {
 	public ResponseEntity<List<Plan>> getPlanesDeViaje(@PathVariable int idViaje) {
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
-			return ResponseEntity
-					.status(Response.SC_OK)
-					.body(viaje.getPlanes());
+			if (lePerteneceAlUsuario(viaje)) {
+				return ResponseEntity
+						.status(Response.SC_OK)
+						.body(viaje.getPlanes());
+			} else {
+				return ResponseEntity
+						.status(Response.SC_FORBIDDEN)
+						.build();
+			}
 		} catch (NoSuchElementException e) {
 			return ResponseEntity
 					.status(Response.SC_NOT_FOUND)
@@ -69,10 +75,11 @@ public class PlanController {
 	 * @return 200 y los planes
 	 */
 	@GetMapping("/planes")
-    public ResponseEntity<List<Plan>> getPlanes() {
+    public ResponseEntity<List<Plan>> getPlanesDelUsuario() {
+		int idUsuario = getIdUsuarioDelToken();
 		return ResponseEntity
 				.status(Response.SC_OK)
-				.body(repository.findAll());
+				.body(repository.getPlanesDelUsuario(idUsuario));
     }
 	
 	/**
@@ -84,10 +91,16 @@ public class PlanController {
 	@GetMapping("/planes/{id}")
     public ResponseEntity<Plan> getPlan(@PathVariable int id) {
 		try {
-			Plan p = repository.findById(id).get(); 
-			return ResponseEntity
-					.status(Response.SC_OK)
-					.body(p);
+			Plan p = repository.findById(id).get();
+			if (lePerteneceAlUsuario(p.getViaje())) {
+				return ResponseEntity
+						.status(Response.SC_OK)
+						.body(p);
+			} else {
+				return ResponseEntity
+						.status(Response.SC_FORBIDDEN)
+						.build();
+			}
 		} catch (NoSuchElementException e) {
 			return ResponseEntity
 					.status(Response.SC_NOT_FOUND)
@@ -110,8 +123,16 @@ public class PlanController {
 					.status(Response.SC_BAD_REQUEST)
 					.build();
 		}
+		
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
+			System.out.println(!lePerteneceAlUsuario(viaje));
+			if (!lePerteneceAlUsuario(viaje)) {
+				return ResponseEntity
+				.status(Response.SC_FORBIDDEN)
+				.build();
+			}
+			
 			plan.setViaje(viaje);
 			plan = repository.save(plan);
 			return ResponseEntity
@@ -134,11 +155,18 @@ public class PlanController {
 	@DeleteMapping("/planes/{id}")
 	public ResponseEntity<Void> borrarPlan(@PathVariable int id) {
 		try {
-			repository.deleteById(id);
-			return ResponseEntity
-					.status(Response.SC_NO_CONTENT)
-					.build();
-		} catch (EmptyResultDataAccessException e) {
+			Plan plan = repository.findById(id).get();
+			if (lePerteneceAlUsuario(plan.getViaje())) {
+				repository.delete(plan);
+				return ResponseEntity
+						.status(Response.SC_NO_CONTENT)
+						.build();
+			} else {
+				return ResponseEntity
+						.status(Response.SC_FORBIDDEN)
+						.build();
+			}
+		} catch (NoSuchElementException e) {
 			return ResponseEntity
 					.status(Response.SC_NOT_FOUND)
 					.build();
@@ -152,8 +180,8 @@ public class PlanController {
 	 * @return 200 y el plan si fue modificado
 	 * @return 404 si el plan no existe
 	 */
-	@PutMapping("/planes/{id}")
-	public ResponseEntity<Plan> modificarPlan(@PathVariable int id,@RequestBody Plan plan) {
+	@PutMapping("/planes/{idPlan}")
+	public ResponseEntity<Plan> modificarPlan(@PathVariable int idPlan,@RequestBody Plan plan) {
 		plan.setId(0);
 		if (!plan.esValido()) {
 			return ResponseEntity
@@ -161,13 +189,20 @@ public class PlanController {
 					.build();
 		}
 		
+		
 		try {
-			Plan p = repository.findById(id).get();
+			Plan p = repository.findById(idPlan).get();
+			if(!lePerteneceAlUsuario(p.getViaje())) {
+				return ResponseEntity
+						.status(Response.SC_FORBIDDEN)
+						.build();
+			}
+			
 			p.modificarse(plan);
 			repository.flush();
 			return ResponseEntity
 					.status(Response.SC_OK)
-					.body(plan);
+					.body(p);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity
 					.status(Response.SC_NOT_FOUND)

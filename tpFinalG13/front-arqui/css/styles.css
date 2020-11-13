@@ -11,6 +11,46 @@ section.viajes {
     width: 80vw;
 }
 
+.content.width-95 {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.width-80 {
+    width: 80%;
+}
+
+.text-black {
+    color: black;
+}
+
+.shadow- {
+    -webkit-box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+    box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+}
+
+.padding-5 {
+    padding: 2% 5% 5% 5%;
+}
+
+.width-45 {
+    width: 45%;
+}
+
+.botones-plan {
+    display: flex;
+    justify-content: space-between;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.btn-crear-plan {
+    width: 150px;
+}
+
 html {
     margin: 9.6vh 0 0 0;
 }
@@ -115,6 +155,11 @@ button.accordion:hover, button.accordion.is-open {
 
 .btn-ancho {
     width: 100%;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
 }
 
 #btn-registrarse,#btn-iniciar {
@@ -343,7 +388,7 @@ button.accordion:hover, button.accordion.is-open {
 /* /popup */
 
 .margen-arriba {
-    margin-top: 5%;
+    margin-top: 3% !important;
 }
 
 .margen-abajo {
@@ -398,6 +443,10 @@ button.accordion:hover, button.accordion.is-open {
 
 .rojo {
     color: red;
+}
+
+.padding-arriba {
+    padding-top: 3%;
 }
 
 /* tabla bootstrap */
@@ -473,9 +522,9 @@ div.title {
     align-items: center;
 }
 
-#plus-icon {
-    width: 25px;
-    height: 25px;
+#plus-icon,.plane-icon {
+    width: 28px;
+    height: 28px;
     margin: 0 1%;
 }
 
@@ -485,18 +534,35 @@ div.title {
 
 ul.acordeon li div.title {
     cursor: pointer;
-    color: var(--secondary);
+    color: black;
 }
+
+.width-24 {
+    width: 24%;
+}
+
+.flex-row {
+    display: flex;
+}
+
+.w-80 {
+    width: 90%;
+}
+
+.btns-borrar {
+    font-size: 1.5em;
+}
+
 
 ul.acordeon li div.content {
     color: white;
-    max-height: 0;
+    display: none;
     overflow: hidden;
     transition: max-height .3s ease-out;
 }
 
 ul.acordeon li div.content.active {
-    max-height: 110vh;
+    display: block;
 }
 
 #img-event-1 {

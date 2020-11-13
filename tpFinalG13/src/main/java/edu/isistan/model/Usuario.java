@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,10 +24,12 @@ public class Usuario {
 	private Integer id;
 	@ApiModelProperty(notes = "Contraseña del usuario",name = "password",required = true,value = "password")
 	@Column(name = "password")
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@Column
 	private String email;
+	@Column
+	private String username;
 	@Transient
 	private String token;
 	
@@ -62,5 +66,15 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
 	
 }
