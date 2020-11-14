@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -148,6 +149,12 @@ public class ViajeController extends AbsController {
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<Viaje> modificarViaje(@PathVariable int id,@RequestBody Viaje viaje) {
+		if (!viaje.esValido()) {
+			return ResponseEntity
+					.status(Response.SC_BAD_REQUEST)
+					.build();
+		}
+		
 		try {
 			Viaje v = repository.findById(id).get();
 			if (lePerteneceAlUsuario(v)) {
@@ -173,4 +180,6 @@ public class ViajeController extends AbsController {
 					.build();
 		}
 	}
+
+	
 }

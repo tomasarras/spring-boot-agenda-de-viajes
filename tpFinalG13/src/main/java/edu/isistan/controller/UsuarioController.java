@@ -2,7 +2,6 @@ package edu.isistan.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -75,7 +73,7 @@ public class UsuarioController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Usuario u) {
-		if (StringUtils.isEmpty(u.getUsername())) {
+		if (StringUtils.isEmpty(u.getUsername()) || StringUtils.isEmpty(u.getPassword())) {
 			return ResponseEntity
 					.status(Response.SC_BAD_REQUEST)
 					.build();

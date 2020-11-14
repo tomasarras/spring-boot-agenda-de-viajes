@@ -6,11 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -23,7 +20,7 @@ public class Usuario {
 	@Column(name = "id_usuario", nullable = false)
 	private Integer id;
 	@ApiModelProperty(notes = "Contraseña del usuario",name = "password",required = true,value = "password")
-	@Column(name = "password")
+	@Column
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@Column
@@ -74,6 +71,14 @@ public class Usuario {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", password=" + password + ", email=" + email + ", username=" + username
+				+ ", token=" + token + "]";
+	}
+	
+	
 	
 	
 	

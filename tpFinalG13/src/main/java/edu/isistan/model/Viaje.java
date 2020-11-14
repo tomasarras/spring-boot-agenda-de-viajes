@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.util.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +29,7 @@ public class Viaje {
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Column(name = "id_viaje", nullable = false)
 	private Integer id;
-	@Column(name = "nombre_viaje")
+	@Column(name = "nombre_viaje", nullable = false)
 	@ApiModelProperty(notes = "Nombre del viaje",name = "nombre",required = true,value  = "nombre_viaje")
 	private String nombre;
 	@JsonIgnore
@@ -37,14 +39,22 @@ public class Viaje {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "viaje")
 	private List<Plan> planes;
-	@Column(name = "ciudad_destino")
+	@Column(name = "ciudad_destino", nullable = false)
 	private String ciudadDestino;
-	@Column(name = "fecha_inicio")
+	@Column(name = "fecha_inicio", nullable = false)
 	private LocalDate fechaInicio;
-	@Column(name = "fecha_fin")
+	@Column(name = "fecha_fin", nullable = false)
 	private LocalDate fechaFin;
-	@Column
+	@Column(nullable = false)
 	private String descripcion;
+	
+	public boolean esValido() {
+		return !StringUtils.isEmpty(this.getNombre())
+				&& !StringUtils.isEmpty(this.getCiudadDestino())
+				&& !StringUtils.isEmpty(this.getDescripcion())
+				&& this.getFechaInicio() != null
+				&& this.getFechaFin() != null;
+	}
 	
 	public Viaje() {
 		super();

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -126,7 +125,6 @@ public class PlanController extends AbsController {
 		
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
-			System.out.println(!lePerteneceAlUsuario(viaje));
 			if (!lePerteneceAlUsuario(viaje)) {
 				return ResponseEntity
 				.status(Response.SC_FORBIDDEN)
