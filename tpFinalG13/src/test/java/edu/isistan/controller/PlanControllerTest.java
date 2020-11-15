@@ -80,8 +80,8 @@ public class PlanControllerTest {
 		assertEquals(10,planes.get(0).get("id"));
 		assertEquals("nombre1",planes.get(0).get("nombre"));
 		assertEquals("compañia1",planes.get(0).get("compania"));
-		assertEquals("2020-08-08",planes.get(0).get("fechaInicio"));
-		assertEquals("2020-08-08",planes.get(0).get("fechaFin"));
+		assertEquals("2020-01-01 01:01",planes.get(0).get("fechaInicio"));
+		assertEquals("2020-01-01 01:01",planes.get(0).get("fechaFin"));
 		assertEquals("habitacion1",planes.get(0).get("habitacion"));
 		assertEquals("direccion1",planes.get(0).get("direccion"));
 		assertEquals("reservaHotel",planes.get(0).get("type"));
@@ -118,8 +118,8 @@ public class PlanControllerTest {
 		assertEquals(10,planes.get(0).get("id"));
 		assertEquals("nombre1",planes.get(0).get("nombre"));
 		assertEquals("compañia1",planes.get(0).get("compania"));
-		assertEquals("2020-08-08",planes.get(0).get("fechaInicio"));
-		assertEquals("2020-08-08",planes.get(0).get("fechaFin"));
+		assertEquals("2020-01-01 01:01",planes.get(0).get("fechaInicio"));
+		assertEquals("2020-01-01 01:01",planes.get(0).get("fechaFin"));
 		assertEquals("habitacion1",planes.get(0).get("habitacion"));
 		assertEquals("direccion1",planes.get(0).get("direccion"));
 		assertEquals("reservaHotel",planes.get(0).get("type"));
@@ -135,8 +135,8 @@ public class PlanControllerTest {
 		assertEquals(10,plan.getId());
 		assertEquals("nombre1",plan.getNombre());
 		assertEquals("compañia1",plan.getCompania());
-		assertEquals("2020-08-08",plan.getFechaInicio().toString());
-		assertEquals("2020-08-08",plan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",plan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",plan.getFechaFin().toString());
 		assertEquals("habitacion1",plan.getHabitacion());
 		assertEquals("direccion1",plan.getDireccion());
 	}
@@ -163,8 +163,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"habitacion\": \"habitacion\","
 				+ "\"direccion\": \"direccion\""
 				+ "}";
@@ -179,10 +179,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-11-14",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",responsePlan.getFechaFin().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
 		assertEquals("habitacion",responsePlan.getHabitacion());
 		assertEquals("habitacion",repositoryPlan.getHabitacion());
 		assertEquals("direccion",responsePlan.getDireccion());
@@ -195,8 +195,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -211,10 +211,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-11-14",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",responsePlan.getFechaFin().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
 		assertEquals(5,responsePlan.getAsiento());
 		assertEquals(5,repositoryPlan.getAsiento());
 	}
@@ -225,8 +225,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeTren\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5,"
 				+ "\"estacion\" : \"estacion\""
 				+ "}";
@@ -242,10 +242,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-11-14",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",responsePlan.getFechaFin().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
 		assertEquals(5,responsePlan.getAsiento());
 		assertEquals(5,repositoryPlan.getAsiento());
 		assertEquals("estacion",responsePlan.getEstacion());
@@ -258,8 +258,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"vuelo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"numeroVuelo\": 5,"
 				+ "\"aeropuertoSalida\" : \"aeropuertoSalida\","
 				+ "\"aeropuertoLlegada\" : \"aeropuertoLlegada\","
@@ -279,10 +279,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-11-14",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",responsePlan.getFechaFin().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
 		assertEquals(5,responsePlan.getNumeroVuelo());
 		assertEquals(5,repositoryPlan.getNumeroVuelo());
 		assertEquals("aeropuertoSalida",responsePlan.getAeropuertoSalida());
@@ -303,8 +303,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -321,8 +321,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -339,8 +339,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -348,8 +348,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -398,8 +398,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel editado\","
 				+ "\"compania\": \"compañia editada\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"direccion\": \"direccion editada\","
 				+ "\"habitacion\": \"habitacion editada\""
 				+ "}";
@@ -415,10 +415,10 @@ public class PlanControllerTest {
 		assertEquals("hotel editado",repositoryPlan.getNombre());
 		assertEquals("compañia editada",responsePlan.getCompania());
 		assertEquals("compañia editada",repositoryPlan.getCompania());
-		assertEquals("2020-11-14",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-11-14",responsePlan.getFechaFin().toString());
-		assertEquals("2020-11-14",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
 		assertEquals("direccion editada",repositoryPlan.getDireccion());
 		assertEquals("direccion editada",responsePlan.getDireccion());
 		assertEquals("habitacion editada",responsePlan.getHabitacion());
@@ -431,8 +431,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -441,8 +441,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -465,8 +465,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -486,8 +486,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-11-14\","
-				+ "\"fechaFin\": \"2020-11-14\","
+				+ "\"fechaInicio\": \"2020-01-01 01:01\","
+				+ "\"fechaFin\": \"2020-01-01 01:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";

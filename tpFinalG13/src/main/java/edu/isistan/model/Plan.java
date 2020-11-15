@@ -1,7 +1,6 @@
 package edu.isistan.model;
 
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.springframework.util.StringUtils;
 import javax.persistence.InheritanceType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,9 +45,11 @@ public class Plan {
 	@Column
 	private String compania;
 	@Column(name = "fecha_inicio")
-	private LocalDate fechaInicio;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime fechaInicio;
 	@Column(name = "fecha_fin")
-	private LocalDate fechaFin;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime fechaFin;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_viaje",nullable = false)
@@ -108,22 +110,22 @@ public class Plan {
 	}
 
 
-	public LocalDate getFechaInicio() {
+	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
 	}
 
 
-	public void setFechaInicio(LocalDate fechaInicio) {
+	public void setFechaInicio(LocalDateTime fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
 
-	public LocalDate getFechaFin() {
+	public LocalDateTime getFechaFin() {
 		return fechaFin;
 	}
 
 
-	public void setFechaFin(LocalDate fechaFin) {
+	public void setFechaFin(LocalDateTime fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 

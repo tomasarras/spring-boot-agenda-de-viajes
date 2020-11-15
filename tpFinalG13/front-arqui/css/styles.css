@@ -150,7 +150,7 @@ button.accordion:hover, button.accordion.is-open {
 }
 .blanco,
 #btn-borrar {
-    color: white;
+    color: white !important;
 }
 
 .btn-ancho {

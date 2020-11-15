@@ -1,9 +1,7 @@
 package edu.isistan.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import org.springframework.util.StringUtils;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -42,35 +38,35 @@ public class Viaje {
 	@Column(name = "ciudad_destino", nullable = false)
 	private String ciudadDestino;
 	@Column(name = "fecha_inicio", nullable = false)
-	private LocalDate fechaInicio;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	/*@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)*/
+	private LocalDateTime fechaInicio;
 	@Column(name = "fecha_fin", nullable = false)
-	private LocalDate fechaFin;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime fechaFin;
 	@Column(nullable = false)
 	private String descripcion;
 	
 	public boolean esValido() {
+		if (this.fechaInicio != null && this.fechaFin != null) {
+			String inicio = this.fechaInicio.toString();
+			String fin = this.fechaFin.toString();
+			
+			int compare = inicio.compareTo(fin);
+			if (compare == 1) {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
 		return !StringUtils.isEmpty(this.getNombre())
 				&& !StringUtils.isEmpty(this.getCiudadDestino())
-				&& !StringUtils.isEmpty(this.getDescripcion())
-				&& this.getFechaInicio() != null
-				&& this.getFechaFin() != null;
+				&& !StringUtils.isEmpty(this.getDescripcion());
 	}
 	
 	public Viaje() {
 		super();
-	}
-	
-	public Viaje(String nombre) {
-		super();
-		this.nombre = nombre;
-		this.planes = new ArrayList<Plan>();
-	}
-
-	public Viaje(Integer id, String nombre) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.planes = new ArrayList<Plan>();
 	}
 
 	public Integer getId() {
@@ -117,19 +113,19 @@ public class Viaje {
 		this.ciudadDestino = ciudadDestino;
 	}
 
-	public LocalDate getFechaInicio() {
+	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(LocalDate fechaInicio) {
+	public void setFechaInicio(LocalDateTime fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public LocalDate getFechaFin() {
+	public LocalDateTime getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(LocalDate fechaFin) {
+	public void setFechaFin(LocalDateTime fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
@@ -140,6 +136,15 @@ public class Viaje {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	@Override
+	public String toString() {
+		return "Viaje [id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + ", planes=" + planes
+				+ ", ciudadDestino=" + ciudadDestino + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
+				+ ", descripcion=" + descripcion + "]";
+	}
+	
+	
 	
 	
 }

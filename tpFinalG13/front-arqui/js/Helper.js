@@ -4,7 +4,8 @@ export default class Helper {
         let sesion = new Vue({
             el: "#header-nav",
             data: {
-                logeado : false
+                logeado : false,
+                admin : false
             }
         });
     
@@ -12,11 +13,28 @@ export default class Helper {
 
         if (token) {
             sesion.logeado = true;
+            let decode = this.parseJwt(token);
+            let roles = decode.authorities;
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i] == "ROLE_ADMIN") {
+                    sesion.admin = true;
+                }
+            }
         }
 
         let btnCerrarSesion = document.querySelector("#logout");
         btnCerrarSesion.addEventListener("click",this.quitarToken);
     }
+
+    static parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+    };
 
     comprobarInputsVacios(event, callback) {
         let error = false;

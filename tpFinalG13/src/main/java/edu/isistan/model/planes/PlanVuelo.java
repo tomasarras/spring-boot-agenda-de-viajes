@@ -1,14 +1,9 @@
 package edu.isistan.model.planes;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import org.springframework.util.StringUtils;
-
 import edu.isistan.model.Plan;
-import edu.isistan.model.Viaje;
 
 @Entity
 public class PlanVuelo extends Plan {

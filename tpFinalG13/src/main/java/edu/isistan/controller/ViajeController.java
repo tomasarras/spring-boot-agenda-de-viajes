@@ -1,11 +1,12 @@
 package edu.isistan.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Usuario;
 import edu.isistan.model.Viaje;
+import edu.isistan.reportes.ReporteCiudad;
 import edu.isistan.repository.UsuarioRepository;
 import edu.isistan.repository.ViajeRepository;
 
@@ -31,24 +34,34 @@ public class ViajeController extends AbsController {
 	@Autowired
 	private UsuarioRepository repositoryUsuarios;
 
-	/**
-	 * 
-	 * @return 200 y todos los viajes
-	 */
-	/*@GetMapping
-    public ResponseEntity<List<Viaje>> getViajes() {
-		return ResponseEntity
-				.status(Response.SC_OK)
-				.body(repository.findAll());
-    }*/
-	
 	@GetMapping
-    public ResponseEntity<List<Viaje>> getViajesDeUsuario() {
+    public ResponseEntity<List<Viaje>> getViajesDeUsuario(@RequestParam(required = false) String criterio) {
 		int idUsuario = getIdUsuarioDelToken();
-		List<Viaje> viajes = repository.buscarViajesDeUsuario(idUsuario);
+		List<Viaje> viajes;
+		if (criterio != null) {
+			LocalDateTime now = LocalDateTime.now();
+			if (criterio.equals("realizados")) {
+				viajes = repository.buscarViajesDeUsuarioRealizados(idUsuario,now);
+			} else if (criterio.equals("pendientes")) {
+				viajes = repository.buscarViajesDeUsuarioPendientes(idUsuario,now);
+			} else {
+				viajes = repository.buscarViajesDeUsuario(idUsuario);
+			}
+		} else {
+			viajes = repository.buscarViajesDeUsuario(idUsuario);
+		}
+		
 		return ResponseEntity
 				.status(Response.SC_OK)
 				.body(viajes);
+	}
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@GetMapping("/ciudades")
+    public ResponseEntity<List<ReporteCiudad>> getCiudadesMasVisitadas() {
+		return ResponseEntity
+				.status(Response.SC_OK)
+				.body(repository.reporteCiudadesMasVisitadas());
 	}
 	
 	/**
@@ -78,22 +91,14 @@ public class ViajeController extends AbsController {
 		}
     }
 	
-	/**
-	 * 
-	 * @param viaje que se va a crear
-	 * @return 201 y el viaje si se creo
-	 */
-	/*@PostMapping
-    public ResponseEntity<Viaje> crearViaje(@RequestBody Viaje viaje) {
-		Viaje v = new Viaje(viaje.getNombre());
-		v = repository.save(v);
-		return ResponseEntity
-				.status(Response.SC_CREATED)
-				.body(v);
-    }*/
-	
 	@PostMapping
     public ResponseEntity<Viaje> crearViaje(@RequestBody Viaje viaje) {
+		if (!viaje.esValido()) {
+			return ResponseEntity
+					.status(Response.SC_BAD_REQUEST)
+					.build();
+		}
+		
 		Viaje v = new Viaje();
 		v.setNombre(viaje.getNombre());
 		v.setCiudadDestino(viaje.getCiudadDestino());
@@ -104,8 +109,8 @@ public class ViajeController extends AbsController {
 		Usuario usuario = repositoryUsuarios.findById(idUsuario).get();
 		v.setUsuario(usuario);
 		v = repository.save(v);
+		System.out.println(v);
 
-		System.out.println(idUsuario);
 		return ResponseEntity
 				.status(Response.SC_CREATED)
 				.body(v);

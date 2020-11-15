@@ -183,11 +183,6 @@ document.addEventListener("DOMContentLoaded",()=> {
     });
     let currentType;
 
-    document.querySelector("#btn-crear-viaje")
-    .addEventListener("click",crearViaje);
-
-    
-
     getViajes(cargarAnimaciones);
 
     Helper.start();
@@ -276,11 +271,7 @@ document.addEventListener("DOMContentLoaded",()=> {
     function planToJson(inputs) {
         let json = {};
         for (let i = 0; i < inputs.length; i++){
-            let value = inputs[i].value;
-            if (inputs[i].getAttribute("type") == "datetime-local") {
-                value = value.replace("T", " ");
-            }
-            json[inputs[i].getAttribute("name")] = value;
+            json[inputs[i].getAttribute("name")] = inputs[i].value;
         }
         return json;
     }
@@ -407,8 +398,8 @@ document.addEventListener("DOMContentLoaded",()=> {
     async function crearViaje() {
         let nombreViaje = document.querySelector("#nombre-viaje").value;
         let descripcion = document.querySelector("#descripcion").value;
-        let fechaInicio = document.querySelector("#fecha-inicio").value.replace("T", " ");
-        let fechaFin = document.querySelector("#fecha-fin").value.replace("T", " ");
+        let fechaInicio = document.querySelector("#fecha-inicio").value;
+        let fechaFin = document.querySelector("#fecha-fin").value;
         let ciudadDestino = document.querySelector("#ciudad-destino").value;
 
         let json = {
@@ -432,7 +423,7 @@ document.addEventListener("DOMContentLoaded",()=> {
     }
 
     function getViajes(callback) {
-        fetch(uri + "usuarios/viajes"/*?criterio=pendientes*/,
+        fetch(uri + "usuarios/viajes?criterio=realizados",
         {
             "method": "GET",
             "headers": {

@@ -1,5 +1,7 @@
 package edu.isistan.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.catalina.connector.Response;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import edu.isistan.model.Plan;
 import edu.isistan.model.Viaje;
@@ -74,13 +77,64 @@ public class PlanController extends AbsController {
 	 * @return 200 y los planes
 	 */
 	@GetMapping("/planes")
-    public ResponseEntity<List<Plan>> getPlanesDelUsuario() {
+    public ResponseEntity<List<Plan>> getPlanesDelUsuario(
+    		@RequestParam(required = false) String zona,
+    		@RequestParam(required = false, name = "fechaInicio") String fechaInicioString,
+    		@RequestParam(required = false, name ="fechaFin") String fechaFinString,
+    		@RequestParam(required = false) String estado
+    		) {
+		
+		List<Plan> planes = null;
 		int idUsuario = getIdUsuarioDelToken();
+		
+		boolean porZona = zona != null;
+		boolean porFecha = fechaInicioString != null && fechaFinString != null;
+		boolean porEstado = estado != null;
+		
+		if (porFecha) {
+			LocalDateTime fechaInicio = getFechaString(fechaInicioString);
+			LocalDateTime fechaFin = getFechaString(fechaFinString);
+			
+			if (fechaInicio == null || fechaFin == null) {
+				return ResponseEntity
+						.status(Response.SC_BAD_REQUEST)
+						.build();
+			} else {
+				planes = repository.getPlanesDelUsuarioPorFecha(idUsuario,fechaInicio,fechaFin);
+			}
+		}
+		
+		if (porZona) {
+			planes = repository.getPlanesDelUsuarioPorZona(idUsuario, zona);
+		}
+		
+		if (porEstado) {
+			LocalDateTime now = LocalDateTime.now();
+			if (estado.equals("pendientes")) {
+				planes = repository.getPlanesDelUsuarioPendientes(idUsuario,now);
+			} else if (estado.equals("realizados")) {
+				planes = repository.getPlanesDelUsuarioRealizados(idUsuario,now);
+			}
+		}
+		
+		if (planes == null) {
+			planes = repository.getPlanesDelUsuario(idUsuario);
+		}
+		
 		return ResponseEntity
 				.status(Response.SC_OK)
-				.body(repository.getPlanesDelUsuario(idUsuario));
+				.body(planes);
     }
 	
+	private LocalDateTime getFechaString(String str) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		try {
+			return LocalDateTime.parse(str, formatter);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	/**
 	 * Obtener un plan por id
 	 * @param id del plan que se quiere obtener

@@ -2,9 +2,6 @@ package edu.isistan.model.planes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import org.springframework.util.StringUtils;
-
 import edu.isistan.model.Plan;
 
 @Entity

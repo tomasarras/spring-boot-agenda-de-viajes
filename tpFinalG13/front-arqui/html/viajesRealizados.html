@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../js/Vue.js"></script>
-    <script type="module" src="../js/viajes.js"></script>
+    <script type="module" src="../js/viajesRealizados.js"></script>
 </head>
 <body>
 
@@ -26,9 +26,6 @@
                 <div class="navbar-nav ml-auto" id="header-nav">
     
                     <a class="nav-item nav-link active" href="#">Inicio</a>
-                    <a class="nav-item nav-link active" href="../html/reportePlanes.html">Reporte de planes</a>
-                    <a class="nav-item nav-link active" href="../html/viajesRealizados.html">Viajes Realizados</a>
-                    <a class="nav-item nav-link active" href="../html/admin.html">Admin</a>
                     <div id="logout">
                         <div class="log nav-item btn btn-danger" v-if="logeado">
                             <img src="../img/newuser.png">
@@ -58,44 +55,6 @@
         
         <div class="container flex">
             <ul class="acordeon" id="data">
-                <li>
-                    <div class="title" v-on:click="abrirLista">
-                        <h2 class="display-flex align-center">
-                            <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g> </svg>
-                            Crear nuevo viaje
-                        </h2>
-                    </div>
-                    <div class="content width-95 shadow-">
-                        <div class="padding-5 text-black">
-                            <div class="form-group">
-                                <label for="nombre-viaje">Nombre del viaje</label><br>
-                                <input type="text" id="nombre-viaje" class="form-control" name="nombre-viaje" placeholder="Nombre del viaje">
-                            </div>
-
-                            <div class="form-group width-24">
-                                <label for="fecha-inicio">Fecha de inicio</label><br>
-                                <input type="datetime-local" id="fecha-inicio" class="form-control" name="fecha-inicio" placeholder="Fecha de inicio">
-                            </div>
-                            
-                            <div class="form-group width-24">
-                                <label for="fecha-fin">Fecha de fin</label><br>
-                                <input type="datetime-local" id="fecha-fin" class="form-control" name="fecha-fin" placeholder="Fecha de fin">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ciudad-destino">Ciudad de destino</label><br>
-                                <input type="text" id="ciudad-destino" class="form-control" name="ciudad-destino" placeholder="Ciudad de destino">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="descripcion">Descripcion</label><br>
-                                <textarea type="text" id="descripcion" class="margen-abajo form-control" name="descripcion" placeholder="Descripcion" rows="3"></textarea>
-                            </div>
-
-                            <button class="btn btn-primary btn-ancho" id="btn-crear-viaje">Crear viaje</button>
-                        </div>
-                    </div>
-                </li>
 
                 <li v-for="viaje in viajes">
                     <div class="title margen-arriba flex-row space-between" v-on:click="abrirLista">
@@ -110,8 +69,7 @@
                             <p>{{viaje.descripcion}}</p>
                             <p class="margen-abajo">El viaje con destino a {{viaje.ciudadDestino}} se realizara el {{formatDate(viaje.fechaInicio)}} hasta el {{formatDate(viaje.fechaFin)}}</p>
 
-                            <div class="botones-plan margen-abajo">
-                                <button class="btn btn-primary width-45 btn-agregar-plan animation-back" v-bind:name="viaje.id">Agregar plan</button>
+                            <div class="botones-plan centrar-contenido">
                                 <button class="btn btn-primary width-45 btn-verplanes" v-bind:name="viaje.id">Ver planes de este viaje</button>
                             </div>
 

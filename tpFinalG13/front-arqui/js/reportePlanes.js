@@ -2,12 +2,18 @@ import Helper from "./Helper.js";
 
 document.addEventListener("DOMContentLoaded",()=> {
     const uri = "http://localhost:8080/";
+    let pendientes = false;
+    let realizados = false;
+    let zona = false;
+    let fecha = false;
+
     let data = new Vue({
         el: "#data",
         data: {
-            planes : [],
-            viajes : [],
-            planesActivos: []
+            planesRealizados : [],
+            planesPendientes : [],
+            planesZona : [],
+            planesFecha : [],
         },
         methods: {
             borrarViaje : async function (event) {
@@ -183,34 +189,150 @@ document.addEventListener("DOMContentLoaded",()=> {
     });
     let currentType;
 
-    document.querySelector("#btn-crear-viaje")
-    .addEventListener("click",crearViaje);
-
-    
-
-    getViajes(cargarAnimaciones);
 
     Helper.start();
 
-    function cargarAnimaciones() {
-        cargarListaAnimada();
-        cargarBtnsVerPlanes();
-        ocultarTipoPlanes();
-        mostrarTipoPlanesSelect();
-        btnsExpandirSelect();
-        btnsCrearPlan();
+    document.querySelector("#select-tipo-reporte")
+    .addEventListener("change",seleccionarReporte);
+
+    document.querySelector("#btn-reporte-zona")
+    .addEventListener("click",getPlanesPorZona);
+
+    document.querySelector("#btn-reporte-fecha")
+    .addEventListener("click",getPlanesPorFecha);
+
+    function getPlanesPorZona() {
+        let zona = document.querySelector("#ciudad").value;
+        let planesUl = document.querySelector("#planes-zona");
+        planesUl.classList.remove("oculto");
+        let planesUls = document.querySelectorAll("reportePlan");
+
+        for (let i = 0; i < planesUls.length; i++) {
+            planesUls[i].classList.add("oculto");
+        }
+
+        fetch(uri + "usuarios/viajes/planes?zona=" + zona,
+        {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": Helper.getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(planes => {
+            data.planesZona = planes;
+        })
+        .catch(r => {
+            Helper.quitarToken();
+        });
     }
 
-    function btnsExpandirSelect() {
-        let btns = document.querySelectorAll(".btn-agregar-plan");
-        for (let i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click",()=>{
-                let selectPlan = btns[i].parentElement.nextElementSibling;
-                btns[i].classList.add("oculto")
-                selectPlan.classList.remove("oculto");
-                btns[i].parentElement.classList.add("centrar-contenido");
-            });
+    function getPlanesPorFecha() {
+        let fechaInicio = document.querySelector("#fechaInicio").value;
+        let fechaFin = document.querySelector("#fechaFin").value;
+
+        let planesUl = document.querySelector("#planes-fecha");
+        planesUl.classList.remove("oculto");
+        let planesUls = document.querySelectorAll("reportePlan");
+
+        for (let i = 0; i < planesUls.length; i++) {
+            planesUls[i].classList.add("oculto");
         }
+
+        fetch(uri + "usuarios/viajes/planes?fechaInicio=" + fechaInicio + "&fechaFin="+fechaFin,
+        {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": Helper.getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(planes => {
+            data.planesFecha = planes;
+        })
+        .catch(r => {
+            Helper.quitarToken();
+        });
+    }
+
+    function seleccionarReporte() {
+        let select = document.querySelector("#select-tipo-reporte");
+
+        switch (select.value) {
+            case "pendientes" : {
+                if (!pendientes) {
+                    getPlanesPendientes();
+                }
+
+                let planesPendientes = document.querySelector("#planesPendientes");
+                show(planesPendientes);
+                break;
+            }
+            case "realizados" : {
+                if (!realizados) {
+                    getPlanesRealizados();
+                }
+                let planesRealizados = document.querySelector("#planesRealizados");
+                show(planesRealizados);
+                break;
+            }
+            case "zona" : {
+                let planesZona = document.querySelector("#planesZona");
+                show(planesZona);
+                break;
+            }
+            case "fecha" : {
+                let planesFecha = document.querySelector("#planesFecha");
+                show(planesFecha);
+                break;
+            }
+        }
+    }
+
+    function getPlanesPendientes() {
+        fetch(uri + "usuarios/viajes/planes?estado=pendientes",
+        {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": Helper.getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(planes => {
+            data.planesPendientes = planes;
+        })
+        .catch(r => {
+            Helper.quitarToken();
+        });
+    }
+
+    function getPlanesRealizados() {
+        fetch(uri + "usuarios/viajes/planes?estado=realizados",
+        {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": Helper.getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(planes => {
+            data.planesRealizados = planes;
+        })
+        .catch(r => {
+            Helper.quitarToken();
+        });
+    }
+
+    function show(reporte) {
+        let reportes = document.querySelectorAll(".reportePlan");
+        for (let i = 0; i < reportes.length; i++) {
+            reportes[i].classList.add("oculto");
+        }
+        reporte.classList.remove("oculto");
     }
 
     async function borrarPlan(id) {
@@ -276,11 +398,7 @@ document.addEventListener("DOMContentLoaded",()=> {
     function planToJson(inputs) {
         let json = {};
         for (let i = 0; i < inputs.length; i++){
-            let value = inputs[i].value;
-            if (inputs[i].getAttribute("type") == "datetime-local") {
-                value = value.replace("T", " ");
-            }
-            json[inputs[i].getAttribute("name")] = value;
+            json[inputs[i].getAttribute("name")] = inputs[i].value;
         }
         return json;
     }
@@ -407,8 +525,8 @@ document.addEventListener("DOMContentLoaded",()=> {
     async function crearViaje() {
         let nombreViaje = document.querySelector("#nombre-viaje").value;
         let descripcion = document.querySelector("#descripcion").value;
-        let fechaInicio = document.querySelector("#fecha-inicio").value.replace("T", " ");
-        let fechaFin = document.querySelector("#fecha-fin").value.replace("T", " ");
+        let fechaInicio = document.querySelector("#fecha-inicio").value;
+        let fechaFin = document.querySelector("#fecha-fin").value;
         let ciudadDestino = document.querySelector("#ciudad-destino").value;
 
         let json = {
@@ -432,7 +550,7 @@ document.addEventListener("DOMContentLoaded",()=> {
     }
 
     function getViajes(callback) {
-        fetch(uri + "usuarios/viajes"/*?criterio=pendientes*/,
+        fetch(uri + "usuarios/viajes?criterio=pasados",
         {
             "method": "GET",
             "headers": {

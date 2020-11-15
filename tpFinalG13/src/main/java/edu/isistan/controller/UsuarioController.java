@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import edu.isistan.config.TokenConfig;
 import edu.isistan.model.Usuario;
+import edu.isistan.reportes.ReporteUsuario;
 import edu.isistan.repository.UsuarioRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -62,8 +65,8 @@ public class UsuarioController {
 		repository.save(usuario);
 		
 		String data = Integer.toString(usuario.getId());
-		
-		String token = getJWTToken(data);
+		boolean admin = false;
+		String token = getJWTToken(data,admin);
 		usuario.setToken(token);
 		
 		return ResponseEntity
@@ -90,7 +93,7 @@ public class UsuarioController {
 		if (bCryptPasswordEncoder.matches(u.getPassword(), usuario.getPassword())) {
 			String data = Integer.toString(usuario.getId());
 			
-			usuario.setToken(getJWTToken(data));
+			usuario.setToken(getJWTToken(data,usuario.isAdmin()));
 			return ResponseEntity
 					.status(Response.SC_OK)
 					.body(usuario);
@@ -103,16 +106,32 @@ public class UsuarioController {
 		
 	}
 	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@GetMapping
+	public ResponseEntity<List<ReporteUsuario>> getUsuariosPorMasViajesRealizados() {
+		System.out.println();
+		System.out.println();
+		
+		return ResponseEntity
+				.status(Response.SC_OK)
+				.body(repository.getUsuariosConMasViajes());
+	}
+
+	
 	private boolean checkUsuarioValido(Usuario usuario) {
 		return !StringUtils.isEmpty(usuario.getEmail())
 				&& !StringUtils.isEmpty(usuario.getPassword())
 				&& !StringUtils.isEmpty(usuario.getUsername());
 	}
 
-	private String getJWTToken(String data) {
+	private String getJWTToken(String data,boolean admin) {
 		String secretKey = TokenConfig.SECRET;
+		String roles = "ROLE_USER";
+		if (admin) {
+			roles += ",ROLE_ADMIN";
+		}
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-				.commaSeparatedStringToAuthorityList("ROLE_USER");
+				.commaSeparatedStringToAuthorityList(roles);
 		
 		String token = Jwts
 				.builder()

@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,6 +27,9 @@ public class Usuario {
 	private String password;
 	@Column
 	private String email;
+	@Column
+	@JsonIgnore
+	private boolean admin;
 	@Column
 	private String username;
 	@Transient
@@ -71,12 +76,21 @@ public class Usuario {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public boolean isAdmin() {
+		return this.admin;
+	}
+	
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", password=" + password + ", email=" + email + ", username=" + username
 				+ ", token=" + token + "]";
 	}
+	
 	
 	
 	
