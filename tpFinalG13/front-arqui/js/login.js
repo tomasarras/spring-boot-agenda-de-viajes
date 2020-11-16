@@ -6,10 +6,12 @@ document.addEventListener("DOMContentLoaded",()=> {
 
     let btnIniciar = document.querySelector("#btn-iniciar");
 
-    btnIniciar.addEventListener("click", iniciar);
+    btnIniciar.addEventListener("click", (e)=>{
+        e.preventDefault();
+        Helper.comprobarInputsVacios(iniciar,btnIniciar);
+    });
 
-    async function iniciar(event) {
-        event.preventDefault();
+    async function iniciar() {
         let password = document.querySelector("#password");
         let userName = document.querySelector("#username").value;
 
@@ -31,12 +33,19 @@ document.addEventListener("DOMContentLoaded",()=> {
             location.href = "../html/viajes.html";
             
         } else {
-            let error = await response.text();
-            if (error == '"El email ya existe"')
-                errorEmail();
-            else if (error == '"El usuario ya existe"')
-                errorUsuario();
+            let error = document.querySelector("#incorrectos");
+            error.classList.remove("oculto");
+            let inputs = document.querySelectorAll("input");
+            inputs.forEach(input =>{
+                input.addEventListener("focus",()=>{
+                    error.classList.add("oculto");
+                });
+            });
         }
+    }
+
+    if (Helper.sesion.logeado) {
+        location.href = "html/viajes.html";
     }
 
 });

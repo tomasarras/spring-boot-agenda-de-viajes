@@ -229,8 +229,8 @@ document.addEventListener("DOMContentLoaded",()=> {
     }
 
     function getPlanesPorFecha() {
-        let fechaInicio = document.querySelector("#fechaInicio").value;
-        let fechaFin = document.querySelector("#fechaFin").value;
+        let fechaInicio = document.querySelector("#fechaInicio").value.replace("T", " ");
+        let fechaFin = document.querySelector("#fechaFin").value.replace("T", " ");
 
         let planesUl = document.querySelector("#planes-fecha");
         planesUl.classList.remove("oculto");
@@ -253,7 +253,8 @@ document.addEventListener("DOMContentLoaded",()=> {
             data.planesFecha = planes;
         })
         .catch(r => {
-            Helper.quitarToken();
+            console.log(r)
+            //Helper.quitarToken();
         });
     }
 

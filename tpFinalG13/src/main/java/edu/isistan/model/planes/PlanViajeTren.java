@@ -9,9 +9,9 @@ import edu.isistan.model.Plan;
 
 @Entity
 public class PlanViajeTren extends Plan {
-	@Column
+	@Column(nullable = false)
 	private Integer asiento;
-	@Column
+	@Column(nullable = false)
 	private String estacion;
 	public PlanViajeTren() {
 		super();

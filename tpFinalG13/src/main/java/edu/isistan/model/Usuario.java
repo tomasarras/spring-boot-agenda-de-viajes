@@ -22,15 +22,15 @@ public class Usuario {
 	@Column(name = "id_usuario", nullable = false)
 	private Integer id;
 	@ApiModelProperty(notes = "Contraseña del usuario",name = "password",required = true,value = "password")
-	@Column
+	@Column(nullable = false)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
-	@Column
+	@Column(nullable = false)
 	private String email;
-	@Column
+	@Column(nullable = false)
 	@JsonIgnore
 	private boolean admin;
-	@Column
+	@Column(nullable = false)
 	private String username;
 	@Transient
 	private String token;

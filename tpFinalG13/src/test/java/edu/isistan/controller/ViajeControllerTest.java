@@ -242,7 +242,7 @@ public class ViajeControllerTest {
 		String viajePost = "{"
 				+ "\"nombre\" : \"nombreViaje\","
 				+ "\"ciudadDestino\" : \"ciudadDestino\","
-				+ "\"fechaInicio\" : \"2020-11-14 01:01\","
+				+ "\"fechaInicio\" : \"2020-11-13 01:01\","
 				+ "\"fechaFin\" : \"2020-11-14 01:01\","
 				+ "\"descripcion\" : \"descripcion\""
 				+ "}";
@@ -259,12 +259,29 @@ public class ViajeControllerTest {
 		assertEquals("nombreViaje",vRepository.getNombre());
 		assertEquals("ciudadDestino",viaje.getCiudadDestino());
 		assertEquals("ciudadDestino",vRepository.getCiudadDestino());
-		assertEquals("2020-11-14T01:01",viaje.getFechaInicio().toString());
-		assertEquals("2020-11-14T01:01",vRepository.getFechaInicio().toString());
+		assertEquals("2020-11-13T01:01",viaje.getFechaInicio().toString());
+		assertEquals("2020-11-13T01:01",vRepository.getFechaInicio().toString());
 		assertEquals("2020-11-14T01:01",viaje.getFechaFin().toString());
 		assertEquals("2020-11-14T01:01",vRepository.getFechaFin().toString());
 		assertEquals("descripcion",viaje.getDescripcion());
 		assertEquals("descripcion",vRepository.getDescripcion());
+	}
+	
+	@Test
+	public void crearViajeConFinMayorAlInicioTest() {
+		String viajePost = "{"
+				+ "\"nombre\":\"nombre\","
+				+ "\"descripcion\":\"descripcion\","
+				+ "\"fechaInicio\":\"2020-11-15 15:43\","
+				+ "\"fechaFin\":\"2020-11-10 15:43\","
+				+ "\"ciudadDestino\":\"ciudad\""
+				+ "}";
+		
+		headerToken.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<String>(viajePost,headerToken);
+		ResponseEntity<String> response = testRestTemplate.exchange("/usuarios/viajes",HttpMethod.POST,request, String.class);
+		
+		assertEquals(Response.SC_BAD_REQUEST,response.getStatusCodeValue());
 	}
 	
 	@Test
@@ -376,7 +393,7 @@ public class ViajeControllerTest {
 		String viajePut = "{"
 				+ "\"nombre\" : \"nombre modificado\","
 				+ "\"ciudadDestino\" : \"ciudad modificada\","
-				+ "\"fechaInicio\" : \"2020-11-14 01:01\","
+				+ "\"fechaInicio\" : \"2020-11-13 01:01\","
 				+ "\"fechaFin\" : \"2020-11-14 01:01\","
 				+ "\"descripcion\" : \"descripcion modificada\""
 				+ "}";
@@ -393,8 +410,8 @@ public class ViajeControllerTest {
 		assertEquals("nombre modificado",vRepository.getNombre());
 		assertEquals("ciudad modificada",viaje.getCiudadDestino());
 		assertEquals("ciudad modificada",vRepository.getCiudadDestino());
-		assertEquals("2020-11-14T01:01",viaje.getFechaInicio().toString());
-		assertEquals("2020-11-14T01:01",vRepository.getFechaInicio().toString());
+		assertEquals("2020-11-13T01:01",viaje.getFechaInicio().toString());
+		assertEquals("2020-11-13T01:01",vRepository.getFechaInicio().toString());
 		assertEquals("2020-11-14T01:01",viaje.getFechaFin().toString());
 		assertEquals("2020-11-14T01:01",vRepository.getFechaFin().toString());
 		assertEquals("descripcion modificada",viaje.getDescripcion());
@@ -407,7 +424,7 @@ public class ViajeControllerTest {
 		String viajePut = "{"
 				+ "\"nombre\" : \"nombre modificado\","
 				+ "\"ciudadDestino\" : \"ciudad modificada\","
-				+ "\"fechaInicio\" : \"2020-11-14 01:01\","
+				+ "\"fechaInicio\" : \"2020-11-13 01:01\","
 				+ "\"fechaFin\" : \"2020-11-14 01:01\","
 				+ "\"descripcion\" : \"descripcion modificada\""
 				+ "}";
@@ -425,7 +442,7 @@ public class ViajeControllerTest {
 		String viajePut = "{"
 				+ "\"nombre\" : \"nombre modificado\","
 				+ "\"ciudadDestino\" : \"ciudad modificada\","
-				+ "\"fechaInicio\" : \"2020-11-14 01:01\","
+				+ "\"fechaInicio\" : \"2020-11-13 01:01\","
 				+ "\"fechaFin\" : \"2020-11-14 01:01\","
 				+ "\"descripcion\" : \"descripcion modificada\""
 				+ "}";

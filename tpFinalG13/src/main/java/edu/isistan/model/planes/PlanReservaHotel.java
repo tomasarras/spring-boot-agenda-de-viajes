@@ -7,9 +7,9 @@ import edu.isistan.model.Plan;
 
 @Entity
 public class PlanReservaHotel extends Plan {
-	@Column
+	@Column(nullable = false)
 	private String habitacion;
-	@Column
+	@Column(nullable = false)
 	private String direccion;
 	public PlanReservaHotel() {
 		super();

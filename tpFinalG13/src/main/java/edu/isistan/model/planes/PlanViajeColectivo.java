@@ -6,7 +6,7 @@ import edu.isistan.model.Plan;
 
 @Entity
 public class PlanViajeColectivo extends Plan {
-	@Column
+	@Column(nullable = false)
 	private Integer asiento;
 
 	public int getAsiento() {

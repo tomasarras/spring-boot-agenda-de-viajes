@@ -40,14 +40,14 @@ public class Plan {
 	@Column(name = "id_plan", nullable = false)
 	private Integer id;
 	@ApiModelProperty(notes = "Nombre del plan",name = "nombre",required = true,value = "nombre_plan")
-	@Column(name = "nombre_plan")
+	@Column(name = "nombre_plan", nullable = false)
 	private String nombre;
-	@Column
+	@Column(nullable = false)
 	private String compania;
-	@Column(name = "fecha_inicio")
+	@Column(name = "fecha_inicio", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaInicio;
-	@Column(name = "fecha_fin")
+	@Column(name = "fecha_fin", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaFin;
 	@JsonIgnore

@@ -127,7 +127,7 @@ public class PlanController extends AbsController {
     }
 	
 	private LocalDateTime getFechaString(String str) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		try {
 			return LocalDateTime.parse(str, formatter);
 		} catch (Exception e) {

@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import org.springframework.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -39,7 +42,6 @@ public class Viaje {
 	private String ciudadDestino;
 	@Column(name = "fecha_inicio", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	/*@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)*/
 	private LocalDateTime fechaInicio;
 	@Column(name = "fecha_fin", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -52,8 +54,8 @@ public class Viaje {
 			String inicio = this.fechaInicio.toString();
 			String fin = this.fechaFin.toString();
 			
-			int compare = inicio.compareTo(fin);
-			if (compare == 1) {
+			boolean valido = (inicio.compareTo(fin)) < 0;
+			if (!valido) {
 				return false;
 			}
 			

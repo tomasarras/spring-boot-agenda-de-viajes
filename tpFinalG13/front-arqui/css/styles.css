@@ -1,10 +1,16 @@
 footer {
     border-radius: 15px 15px 0 0;
+    position: relative;
+    bottom: 0;
 }
 
-section.registro {
+section.registro, section.login {
     width: 30vw;
     margin-right: 10%;
+}
+
+section.login {
+    margin-bottom: 10%;
 }
 
 section.viajes {
@@ -175,13 +181,16 @@ button.accordion:hover, button.accordion.is-open {
 
 body {
     background-image: url(../img/fondo.jpg);
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-clip: border-box;
-    background-origin: padding-box;
-    background-size: auto auto;
-    background-size: cover;
+    background-size: 100vw 100vh;
+}
+
+#link-login {
+    margin: 0 3%;
+}
+
+.navbar-expand-lg .navbar-nav{
+    justify-content: flex-end;
+    width: 100%;
 }
 
 .navbar-light .navbar-nav .nav-link.active,
@@ -294,6 +303,12 @@ button.accordion {
     color: #444;
     cursor: pointer;
     transition: background-color 0.2s linear;
+}
+
+.invalid-rojo {
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
 }
 
 button.accordion:after {

@@ -14,7 +14,7 @@
 
     <header class="container-fluid bg-inverse fixed-top bg-dark text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar navbar-dark bg-dark container">
-            <a class="navbar-brand titulo" href="#">Entrega final</a>
+            <a class="navbar-brand titulo" href="../html/viajes.html">Entrega final</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -25,10 +25,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav ml-auto" id="header-nav">
     
-                    <a class="nav-item nav-link active" href="#">Inicio</a>
-                    <a class="nav-item nav-link active" href="../html/reportePlanes.html">Reporte de planes</a>
-                    <a class="nav-item nav-link active" href="../html/viajesRealizados.html">Viajes Realizados</a>
-                    <a class="nav-item nav-link active" href="../html/admin.html">Admin</a>
+                    <a v-if="logeado" class="nav-item nav-link active" href="../html/reportePlanes.html">Reporte de planes</a>
+                    <a v-if="logeado" class="nav-item nav-link active" href="../html/viajesRealizados.html">Viajes realizados</a>
+                    <a v-if="admin" class="nav-item nav-link active" href="../html/admin.html">Admin</a>
                     <div id="logout">
                         <div class="log nav-item btn btn-danger" v-if="logeado">
                             <img src="../img/newuser.png">
@@ -36,7 +35,7 @@
                         </div>
                     </div>
     
-                        <a href="../html/login.html" v-if="!logeado">
+                        <a href="../html/login.html" v-if="!logeado" id="link-login">
                             <div class="log nav-item btn btn-danger" id="btn-login">
                                 <img src="../img/lock.png">
                                 Login
@@ -54,7 +53,7 @@
     </header>
 
     <section id="reporte-carreras" class="bg-dark borde grande margen">
-        <h1 class="centrar-contenido margen-abajo blanco">Agenda de viajes</h1>
+        <h1 class="centrar-contenido margen-abajo blanco">Agenda de viajes: viajes pendientes</h1>
         
         <div class="container flex">
             <ul class="acordeon" id="data">
@@ -65,34 +64,42 @@
                             Crear nuevo viaje
                         </h2>
                     </div>
-                    <div class="content width-95 shadow-">
-                        <div class="padding-5 text-black">
+                    <div class="content width-95 shadow-" id="list-crear-viaje">
+                        <div class="padding-5 text-black completar-campos">
                             <div class="form-group">
                                 <label for="nombre-viaje">Nombre del viaje</label><br>
-                                <input type="text" id="nombre-viaje" class="form-control" name="nombre-viaje" placeholder="Nombre del viaje">
+                                <input type="text" id="nombre-viaje" class="form-control campo-vacio campo-viaje" name="nombre" placeholder="Nombre del viaje">
+                                <div class="invalid-feedback">El nombre del viaje no puede quedar vacio</div>
                             </div>
-
+                            
                             <div class="form-group width-24">
                                 <label for="fecha-inicio">Fecha de inicio</label><br>
-                                <input type="datetime-local" id="fecha-inicio" class="form-control" name="fecha-inicio" placeholder="Fecha de inicio">
+                                <input type="datetime-local" id="fecha-inicio" class="form-control campo-vacio campo-viaje" name="fechaInicio" placeholder="Fecha de inicio">
+                                <div class="invalid-feedback">La fecha de inicio del viaje no puede quedar vacia</div>
+                                <div id="fecha-inicio-incorrecta" class="invalid oculto invalid-rojo">La fecha de inicio no puede estar despues que la fecha de fin</div>
                             </div>
                             
                             <div class="form-group width-24">
                                 <label for="fecha-fin">Fecha de fin</label><br>
-                                <input type="datetime-local" id="fecha-fin" class="form-control" name="fecha-fin" placeholder="Fecha de fin">
+                                <input type="datetime-local" id="fecha-fin" class="form-control campo-vacio campo-viaje" name="fechaFin" placeholder="Fecha de fin">
+                                <div class="invalid-feedback">La fecha de fin del viaje no puede quedar vacia</div>
                             </div>
 
                             <div class="form-group">
                                 <label for="ciudad-destino">Ciudad de destino</label><br>
-                                <input type="text" id="ciudad-destino" class="form-control" name="ciudad-destino" placeholder="Ciudad de destino">
+                                <input type="text" id="ciudad-destino" class="form-control campo-vacio campo-viaje" name="ciudadDestino" placeholder="Ciudad de destino">
+                                <div class="invalid-feedback">La ciudad de destino del viaje no puede quedar vacia</div>
                             </div>
 
                             <div class="form-group">
                                 <label for="descripcion">Descripcion</label><br>
-                                <textarea type="text" id="descripcion" class="margen-abajo form-control" name="descripcion" placeholder="Descripcion" rows="3"></textarea>
+                                <textarea type="text" id="descripcion" class="margen-abajo form-control campo-vacio campo-viaje" name="descripcion" placeholder="Descripcion" rows="3"></textarea>
+                                <div class="invalid-feedback">La descripcion del viaje no puede quedar vacia</div>
                             </div>
-
-                            <button class="btn btn-primary btn-ancho" id="btn-crear-viaje">Crear viaje</button>
+                            <div class="botones-plan margen-abajo">
+                                <button class="btn btn-primary btn-ancho margen-der comprobar-campos-vacios" id="btn-crear-viaje">Crear viaje</button>
+                                <button class="btn btn-primary btn-ancho" id="btn-importar-viaje">Importar viaje</button>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -107,7 +114,7 @@
                     </div>
                     <div class="content width-95 shadow-">
                         <div class="padding-5 text-black">
-                            <p>{{viaje.descripcion}}</p>
+                            <p>Descripcion del viaje: {{viaje.descripcion}}</p>
                             <p class="margen-abajo">El viaje con destino a {{viaje.ciudadDestino}} se realizara el {{formatDate(viaje.fechaInicio)}} hasta el {{formatDate(viaje.fechaFin)}}</p>
 
                             <div class="botones-plan margen-abajo">
@@ -128,174 +135,204 @@
 
 
                                 <div class="tipos-de-planes">
-                                    <div class="tipo-plan" value="reservaHotel">
+                                    <div class="tipo-plan completar-campos" value="reservaHotel">
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
-                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                            <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                                            <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <label for="compania">Compañia</label>
-                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                            <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                                            <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+                                            
                                         </div>
 
                                         <div class="form-group width-24">
                                             <label for="fechaInicio">Fecha de inicio</label>
-                                            <input type="datetime-local" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                            <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                                            <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
                                         </div>
                 
                                         <div class="form-group width-24">
                                             <label for="fechaFin">Fecha de fin</label>
-                                            <input type="datetime-local" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                            <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                                            <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="habitacion">Habitacion</label>
-                                            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
+                                            <input type="text" name="habitacion" class="form-control campo-vacio" placeholder="Habitacion">
+                                            <div class="invalid-feedback">La habitacion no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="direccion">Direccion</label>
-                                            <input type="text" name="direccion" class="form-control" placeholder="Direccion">
+                                            <input type="text" name="direccion" class="form-control campo-vacio" placeholder="Direccion">
+                                            <div class="invalid-feedback">La direccion no puede quedar vacia</div>
                                         </div>
                                     </div>
 
-                                    <div class="tipo-plan" value="viajeColectivo">
+                                    <div class="tipo-plan completar-campos" value="viajeColectivo">
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
-                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                            <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                                            <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="compania">Compañia</label>
-                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                            <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                                            <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group width-24">
                                             <label for="fechaInicio">Fecha de inicio</label>
-                                            <input type="datetime-local" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                            <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                                            <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
                                         </div>
                 
                                         <div class="form-group width-24">
                                             <label for="fechaFin">Fecha de fin</label>
-                                            <input type="datetime-local" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                            <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                                            <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="asiento">Numero de asiento</label>
-                                            <input type="number" name="asiento" class="form-control" placeholder="Asiento">
+                                            <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                                            <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
                                         </div>
                                     </div>
 
-                                    <div class="tipo-plan" value="viajeTren">
+                                    <div class="tipo-plan completar-campos" value="viajeTren">
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
-                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                            <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                                            <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="compania">Compañia</label>
-                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                            <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                                            <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group width-24">
                                             <label for="fechaInicio">Fecha de inicio</label>
-                                            <input type="datetime-local" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                            <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                                            <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
                                         </div>
                 
                                         <div class="form-group width-24">
                                             <label for="fechaFin">Fecha de fin</label>
-                                            <input type="datetime-local" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                            <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                                            <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="asiento">Numero de asiento</label>
-                                            <input type="number" name="asiento" class="form-control" placeholder="Asiento">
+                                            <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                                            <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="estacion">Estacion de tren</label>
-                                            <input type="text" name="estacion" class="form-control" placeholder="Estacion">
+                                            <input type="text" name="estacion" class="form-control campo-vacio" placeholder="Estacion">
+                                            <div class="invalid-feedback">La estacion de tren no puede quedar vacio</div>
                                         </div>
                                     </div>
                                     
-                                    <div class="tipo-plan" value="vuelo">
+                                    <div class="tipo-plan completar-campos" value="vuelo">
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
-                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                            <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                                            <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="compania">Compañia</label>
-                                            <input type="text" name="compania" class="form-control" placeholder="Compania">
+                                            <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                                            <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group width-24">
                                             <label for="fechaInicio">Fecha de inicio</label>
-                                            <input type="datetime-local" name="fechaInicio" class="form-control" placeholder="Fecha de inicio">
+                                            <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                                            <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
                                         </div>
                 
                                         <div class="form-group width-24">
                                             <label for="fechaFin">Fecha de fin</label>
-                                            <input type="datetime-local" name="fechaFin" class="form-control" placeholder="Fecha de fin">
+                                            <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                                            <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="numeroVuelo">Numero de vuelo</label>
-                                            <input type="number" name="numeroVuelo" class="form-control" placeholder="Numero vuelo">
+                                            <input type="number" name="numeroVuelo" class="form-control campo-vacio" placeholder="Numero vuelo">
+                                            <div class="invalid-feedback">El numero de vuelo no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="aeropuertoSalida">Aeropuerto de salida</label>
-                                            <input type="text" name="aeropuertoSalida" class="form-control" placeholder="Aeropuerto">
+                                            <input type="text" name="aeropuertoSalida" class="form-control campo-vacio" placeholder="Aeropuerto">
+                                            <div class="invalid-feedback">El aeropuerto de salida no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="aeropuertoLlegada">Aeropuerto de llegada</label>
-                                            <input type="text" name="aeropuertoLlegada" class="form-control" placeholder="Aeropuerto de llegada">
+                                            <input type="text" name="aeropuertoLlegada" class="form-control campo-vacio" placeholder="Aeropuerto de llegada">
+                                            <div class="invalid-feedback">El aeropuerto de llegada no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="codigoReserva">Codigo de reserva</label>
-                                            <input type="number" name="codigoReserva" class="form-control" placeholder="Codigo de reserva">
+                                            <input type="number" name="codigoReserva" class="form-control campo-vacio" placeholder="Codigo de reserva">
+                                            <div class="invalid-feedback">El codigo de reserva no puede quedar vacio</div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="tiempoEscalas">Tiempo entre escalas</label>
+                                            <label for="tiempoEscalas">Tiempo entre escalas (opcional)</label>
                                             <input type="number" name="tiempoEscalas" class="form-control" placeholder="Tiempo entre escalas">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="aeronave">Aeronave</label>
-                                            <input type="text" name="aeronave" class="form-control" placeholder="Aeronave">
+                                            <input type="text" name="aeronave" class="form-control campo-vacio" placeholder="Aeronave">
+                                            <div class="invalid-feedback">La aeronave no puede quedar vacia</div>
                                         </div>
                                     </div>
 
                                 </div>
-                                <button class="btn btn-primary display-flex align-center btn-crear-plan oculto margen-arriba" v-bind:name="viaje.id">
-                                    <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g></svg>
-                                    Crear plan
-                                </button>
+                                <div>
+                                    <button class="btn btn-primary display-flex align-center btn-crear-plan oculto margen-arriba" v-bind:name="viaje.id">
+                                        <svg id="plus-icon" height="15.33333pt" viewBox="0 0 469.33333 469.33333" width="469.33333pt" xmlns="http://www.w3.org/2000/svg"><g fill="#4caf50"><path d="m437.332031 192h-405.332031c-17.664062 0-32 14.335938-32 32v21.332031c0 17.664063 14.335938 32 32 32h405.332031c17.664063 0 32-14.335937 32-32v-21.332031c0-17.664062-14.335937-32-32-32zm0 0"/><path d="m192 32v405.332031c0 17.664063 14.335938 32 32 32h21.332031c17.664063 0 32-14.335937 32-32v-405.332031c0-17.664062-14.335937-32-32-32h-21.332031c-17.664062 0-32 14.335938-32 32zm0 0"/></g></svg>
+                                        Crear plan
+                                    </button>
+                                    <button class="btn btn-primary oculto" id="btn-importar-hotel">Importar reserva de hotel</button>
+                                </div>
                             </div>
 
-                            <ul class="acordeon">
+                            <ul class="acordeon completar-campos">
                                 <li v-for="plan in planes" v-if="plan.idViaje == viaje.id">
                                     <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
                                         <h2 class="display-flex w-80 align-center margen-izq">
                                             <span class="nombre-plan">{{plan.nombre}}</span>
                                             <div class="form-group oculto input-plan">
-                                                <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                                                <input type="text" class="input-editar-nombre campo-vacio" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
                                             </div>
                                         </h2>
                                         
 
                                         <a href="javascript:void(0);" class="btns-borrar btns-editar-js margen-der" v-bind:name="plan.id" v-on:click="mostrarEditarPlan"><i class='far fa-edit icono icono btns-borrar'></i></a>
-                                        <a href="javascript:void(0);" class="btns-borrar btns-borrar-js" v-bind:name="plan.id"><i class="fa fa-trash-o rojo icono btns-borrar"></i></a>
+                                        <a href="javascript:void(0);" class="btns-borrar btns-borrar-js" v-bind:name="plan.id" v-on:click="borrarPlan"><i class="fa fa-trash-o rojo icono btns-borrar"></i></a>
                                     </div>
                                     <div class="content width-95 shadow-">
                                         <div class="padding-5">
                                             <ul v-bind:name="viaje.id">
-                                                <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                                <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre' && value != null" class="nombre" v-bind:name="plan.nombre">
                                                     <span v-if="key == 'type'">
                                                         <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
                                                         <div hidden></div>
@@ -304,21 +341,21 @@
                                                         <span>Fecha de inicio: {{formatDate(value)}}</span>
                                                         <div class="form-group oculto">
                                                             <label for="fechaInicio">Fecha de inicio</label>
-                                                            <input type="datetime-local" name="fechaInicio" class="form-control" v-bind:value="value">
+                                                            <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" v-bind:value="value">
                                                         </div>
                                                     </span>
                                                     <span v-if="key == 'fechaFin'">
                                                         <span>Fecha de fin: {{formatDate(value)}}</span>
                                                         <div class="form-group oculto">
                                                             <label for="fechaFin">Fecha de fin</label>
-                                                            <input type="datetime-local" name="fechaFin" class="form-control" v-bind:value="value">
+                                                            <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" v-bind:value="value">
                                                         </div>
                                                     </span>
                                                     <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
                                                         <span>{{getPrettyKey(key)}}: {{value}}</span>
                                                         <div class="form-group oculto">
                                                             <label v-bind:for="key">{{getPrettyKey(key)}}</label>
-                                                            <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                                            <input type="text" v-bind:name="key" class="form-control campo-vacio" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
                                                         </div>
                                                     </span>
                                                 </li>
@@ -339,6 +376,224 @@
             </ul>
         </div>
     </section>
+
+
+    <section id="overlay-viaje-realizado" class="overlay">
+        <div id="popup-viaje-realizado" class="popup">
+            
+            <div class="flex-end">
+                <a href="javascript:void(0);" class="btn-cerrar-popup btn-cerrar-popup-js">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+            
+            <h5 class="margen-abajo">Crear viaje</h5>
+            <div class="input-group mb-3 col">
+                <p>El viaje que intentas agregar tiene una fecha de finalizacion que ya paso, si lo agregas va a aparecer en "viajes realizados"</p>
+            </div>
+            <div class="botones-plan margen-abajo">
+                <button class="btn btn-primary btn-ancho margen-der" id="btn-confirmar-viaje">Agregar igualmente</button>
+                <button class="btn btn-primary btn-ancho btn-cerrar-popup-js">Cancelar</button>
+            </div>
+        </div>	
+    </section>
+
+    <section id="overlay-importar-viaje" class="overlay">
+        <div id="popup-importar-viaje" class="popup">
+            
+            <div class="flex-end">
+                <a href="javascript:void(0);" class="btn-cerrar-popup btn-cerrar-popup-js">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+            
+            <p>Selecciona el archivo generado por tu compañia de vuelo</p>
+            <input type="file" id="importar-vuelo" multiple size="50">
+            <p class="oculto margen-arriba">Se detecto el vuelo: <span class="negrita" id="nombre-vuelo-importar"></span></p>
+            <p class="oculto" id="error-importar-viaje">Error al intentar importar el archivo</p>
+
+            <div class="botones-plan margen-abajo oculto" id="btns-importar">
+                <button class="btn btn-primary btn-ancho margen-der" id="btn-confirmar-importar">Importar vuelo</button>
+                <button class="btn btn-primary btn-ancho btn-cerrar-popup-js">Cancelar</button>
+            </div>
+        </div>	
+    </section>
+
+
+
+    <div class="tipos-de-planes oculto" hidden>
+        <div class="tipo-plan" value="reservaHotel">
+            <div class="form-group completar-campos">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+                
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="habitacion">Habitacion</label>
+                <input type="text" name="habitacion" class="form-control campo-vacio" placeholder="Habitacion">
+                <div class="invalid-feedback">La habitacion no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Direccion</label>
+                <input type="text" name="direccion" class="form-control campo-vacio" placeholder="Direccion">
+                <div class="invalid-feedback">La direccion no puede quedar vacia</div>
+            </div>
+        </div>
+
+        <div class="tipo-plan completar-campos" value="viajeColectivo">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="asiento">Numero de asiento</label>
+                <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
+            </div>
+        </div>
+
+        <div class="tipo-plan completar-campos" value="viajeTren">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="asiento">Numero de asiento</label>
+                <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="estacion">Estacion de tren</label>
+                <input type="text" name="estacion" class="form-control campo-vacio" placeholder="Estacion">
+                <div class="invalid-feedback">La estacion de tren no puede quedar vacio</div>
+            </div>
+        </div>
+        
+        <div class="tipo-plan completar-campos" value="vuelo">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="numeroVuelo">Numero de vuelo</label>
+                <input type="number" name="numeroVuelo" class="form-control campo-vacio" placeholder="Numero vuelo">
+                <div class="invalid-feedback">El numero de vuelo no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="aeropuertoSalida">Aeropuerto de salida</label>
+                <input type="text" name="aeropuertoSalida" class="form-control campo-vacio" placeholder="Aeropuerto">
+                <div class="invalid-feedback">El aeropuerto de salida no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="aeropuertoLlegada">Aeropuerto de llegada</label>
+                <input type="text" name="aeropuertoLlegada" class="form-control campo-vacio" placeholder="Aeropuerto de llegada">
+                <div class="invalid-feedback">El aeropuerto de llegada no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="codigoReserva">Codigo de reserva</label>
+                <input type="number" name="codigoReserva" class="form-control campo-vacio" placeholder="Codigo de reserva">
+                <div class="invalid-feedback">El codigo de reserva no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="tiempoEscalas">Tiempo entre escalas (opcional)</label>
+                <input type="number" name="tiempoEscalas" class="form-control" placeholder="Tiempo entre escalas">
+            </div>
+
+            <div class="form-group">
+                <label for="aeronave">Aeronave</label>
+                <input type="text" name="aeronave" class="form-control campo-vacio" placeholder="Aeronave">
+                <div class="invalid-feedback">La aeronave no puede quedar vacia</div>
+            </div>
+        </div>
+
+    </div>
+
     
     <footer class="container-fluid bg-dark text-white py-3 text-center">
         <p>© 2015-2020 Integrador 4 | Design by Tomas Arras</p>
@@ -350,6 +605,8 @@
         </a>
     
     </footer>
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

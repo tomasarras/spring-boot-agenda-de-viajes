@@ -7,24 +7,23 @@ import edu.isistan.model.Plan;
 
 @Entity
 public class PlanVuelo extends Plan {
-	@Column(name = "numero_vuelo")
+	@Column(name = "numero_vuelo", nullable = false)
 	private Integer numeroVuelo;
-	@Column(name = "aeropuerto_salida")
+	@Column(name = "aeropuerto_salida", nullable = false)
 	private String aeropuertoSalida;
-	@Column(name = "aeropuerto_llegada")
+	@Column(name = "aeropuerto_llegada", nullable = false)
 	private String aeropuertoLlegada;
-	@Column(name = "codigo_reserva")
+	@Column(name = "codigo_reserva", nullable = false)
 	private int codigoReserva;
 	@Column(name = "tiempo_escalas")
 	private Long tiempoEscalas;
-	@Column
+	@Column(nullable = false)
 	private String aeronave;
 	
 	@Override
 	public boolean esValido() {
 		return !(!super.esValido() ||
 			numeroVuelo == null ||
-			tiempoEscalas == null ||
 			StringUtils.isEmpty(aeropuertoSalida) ||
 			StringUtils.isEmpty(aeropuertoLlegada) ||
 			StringUtils.isEmpty(aeronave));

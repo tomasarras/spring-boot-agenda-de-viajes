@@ -1,23 +1,23 @@
 export default class Helper {
 
+    static sesion = new Vue({
+        el: "#header-nav",
+        data: {
+            logeado : false,
+            admin : false
+        }
+    });
+
     static start() {
-        let sesion = new Vue({
-            el: "#header-nav",
-            data: {
-                logeado : false,
-                admin : false
-            }
-        });
-    
         let token = this.getToken();
 
         if (token) {
-            sesion.logeado = true;
+            Helper.sesion.logeado = true;
             let decode = this.parseJwt(token);
             let roles = decode.authorities;
             for (let i = 0; i < roles.length; i++) {
                 if (roles[i] == "ROLE_ADMIN") {
-                    sesion.admin = true;
+                    Helper.sesion.admin = true;
                 }
             }
         }
@@ -36,21 +36,37 @@ export default class Helper {
         return JSON.parse(jsonPayload);
     };
 
-    comprobarInputsVacios(event, callback) {
+    static comprobarInputsVacios(callback,btn) {
+        
+        let sonInputs = NodeList.prototype.isPrototypeOf(btn);
+        let inputs;
+
+        if (!sonInputs) {
+            let elementoEncontrado = false;
+            let elemento = btn;
+            while (!elementoEncontrado) {
+                elemento = elemento.parentElement;
+                if (elemento.classList.contains("completar-campos")) {
+                    elementoEncontrado = true;
+                }
+            }
+            
+            inputs = elemento.querySelectorAll(".campo-vacio");
+        } else {
+            inputs = btn;
+        }
+        
         let error = false;
 
-        let inputs = document.querySelectorAll(".campo-vacio");
-        inputs.forEach(input => {
-            input.classList.remove("is-invalid");
-            if (input.value == '') {
-                input.classList.add("is-invalid");
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].value == '') {
                 error = true;
-                event.preventDefault();
+                inputs[i].classList.add("is-invalid");
+                inputs[i].addEventListener("focus",()=>{
+                    inputs[i].classList.remove("is-invalid");
+                });
             }
-
-            input.addEventListener("click", () => input.classList.remove("is-invalid"));
-
-        });
+        }
 
         if (!error)
             callback();
@@ -58,34 +74,15 @@ export default class Helper {
 
     static guardarToken(token) {
         localStorage.setItem("token",token);
-        //document.cookie = "token=" + token;
     }
 
     static getToken() {
-        /*let cookies = document.cookie.split(";");
-        let i = 0; 
-        let token;
-        while ( i < cookies.length) {
-            if (cookies[i].search("token") == 0) {
-                token = cookies[i].split("=")[1];
-                i = cookies.length;
-            }
-            i++;
-        }*/
         return localStorage.getItem("token");
     }
 
 
     static quitarToken() {
-        /*document.cookie = "token=;";
-        let lista = document.cookie.split(";");
-        for (let i = 0; i < lista.length; i++) {
-            let igual = lista[i].indexOf("=");
-            let nombre = lista[i].substring(0,igual);
-            lista[i] = nombre+"=;";
-            document.cookie = lista[i]
-        }*/
         localStorage.removeItem("token");
-        location.href = "../html/login.html";
+        location.href = "../html/viajes.html";
     }
 }
