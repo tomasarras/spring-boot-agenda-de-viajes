@@ -10,9 +10,27 @@ document.addEventListener("DOMContentLoaded",()=> {
             planesActivos: []
         },
         methods: {
+            showPopUpHotel : function (event) {
+                let btnImportar = event.target;
+                let idViaje = btnImportar.getAttribute("name");
+                document.querySelector("#btn-confirmar-importar-hotel")
+                .setAttribute("name",idViaje);
+
+                let overlay = document.getElementById('overlay-reserva-hotel'),
+                    popup = document.getElementById('popup-reserva-hotel');
+                let btnsCerrarPopUp = overlay.querySelectorAll(".btn-cerrar-popup-js");
+                overlay.classList.add('active');
+                popup.classList.add('active');
+
+                btnsCerrarPopUp.forEach(btn => {
+                    btn.addEventListener("click",()=>{
+                        overlay.classList.remove('active');
+                        popup.classList.remove('active');
+                    });
+                });
+            },
             borrarPlan : function(event) {
                 let btnBorrar = event.target.parentElement;
-                console.log(btnBorrar)
                 borrarPlan(btnBorrar.getAttribute("name"));
             },
             borrarViaje : async function (event) {
@@ -36,7 +54,8 @@ document.addEventListener("DOMContentLoaded",()=> {
 
             editarPlan : async function (event) {
                 let btnEditar = event.target;
-                
+                let ul = btnEditar.parentElement.previousElementSibling;
+
                 let modificar = async function () {
                     let ul = btnEditar.parentElement.previousElementSibling;
                     let idPlan = btnEditar.getAttribute("name");
@@ -59,7 +78,7 @@ document.addEventListener("DOMContentLoaded",()=> {
                     }
                 }
 
-                Helper.comprobarInputsVacios(modificar,btnEditar);
+                Helper.comprobarInputsVacios(modificar,ul.querySelectorAll("input.campo-vacio"));
             },
             abrirLista : function (event) {
                 let element = event.target.parentElement;
@@ -172,6 +191,9 @@ document.addEventListener("DOMContentLoaded",()=> {
     document.querySelector("#importar-vuelo")
     .addEventListener("change",importarViaje);
 
+    document.querySelector("#importar-hotel")
+    .addEventListener("change",importarHotel);
+
     let btnCrearViaje = document.querySelector("#btn-crear-viaje");
     btnCrearViaje.addEventListener("click",()=>{
         Helper.comprobarInputsVacios(crearViaje,btnCrearViaje);
@@ -225,7 +247,8 @@ document.addEventListener("DOMContentLoaded",()=> {
         let btns = document.querySelectorAll(".btn-crear-plan");
         for (let i = 0; i < btns.length; i++){
             btns[i].addEventListener("click",async function () {
-                let divPlanes = btns[i].previousElementSibling;
+                let li = btns[i].parentElement.parentElement.parentElement.parentElement.parentElement;
+                let divPlanes = li.querySelector(".tipos-de-planes");
                 let planActivo = buscarPlanActivo(divPlanes,btns[i].getAttribute("value"));
                 let inputsPlan = planActivo.querySelectorAll("input");
                 let inputsObligatorios = planActivo.querySelectorAll(".campo-vacio");
@@ -234,17 +257,84 @@ document.addEventListener("DOMContentLoaded",()=> {
                     json.type = planActivo.getAttribute("value");
                     let idViaje = btns[i].getAttribute("name");
                     let responsePlan = await crearPlan(json,idViaje);
-                    responsePlan.idViaje = idViaje;
-                    data.planes.push(responsePlan);
-                    planActivo.classList.add("oculto");
-                    inputsPlan.forEach(input => {
-                        input.value = '';
-                    });
-                    document.querySelector(".btn-crear-plan").classList.add("oculto");
+                    if (responsePlan.ok == undefined) {
+                        responsePlan.idViaje = idViaje;
+                        data.planes.push(responsePlan);
+                        planActivo.classList.add("oculto");
+                        li.querySelector(".btn-importar-hoteles")
+                        .classList.add("oculto");
+                        inputsPlan.forEach(input => {
+                            input.value = '';
+                        });
+                        document.querySelector(".btn-crear-plan").classList.add("oculto");
+                    } else {
+                        li.querySelector(".error-crear-plan-fechas")
+                        .classList.remove("oculto");
+                    }
                 }
 
                 Helper.comprobarInputsVacios(enviarPlan,inputsObligatorios);
             });
+        }
+    }
+
+    async function importarHotel(event) {
+        let file = event.target.files[0];
+        let reader = new FileReader();
+        
+        reader.readAsText(file);
+        reader.onload = async function(readerEvent) {
+            let content = readerEvent.target.result;
+            try {
+                let hotelJson = JSON.parse(content);
+                hotelJson.type = "reservaHotel";
+                let atributosHotel = ["habitacion","direccion","nombre","compania","fechaInicio","fechaFin"];
+                let valido = true;
+                atributosHotel.forEach(atr => {
+                    if (hotelJson[atr] != undefined && hotelJson[atr] != null && hotelJson[atr] != '' && valido) {
+                        valido = true;
+                    } else {
+                        valido = false;
+                    }
+                });
+
+                if (valido) {
+                    let btnConfirmar = document.querySelector("#btn-confirmar-importar-hotel");
+                    let enviar = async function () {
+                        let idViaje = btnConfirmar.getAttribute("name");
+                        let response = await crearPlan(hotelJson,idViaje);
+                        if (response.ok == undefined) {
+                            location.reload();
+                        } else {
+                            let error = await response.text();
+                            showImportarHotelError(error);
+                        }
+                    }
+
+                    let mensajeImportar = document.querySelector("#nombre-hotel-importar");
+                    mensajeImportar.innerHTML = hotelJson.nombre;
+                    mensajeImportar.parentElement.classList.remove("oculto");
+                    let btnImportar = document.querySelector("#btns-importar-hotel");
+                    btnImportar.classList.remove("oculto");
+                    document.querySelector("#importar-hotel").classList.add("oculto");
+                    btnConfirmar.addEventListener("click",enviar);
+                } else {
+                    showImportarHotelError();
+                }
+
+            } catch {
+                showImportarHotelError();
+            }
+        }
+    }
+
+    function showImportarHotelError(error) {
+        if (error == "La fecha del plan no esta en el rango del viaje") {
+            document.querySelector("#error-importar-hotel-rango-fecha")
+            .classList.remove("oculto");
+        } else {
+            document.querySelector("#error-importar-hotel-formato")
+            .classList.remove("oculto");
         }
     }
 
@@ -267,6 +357,8 @@ document.addEventListener("DOMContentLoaded",()=> {
                     let mensajeImportar = document.querySelector("#nombre-vuelo-importar");
                     mensajeImportar.innerHTML = viajeJson.nombre;
                     mensajeImportar.parentElement.classList.remove("oculto");
+                    let inputFile = document.querySelector("#importar-vuelo");
+                    inputFile.classList.add("oculto");
 
                     let enviarViajeImportado = async function () {
                         let response = await fetch(uri + "usuarios/viajes",
@@ -285,15 +377,19 @@ document.addEventListener("DOMContentLoaded",()=> {
                                 let planJson = viajeJson.planes[i];
                                 crearPlan(planJson,jsonResponse.id);
                             }
+
                             location.reload();
                         }
                     }
 
                     document.querySelector("#btn-confirmar-importar")
                     .addEventListener("click",enviarViajeImportado);
+                } else {
+                    document.querySelector("#error-importar-viaje-formato")
+                    .classList.remove("oculto");
                 }
             } catch {
-                document.querySelector("#error-importar-viaje")
+                document.querySelector("#error-importar-viaje-formato")
                 .classList.remove("oculto");
             }
         }
@@ -400,8 +496,12 @@ document.addEventListener("DOMContentLoaded",()=> {
             },
             "body" : JSON.stringify(json)
         });
-        let responseToJson = await response.json();
-        return responseToJson;
+        if (response.ok) {
+            let responseToJson = await response.json();
+            return responseToJson;
+        } else {
+            return response;
+        }
     }
 
     function planToJson(inputs) {
@@ -455,7 +555,7 @@ document.addEventListener("DOMContentLoaded",()=> {
                     btnCrear.setAttribute("value",selects[i].value);
                 }
 
-                let btnReservaHotel = document.querySelector("#btn-importar-hotel");
+                let btnReservaHotel = li.querySelector(".btn-importar-hoteles");
                 if (selects[i].value == "reservaHotel") {
                     btnReservaHotel.classList.remove("oculto");
                 } else {
@@ -639,6 +739,7 @@ document.addEventListener("DOMContentLoaded",()=> {
     }
 
     if (!Helper.sesion.logeado) {
-        location.href = "../html/login.html";
+        let base = new URL('/', location.href).href;
+        location.href =  base + "html/login.html";
     }
 });

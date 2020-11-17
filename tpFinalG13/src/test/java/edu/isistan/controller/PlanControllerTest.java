@@ -3,8 +3,11 @@ package edu.isistan.controller;
 import org.junit.jupiter.api.MethodOrderer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import javax.sql.DataSource;
 import org.apache.catalina.connector.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.isistan.model.Usuario;
 import edu.isistan.model.planes.PlanReservaHotel;
@@ -32,9 +36,8 @@ import edu.isistan.repository.PlanRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+/*@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)*/
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Sql("/planes.sql")
 public class PlanControllerTest {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
@@ -42,12 +45,25 @@ public class PlanControllerTest {
 	@Autowired
 	private PlanRepository repository;
 	
-	private static String token;
-	private static HttpHeaders headerToken;
+	@Autowired 
+	private	DataSource database;
+	
+	private HttpHeaders headerToken;
+	private static boolean dataLoaded = false;
 	
 	
 	@Before
 	public void obtenerToken() {
+		
+		if(!dataLoaded) {
+	        try (Connection con = database.getConnection()) {
+	            ScriptUtils.executeSqlScript(con, new ClassPathResource("planes.sql"));
+	            dataLoaded = true;
+	        } catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    }
+		
 		String usuarioPost = "{"
 				+ "\"username\" : \"user1\","
 				+ "\"password\" : \"password\""
@@ -61,11 +77,44 @@ public class PlanControllerTest {
 		ResponseEntity<Usuario> response = testRestTemplate.postForEntity("/usuarios/login", request, Usuario.class);
 		
 		Usuario usuarioResponse = response.getBody();
-		token = usuarioResponse.getToken();
+		String token = usuarioResponse.getToken();
 		
 		headerToken = new HttpHeaders();
 		headerToken.set("Authorization", token);
 	}
+	
+	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+	public void crearPlanViajeColectivoTest() {
+		dataLoaded = false;
+		String planPost = "{"
+				+ "\"type\": \"viajeColectivo\","
+				+ "\"nombre\": \"hotel\","
+				+ "\"compania\": \"compañia\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
+				+ "\"asiento\": 5"
+				+ "}";
+		
+		headerToken.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<String>(planPost,headerToken);
+		ResponseEntity<PlanViajeColectivo> response = testRestTemplate.exchange("/usuarios/viajes/4/planes",HttpMethod.POST,request, PlanViajeColectivo.class);
+		PlanViajeColectivo responsePlan = response.getBody();
+		PlanViajeColectivo repositoryPlan = (PlanViajeColectivo) repository.findById(1).get();
+		
+		assertEquals(Response.SC_CREATED,response.getStatusCodeValue());
+		assertEquals("hotel",responsePlan.getNombre());
+		assertEquals("hotel",repositoryPlan.getNombre());
+		assertEquals("compañia",responsePlan.getCompania());
+		assertEquals("compañia",repositoryPlan.getCompania());
+		assertEquals("2020-01-02T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-02T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-03T02:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-03T02:01",repositoryPlan.getFechaFin().toString());
+		assertEquals(5,responsePlan.getAsiento());
+		assertEquals(5,repositoryPlan.getAsiento());
+	}
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
@@ -158,13 +207,15 @@ public class PlanControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void crearPlanReservaHotelTest() {
+		dataLoaded = false;
 		String planPost = "{"
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"habitacion\": \"habitacion\","
 				+ "\"direccion\": \"direccion\""
 				+ "}";
@@ -179,10 +230,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-02T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-02T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-03T02:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-03T02:01",repositoryPlan.getFechaFin().toString());
 		assertEquals("habitacion",responsePlan.getHabitacion());
 		assertEquals("habitacion",repositoryPlan.getHabitacion());
 		assertEquals("direccion",responsePlan.getDireccion());
@@ -190,43 +241,15 @@ public class PlanControllerTest {
 	}
 	
 	@Test
-	public void crearPlanViajeColectivoTest() {
-		String planPost = "{"
-				+ "\"type\": \"viajeColectivo\","
-				+ "\"nombre\": \"hotel\","
-				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
-				+ "\"asiento\": 5"
-				+ "}";
-		
-		headerToken.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> request = new HttpEntity<String>(planPost,headerToken);
-		ResponseEntity<PlanViajeColectivo> response = testRestTemplate.exchange("/usuarios/viajes/4/planes",HttpMethod.POST,request, PlanViajeColectivo.class);
-		PlanViajeColectivo responsePlan = response.getBody();
-		PlanViajeColectivo repositoryPlan = (PlanViajeColectivo) repository.findById(1).get();
-		
-		assertEquals(Response.SC_CREATED,response.getStatusCodeValue());
-		assertEquals("hotel",responsePlan.getNombre());
-		assertEquals("hotel",repositoryPlan.getNombre());
-		assertEquals("compañia",responsePlan.getCompania());
-		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
-		assertEquals(5,responsePlan.getAsiento());
-		assertEquals(5,repositoryPlan.getAsiento());
-	}
-	
-	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void crearPlanViajeTrenTest() {
+		dataLoaded = false;
 		String planPost = "{"
 				+ "\"type\": \"viajeTren\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"asiento\": 5,"
 				+ "\"estacion\" : \"estacion\""
 				+ "}";
@@ -242,10 +265,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-02T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-02T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-03T02:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-03T02:01",repositoryPlan.getFechaFin().toString());
 		assertEquals(5,responsePlan.getAsiento());
 		assertEquals(5,repositoryPlan.getAsiento());
 		assertEquals("estacion",responsePlan.getEstacion());
@@ -253,13 +276,15 @@ public class PlanControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void crearPlanVueloTest() {
+		dataLoaded = false;
 		String planPost = "{"
 				+ "\"type\": \"vuelo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"numeroVuelo\": 5,"
 				+ "\"aeropuertoSalida\" : \"aeropuertoSalida\","
 				+ "\"aeropuertoLlegada\" : \"aeropuertoLlegada\","
@@ -279,10 +304,10 @@ public class PlanControllerTest {
 		assertEquals("hotel",repositoryPlan.getNombre());
 		assertEquals("compañia",responsePlan.getCompania());
 		assertEquals("compañia",repositoryPlan.getCompania());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-02T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-02T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-03T02:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-03T02:01",repositoryPlan.getFechaFin().toString());
 		assertEquals(5,responsePlan.getNumeroVuelo());
 		assertEquals(5,repositoryPlan.getNumeroVuelo());
 		assertEquals("aeropuertoSalida",responsePlan.getAeropuertoSalida());
@@ -303,8 +328,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -321,8 +346,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -339,8 +364,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -348,8 +373,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"viajeColectivo\","
 				+ "\"nombre\": \"\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"asiento\": 5"
 				+ "}";
 		
@@ -366,7 +391,9 @@ public class PlanControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void borrarPlanTest() {
+		dataLoaded = false;
 		HttpEntity<String> request = new HttpEntity<String>(headerToken);
 		
 		ResponseEntity<String> response = testRestTemplate.exchange("/usuarios/viajes/planes/10",HttpMethod.DELETE,request, String.class);
@@ -393,13 +420,15 @@ public class PlanControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void modificarPlanTest() {
+		dataLoaded = false;
 		String planPost = "{"
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel editado\","
 				+ "\"compania\": \"compañia editada\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"direccion\": \"direccion editada\","
 				+ "\"habitacion\": \"habitacion editada\""
 				+ "}";
@@ -415,10 +444,10 @@ public class PlanControllerTest {
 		assertEquals("hotel editado",repositoryPlan.getNombre());
 		assertEquals("compañia editada",responsePlan.getCompania());
 		assertEquals("compañia editada",repositoryPlan.getCompania());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaInicio().toString());
-		assertEquals("2020-01-01T01:01",responsePlan.getFechaFin().toString());
-		assertEquals("2020-01-01T01:01",repositoryPlan.getFechaFin().toString());
+		assertEquals("2020-01-02T01:01",responsePlan.getFechaInicio().toString());
+		assertEquals("2020-01-02T01:01",repositoryPlan.getFechaInicio().toString());
+		assertEquals("2020-01-03T02:01",responsePlan.getFechaFin().toString());
+		assertEquals("2020-01-03T02:01",repositoryPlan.getFechaFin().toString());
 		assertEquals("direccion editada",repositoryPlan.getDireccion());
 		assertEquals("direccion editada",responsePlan.getDireccion());
 		assertEquals("habitacion editada",responsePlan.getHabitacion());
@@ -431,8 +460,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -441,8 +470,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -458,6 +487,7 @@ public class PlanControllerTest {
 		assertEquals(Response.SC_BAD_REQUEST,response1.getStatusCodeValue());
 		assertEquals(Response.SC_BAD_REQUEST,response2.getStatusCodeValue());
 	}
+	 
 	
 	@Test
 	public void modificarPlanNoEncontradoTest() {
@@ -465,8 +495,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -486,8 +516,8 @@ public class PlanControllerTest {
 				+ "\"type\": \"reservaHotel\","
 				+ "\"nombre\": \"hotel\","
 				+ "\"compania\": \"compañia\","
-				+ "\"fechaInicio\": \"2020-01-01 01:01\","
-				+ "\"fechaFin\": \"2020-01-01 01:01\","
+				+ "\"fechaInicio\": \"2020-01-02 01:01\","
+				+ "\"fechaFin\": \"2020-01-03 02:01\","
 				+ "\"direccion\": \"direccion\","
 				+ "\"habitacion\": \"habitacion\""
 				+ "}";
@@ -500,6 +530,4 @@ public class PlanControllerTest {
 		
 		assertEquals(Response.SC_FORBIDDEN,response.getStatusCodeValue());
 	}
-	
-	
 }

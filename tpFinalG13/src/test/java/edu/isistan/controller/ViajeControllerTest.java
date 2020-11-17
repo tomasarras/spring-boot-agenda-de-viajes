@@ -2,16 +2,17 @@ package edu.isistan.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
-
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-
+import javax.sql.DataSource;
 import org.apache.catalina.connector.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,13 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.isistan.model.Usuario;
 import edu.isistan.model.Viaje;
@@ -37,9 +39,7 @@ import edu.isistan.repository.ViajeRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Sql("/viajes.sql")
 public class ViajeControllerTest {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
@@ -47,15 +47,28 @@ public class ViajeControllerTest {
 	@Autowired
 	private ViajeRepository repository;
 	
+	@Autowired 
+	private	DataSource database;
+	
 	@Autowired
 	private UsuarioRepository repositoryUsuarios;
 	
-	private static String token;
-	private static HttpHeaders headerToken;
+	private HttpHeaders headerToken;
+	private static boolean dataLoaded = false;
 	
 	
 	@Before
 	public void obtenerToken() {
+		
+		if(!dataLoaded) {
+	        try (Connection con = database.getConnection()) {
+	            ScriptUtils.executeSqlScript(con, new ClassPathResource("viajes.sql"));
+	            dataLoaded = true;
+	        } catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    }
+		
 		String usuarioPost = "{"
 				+ "\"username\" : \"user1\","
 				+ "\"password\" : \"password\""
@@ -69,7 +82,7 @@ public class ViajeControllerTest {
 		ResponseEntity<Usuario> response = testRestTemplate.postForEntity("/usuarios/login", request, Usuario.class);
 		
 		Usuario usuarioResponse = response.getBody();
-		token = usuarioResponse.getToken();
+		String token = usuarioResponse.getToken();
 		
 		headerToken = new HttpHeaders();
 		headerToken.set("Authorization", token);
@@ -92,10 +105,11 @@ public class ViajeControllerTest {
 		assertEquals("2020-11-14 01:01",viajes.get(0).get("fechaFin"));
 		assertEquals("descripcion1",viajes.get(0).get("descripcion"));
 	}
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void getViajesDeUsuarioRealizadosTest() {
+		dataLoaded = false;
 		Viaje viajePasado1 = new Viaje();
 		Viaje viajePasado2 = new Viaje();
 		Viaje viajeSiguiente = new Viaje();
@@ -150,7 +164,9 @@ public class ViajeControllerTest {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void getViajesDeUsuarioPendientesTest() {
+		dataLoaded = false;
 		Viaje viajePendiente1 = new Viaje();
 		Viaje viajePendiente2 = new Viaje();
 		Viaje viajePasado = new Viaje();
@@ -238,7 +254,9 @@ public class ViajeControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void crearViajeTest() {
+		dataLoaded = false;
 		String viajePost = "{"
 				+ "\"nombre\" : \"nombreViaje\","
 				+ "\"ciudadDestino\" : \"ciudadDestino\","
@@ -360,7 +378,9 @@ public class ViajeControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void borrarViajeTest() {
+		dataLoaded = false;
 		HttpEntity<String> request = new HttpEntity<String>(headerToken);
 		ResponseEntity<String> response = testRestTemplate.exchange("/usuarios/viajes/4",HttpMethod.DELETE,request, String.class);
 		
@@ -389,7 +409,9 @@ public class ViajeControllerTest {
 	}
 	
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	public void modificarViajeTest() {
+		dataLoaded = false;
 		String viajePut = "{"
 				+ "\"nombre\" : \"nombre modificado\","
 				+ "\"ciudadDestino\" : \"ciudad modificada\","

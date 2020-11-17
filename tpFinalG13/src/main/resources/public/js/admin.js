@@ -60,4 +60,9 @@ document.addEventListener("DOMContentLoaded",()=> {
         });
     }
 
+    if (!Helper.sesion.admin) {
+        let base = new URL('/', location.href).href;
+        location.href =  base + "index.html";
+    }
+
 });

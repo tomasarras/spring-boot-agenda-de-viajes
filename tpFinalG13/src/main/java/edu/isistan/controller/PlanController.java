@@ -169,7 +169,7 @@ public class PlanController extends AbsController {
 	 * @return 404 si el viaje no existe
 	 */
 	@PostMapping("/{idViaje}/planes")
-	private ResponseEntity<Plan> crearPlan(@PathVariable int idViaje,@RequestBody Plan plan) {
+	private ResponseEntity<Object> crearPlan(@PathVariable int idViaje,@RequestBody Plan plan) {
 		plan.setId(0);
 		if (!plan.esValido()) {
 			return ResponseEntity
@@ -179,6 +179,13 @@ public class PlanController extends AbsController {
 		
 		try {
 			Viaje viaje = repositoryViaje.findById(idViaje).get();
+			
+			if (!viaje.puedeGuardarPlan(plan)) {
+				return ResponseEntity
+						.status(Response.SC_BAD_REQUEST)
+						.body("La fecha del plan no esta en el rango del viaje");
+			}
+			
 			if (!lePerteneceAlUsuario(viaje)) {
 				return ResponseEntity
 				.status(Response.SC_FORBIDDEN)

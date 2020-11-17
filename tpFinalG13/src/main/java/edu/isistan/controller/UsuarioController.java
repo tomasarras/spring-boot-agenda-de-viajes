@@ -109,9 +109,6 @@ public class UsuarioController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<ReporteUsuario>> getUsuariosPorMasViajesRealizados() {
-		System.out.println();
-		System.out.println();
-		
 		return ResponseEntity
 				.status(Response.SC_OK)
 				.body(repository.getUsuariosConMasViajes());
@@ -142,11 +139,10 @@ public class UsuarioController {
 								.map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 6000000))
+				.setExpiration(new Date(System.currentTimeMillis() + TokenConfig.EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512,
 						secretKey.getBytes()).compact();
 
 		return "Bearer " + token;
 	}
-
 }

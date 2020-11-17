@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded",()=> {
     }
 
     if (Helper.sesion.logeado) {
-        location.href = "html/viajes.html";
+        let base = new URL('/', location.href).href;
+        location.href =  base + "html/viajes.html";
     }
 
 });

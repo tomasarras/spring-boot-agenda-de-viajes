@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.springframework.util.StringUtils;
 import edu.isistan.model.Plan;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class PlanReservaHotel extends Plan {
 	@Column(nullable = false)
 	private String habitacion;
@@ -26,7 +30,6 @@ public class PlanReservaHotel extends Plan {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	
 	
 	@Override
 	public boolean esValido() {

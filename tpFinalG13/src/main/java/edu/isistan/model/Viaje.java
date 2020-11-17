@@ -14,13 +14,12 @@ import javax.persistence.OneToMany;
 import org.springframework.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 @Entity
+@Data
 public class Viaje {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,86 +66,9 @@ public class Viaje {
 				&& !StringUtils.isEmpty(this.getDescripcion());
 	}
 	
-	public Viaje() {
-		super();
+	public boolean puedeGuardarPlan(Plan plan) {
+		return plan.getFechaInicio().compareTo(this.fechaInicio) >= 0
+				&& this.fechaFin.compareTo(plan.getFechaFin()) >= 0;
 	}
-
-	public Integer getId() {
-		return id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public List<Plan> getPlanes() {
-		return planes;
-	}
-
-	public void setPlanes(List<Plan> planes) {
-		this.planes = planes;
-	}
-	
-	public void addPlan(Plan plan) {
-		this.planes.add(plan);
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getCiudadDestino() {
-		return ciudadDestino;
-	}
-
-	public void setCiudadDestino(String ciudadDestino) {
-		this.ciudadDestino = ciudadDestino;
-	}
-
-	public LocalDateTime getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public LocalDateTime getFechaFin() {
-		return fechaFin;
-	}
-
-	public void setFechaFin(LocalDateTime fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	@Override
-	public String toString() {
-		return "Viaje [id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + ", planes=" + planes
-				+ ", ciudadDestino=" + ciudadDestino + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
-				+ ", descripcion=" + descripcion + "]";
-	}
-	
-	
-	
 	
 }

@@ -12,8 +12,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 @Entity
+@Data
 public class Usuario {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,66 +36,4 @@ public class Usuario {
 	private String username;
 	@Transient
 	private String token;
-	
-	public Usuario() {}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public boolean isAdmin() {
-		return this.admin;
-	}
-	
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", password=" + password + ", email=" + email + ", username=" + username
-				+ ", token=" + token + "]";
-	}
-	
-	
-	
-	
-	
-	
 }

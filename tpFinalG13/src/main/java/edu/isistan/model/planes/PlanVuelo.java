@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.springframework.util.StringUtils;
 import edu.isistan.model.Plan;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class PlanVuelo extends Plan {
 	@Column(name = "numero_vuelo", nullable = false)
 	private Integer numeroVuelo;
@@ -28,45 +32,6 @@ public class PlanVuelo extends Plan {
 			StringUtils.isEmpty(aeropuertoLlegada) ||
 			StringUtils.isEmpty(aeronave));
 		
-	}
-	
-	public PlanVuelo() {}
-	
-	public int getNumeroVuelo() {
-		return numeroVuelo;
-	}
-	public void setNumeroVuelo(int numeroVuelo) {
-		this.numeroVuelo = numeroVuelo;
-	}
-	public String getAeropuertoSalida() {
-		return aeropuertoSalida;
-	}
-	public void setAeropuertoSalida(String aeropuertoSalida) {
-		this.aeropuertoSalida = aeropuertoSalida;
-	}
-	public String getAeropuertoLlegada() {
-		return aeropuertoLlegada;
-	}
-	public void setAeropuertoLlegada(String aeropuertoLlegada) {
-		this.aeropuertoLlegada = aeropuertoLlegada;
-	}
-	public int getCodigoReserva() {
-		return codigoReserva;
-	}
-	public void setCodigoReserva(int codigoReserva) {
-		this.codigoReserva = codigoReserva;
-	}
-	public Long getTiempoEscalas() {
-		return tiempoEscalas;
-	}
-	public void setTiempoEscalas(Long tiempoEscalas) {
-		this.tiempoEscalas = tiempoEscalas;
-	}
-	public String getAeronave() {
-		return aeronave;
-	}
-	public void setAeronave(String aeronave) {
-		this.aeronave = aeronave;
 	}
 	
 	@Override
