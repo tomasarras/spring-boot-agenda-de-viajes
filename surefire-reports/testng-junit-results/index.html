@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports1.css" rel="stylesheet" id="ultra" />
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" id="retro" disabled="false"/>
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <button id="button" class="button">Switch Retro Theme</button> <!-- button -->
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" title="Collapse/expand all the suites" class="collapse-all-link">
+          <img src="collapseall.gif" class="collapse-all-icon">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" panel-name="suite-Surefire_suite" class="navigator-link">
+              <span class="suite-name border-passed">Surefire suite</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" panel-name="test-xml-Surefire_suite" class="navigator-link ">
+                    <span>[unset file name]</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="testlist-Surefire_suite" class="navigator-link ">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="group-Surefire_suite" class="navigator-link ">
+                    <span>0 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="times-Surefire_suite" class="navigator-link ">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="reporter-Surefire_suite" class="navigator-link ">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="ignored-methods-Surefire_suite" class="navigator-link ">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="chronological-Surefire_suite" class="navigator-link ">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">37 methods,   37 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-Surefire_suite" class="hide-methods passed suite-Surefire_suite"> (hide)</a> <!-- hide-methods passed suite-Surefire_suite -->
+                      <a href="#" panel-name="suite-Surefire_suite" class="show-methods passed suite-Surefire_suite"> (show)</a> <!-- show-methods passed suite-Surefire_suite -->
+                    </span>
+                    <div class="method-list-content passed suite-Surefire_suite">
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="borrarPlanDeOtroUsuarioTest">borrarPlanDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="borrarPlanNoEncontradoTest">borrarPlanNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="borrarPlanTest">borrarPlanTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="borrarViajeDeOtroUsuarioTest">borrarViajeDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="borrarViajeNoEncontradoTest">borrarViajeNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="borrarViajeTest">borrarViajeTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanAOtroUsuarioTest">crearPlanAOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanAViajeNoEncontradoTest">crearPlanAViajeNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanDatosVaciosTest">crearPlanDatosVaciosTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanReservaHotelTest">crearPlanReservaHotelTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanViajeColectivoTest">crearPlanViajeColectivoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanViajeTrenTest">crearPlanViajeTrenTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="crearPlanVueloTest">crearPlanVueloTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="crearViajeConFinMayorAlInicioTest">crearViajeConFinMayorAlInicioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="crearViajeSinDatosTest">crearViajeSinDatosTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="crearViajeTest">crearViajeTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanDeOtroUsuarioTest">getPlanDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanNoEncontradoTest">getPlanNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanTest">getPlanTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanesDeViajeDeOtroUsuarioTest">getPlanesDeViajeDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanesDeViajeNoEncontradoTest">getPlanesDeViajeNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanesDeViajeTest">getPlanesDeViajeTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="getPlanesDelUsuarioTest">getPlanesDelUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajeDeOtroUsuarioTest">getViajeDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajeNoEncontradoTest">getViajeNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajeTest">getViajeTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajesDeUsuarioPendientesTest">getViajesDeUsuarioPendientesTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajesDeUsuarioRealizadosTest">getViajesDeUsuarioRealizadosTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="getViajesDeUsuarioTest">getViajesDeUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="modificarPlanAOtroUsuarioTest">modificarPlanAOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="modificarPlanDatosVaciosTest">modificarPlanDatosVaciosTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="modificarPlanNoEncontradoTest">modificarPlanNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.PlanControllerTest" class="method navigator-link" hash-for-method="modificarPlanTest">modificarPlanTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="modificarViajeDeOtroUsuarioTest">modificarViajeDeOtroUsuarioTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="modificarViajeNoEncontradoTest">modificarViajeNoEncontradoTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="modificarViajeSinDatosTest">modificarViajeSinDatosTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="edu.isistan.controller.ViajeControllerTest" class="method navigator-link" hash-for-method="modificarViajeTest">modificarViajeTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-Surefire_suite -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-Surefire_suite" class="panel Surefire_suite">
+          <div class="suite-Surefire_suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">edu.isistan.controller.ViajeControllerTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarViajeDeOtroUsuarioTest">
+                  </a> <!-- borrarViajeDeOtroUsuarioTest -->
+                  <span class="method-name">borrarViajeDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarViajeNoEncontradoTest">
+                  </a> <!-- borrarViajeNoEncontradoTest -->
+                  <span class="method-name">borrarViajeNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarViajeTest">
+                  </a> <!-- borrarViajeTest -->
+                  <span class="method-name">borrarViajeTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearViajeConFinMayorAlInicioTest">
+                  </a> <!-- crearViajeConFinMayorAlInicioTest -->
+                  <span class="method-name">crearViajeConFinMayorAlInicioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearViajeSinDatosTest">
+                  </a> <!-- crearViajeSinDatosTest -->
+                  <span class="method-name">crearViajeSinDatosTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearViajeTest">
+                  </a> <!-- crearViajeTest -->
+                  <span class="method-name">crearViajeTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajeDeOtroUsuarioTest">
+                  </a> <!-- getViajeDeOtroUsuarioTest -->
+                  <span class="method-name">getViajeDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajeNoEncontradoTest">
+                  </a> <!-- getViajeNoEncontradoTest -->
+                  <span class="method-name">getViajeNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajeTest">
+                  </a> <!-- getViajeTest -->
+                  <span class="method-name">getViajeTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajesDeUsuarioPendientesTest">
+                  </a> <!-- getViajesDeUsuarioPendientesTest -->
+                  <span class="method-name">getViajesDeUsuarioPendientesTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajesDeUsuarioRealizadosTest">
+                  </a> <!-- getViajesDeUsuarioRealizadosTest -->
+                  <span class="method-name">getViajesDeUsuarioRealizadosTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getViajesDeUsuarioTest">
+                  </a> <!-- getViajesDeUsuarioTest -->
+                  <span class="method-name">getViajesDeUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarViajeDeOtroUsuarioTest">
+                  </a> <!-- modificarViajeDeOtroUsuarioTest -->
+                  <span class="method-name">modificarViajeDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarViajeNoEncontradoTest">
+                  </a> <!-- modificarViajeNoEncontradoTest -->
+                  <span class="method-name">modificarViajeNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarViajeSinDatosTest">
+                  </a> <!-- modificarViajeSinDatosTest -->
+                  <span class="method-name">modificarViajeSinDatosTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarViajeTest">
+                  </a> <!-- modificarViajeTest -->
+                  <span class="method-name">modificarViajeTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Surefire_suite-class-passed -->
+          <div class="suite-Surefire_suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">edu.isistan.controller.PlanControllerTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarPlanDeOtroUsuarioTest">
+                  </a> <!-- borrarPlanDeOtroUsuarioTest -->
+                  <span class="method-name">borrarPlanDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarPlanNoEncontradoTest">
+                  </a> <!-- borrarPlanNoEncontradoTest -->
+                  <span class="method-name">borrarPlanNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="borrarPlanTest">
+                  </a> <!-- borrarPlanTest -->
+                  <span class="method-name">borrarPlanTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanAOtroUsuarioTest">
+                  </a> <!-- crearPlanAOtroUsuarioTest -->
+                  <span class="method-name">crearPlanAOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanAViajeNoEncontradoTest">
+                  </a> <!-- crearPlanAViajeNoEncontradoTest -->
+                  <span class="method-name">crearPlanAViajeNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanDatosVaciosTest">
+                  </a> <!-- crearPlanDatosVaciosTest -->
+                  <span class="method-name">crearPlanDatosVaciosTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanReservaHotelTest">
+                  </a> <!-- crearPlanReservaHotelTest -->
+                  <span class="method-name">crearPlanReservaHotelTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanViajeColectivoTest">
+                  </a> <!-- crearPlanViajeColectivoTest -->
+                  <span class="method-name">crearPlanViajeColectivoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanViajeTrenTest">
+                  </a> <!-- crearPlanViajeTrenTest -->
+                  <span class="method-name">crearPlanViajeTrenTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="crearPlanVueloTest">
+                  </a> <!-- crearPlanVueloTest -->
+                  <span class="method-name">crearPlanVueloTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanDeOtroUsuarioTest">
+                  </a> <!-- getPlanDeOtroUsuarioTest -->
+                  <span class="method-name">getPlanDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanNoEncontradoTest">
+                  </a> <!-- getPlanNoEncontradoTest -->
+                  <span class="method-name">getPlanNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanTest">
+                  </a> <!-- getPlanTest -->
+                  <span class="method-name">getPlanTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanesDeViajeDeOtroUsuarioTest">
+                  </a> <!-- getPlanesDeViajeDeOtroUsuarioTest -->
+                  <span class="method-name">getPlanesDeViajeDeOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanesDeViajeNoEncontradoTest">
+                  </a> <!-- getPlanesDeViajeNoEncontradoTest -->
+                  <span class="method-name">getPlanesDeViajeNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanesDeViajeTest">
+                  </a> <!-- getPlanesDeViajeTest -->
+                  <span class="method-name">getPlanesDeViajeTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="getPlanesDelUsuarioTest">
+                  </a> <!-- getPlanesDelUsuarioTest -->
+                  <span class="method-name">getPlanesDelUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarPlanAOtroUsuarioTest">
+                  </a> <!-- modificarPlanAOtroUsuarioTest -->
+                  <span class="method-name">modificarPlanAOtroUsuarioTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarPlanDatosVaciosTest">
+                  </a> <!-- modificarPlanDatosVaciosTest -->
+                  <span class="method-name">modificarPlanDatosVaciosTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarPlanNoEncontradoTest">
+                  </a> <!-- modificarPlanNoEncontradoTest -->
+                  <span class="method-name">modificarPlanNoEncontradoTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="modificarPlanTest">
+                  </a> <!-- modificarPlanTest -->
+                  <span class="method-name">modificarPlanTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Surefire_suite-class-passed -->
+        </div> <!-- panel Surefire_suite -->
+        <div panel-name="test-xml-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite thread-count=&quot;1&quot; junit=&quot;true&quot; name=&quot;Surefire suite&quot; verbose=&quot;0&quot;&gt;
+  &lt;test junit=&quot;true&quot; thread-count=&quot;1&quot; name=&quot;Surefire test&quot; verbose=&quot;0&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;edu.isistan.controller.PlanControllerTest&quot;/&gt;
+      &lt;class name=&quot;edu.isistan.controller.ViajeControllerTest&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- Surefire test --&gt;
+&lt;/suite&gt; &lt;!-- Surefire suite --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for Surefire suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">Surefire test (2 classes)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for Surefire suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for Surefire suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_Surefire_suite');
+function tableData_Surefire_suite() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(37);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'modificarPlanNoEncontradoTest')
+data.setCell(0, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(0, 3, 61044);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'crearPlanAViajeNoEncontradoTest')
+data.setCell(1, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(1, 3, 59109);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'modificarPlanDatosVaciosTest')
+data.setCell(2, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(2, 3, 56965);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'getPlanDeOtroUsuarioTest')
+data.setCell(3, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(3, 3, 54903);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'modificarPlanAOtroUsuarioTest')
+data.setCell(4, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(4, 3, 52952);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'getPlanesDelUsuarioTest')
+data.setCell(5, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(5, 3, 50917);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'getPlanesDeViajeDeOtroUsuarioTest')
+data.setCell(6, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(6, 3, 48933);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'crearPlanAOtroUsuarioTest')
+data.setCell(7, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(7, 3, 46745);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'crearPlanViajeColectivoTest')
+data.setCell(8, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(8, 3, 44657);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'getPlanTest')
+data.setCell(9, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(9, 3, 42621);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'borrarPlanNoEncontradoTest')
+data.setCell(10, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(10, 3, 40409);
+data.setCell(11, 0, 11)
+data.setCell(11, 1, 'crearPlanDatosVaciosTest')
+data.setCell(11, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(11, 3, 38333);
+data.setCell(12, 0, 12)
+data.setCell(12, 1, 'crearPlanReservaHotelTest')
+data.setCell(12, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(12, 3, 36227);
+data.setCell(13, 0, 13)
+data.setCell(13, 1, 'borrarViajeTest')
+data.setCell(13, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(13, 3, 34223);
+data.setCell(14, 0, 14)
+data.setCell(14, 1, 'modificarPlanTest')
+data.setCell(14, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(14, 3, 34026);
+data.setCell(15, 0, 15)
+data.setCell(15, 1, 'modificarViajeNoEncontradoTest')
+data.setCell(15, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(15, 3, 32220);
+data.setCell(16, 0, 16)
+data.setCell(16, 1, 'getPlanNoEncontradoTest')
+data.setCell(16, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(16, 3, 31775);
+data.setCell(17, 0, 17)
+data.setCell(17, 1, 'modificarViajeSinDatosTest')
+data.setCell(17, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(17, 3, 30197);
+data.setCell(18, 0, 18)
+data.setCell(18, 1, 'borrarPlanTest')
+data.setCell(18, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(18, 3, 29465);
+data.setCell(19, 0, 19)
+data.setCell(19, 1, 'crearViajeConFinMayorAlInicioTest')
+data.setCell(19, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(19, 3, 28257);
+data.setCell(20, 0, 20)
+data.setCell(20, 1, 'crearPlanViajeTrenTest')
+data.setCell(20, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(20, 3, 27004);
+data.setCell(21, 0, 21)
+data.setCell(21, 1, 'crearViajeTest')
+data.setCell(21, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(21, 3, 26310);
+data.setCell(22, 0, 22)
+data.setCell(22, 1, 'crearPlanVueloTest')
+data.setCell(22, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(22, 3, 24489);
+data.setCell(23, 0, 23)
+data.setCell(23, 1, 'borrarViajeNoEncontradoTest')
+data.setCell(23, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(23, 3, 24136);
+data.setCell(24, 0, 24)
+data.setCell(24, 1, 'getPlanesDeViajeNoEncontradoTest')
+data.setCell(24, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(24, 3, 21827);
+data.setCell(25, 0, 25)
+data.setCell(25, 1, 'getViajesDeUsuarioPendientesTest')
+data.setCell(25, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(25, 3, 21803);
+data.setCell(26, 0, 26)
+data.setCell(26, 1, 'modificarViajeTest')
+data.setCell(26, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(26, 3, 19417);
+data.setCell(27, 0, 27)
+data.setCell(27, 1, 'getPlanesDeViajeTest')
+data.setCell(27, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(27, 3, 19061);
+data.setCell(28, 0, 28)
+data.setCell(28, 1, 'modificarViajeDeOtroUsuarioTest')
+data.setCell(28, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(28, 3, 17146);
+data.setCell(29, 0, 29)
+data.setCell(29, 1, 'borrarPlanDeOtroUsuarioTest')
+data.setCell(29, 2, 'edu.isistan.controller.PlanControllerTest')
+data.setCell(29, 3, 16023);
+data.setCell(30, 0, 30)
+data.setCell(30, 1, 'crearViajeSinDatosTest')
+data.setCell(30, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(30, 3, 14824);
+data.setCell(31, 0, 31)
+data.setCell(31, 1, 'getViajeNoEncontradoTest')
+data.setCell(31, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(31, 3, 12206);
+data.setCell(32, 0, 32)
+data.setCell(32, 1, 'getViajeTest')
+data.setCell(32, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(32, 3, 10196);
+data.setCell(33, 0, 33)
+data.setCell(33, 1, 'borrarViajeDeOtroUsuarioTest')
+data.setCell(33, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(33, 3, 8250);
+data.setCell(34, 0, 34)
+data.setCell(34, 1, 'getViajeDeOtroUsuarioTest')
+data.setCell(34, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(34, 3, 6172);
+data.setCell(35, 0, 35)
+data.setCell(35, 1, 'getViajesDeUsuarioTest')
+data.setCell(35, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(35, 3, 4215);
+data.setCell(36, 0, 36)
+data.setCell(36, 1, 'getViajesDeUsuarioRealizadosTest')
+data.setCell(36, 2, 'edu.isistan.controller.ViajeControllerTest')
+data.setCell(36, 3, 2017);
+window.suiteTableData['Surefire_suite']= { tableData: data, tableDiv: 'times-div-Surefire_suite'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 18 minutes</span>
+              <div id="times-div-Surefire_suite">
+              </div> <!-- times-div-Surefire_suite -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for Surefire suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">0 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-Surefire_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">edu.isistan.controller.PlanControllerTest</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">borrarPlanDeOtroUsuarioTest</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanesDeViajeTest</span>
+                <span class="method-start">2 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanesDeViajeNoEncontradoTest</span>
+                <span class="method-start">3 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanVueloTest</span>
+                <span class="method-start">3 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanViajeTrenTest</span>
+                <span class="method-start">3 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">borrarPlanTest</span>
+                <span class="method-start">4 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanNoEncontradoTest</span>
+                <span class="method-start">4 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarPlanTest</span>
+                <span class="method-start">7 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanReservaHotelTest</span>
+                <span class="method-start">9 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanDatosVaciosTest</span>
+                <span class="method-start">10 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">borrarPlanNoEncontradoTest</span>
+                <span class="method-start">12 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanTest</span>
+                <span class="method-start">13 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanViajeColectivoTest</span>
+                <span class="method-start">13 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanAOtroUsuarioTest</span>
+                <span class="method-start">13 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanesDeViajeDeOtroUsuarioTest</span>
+                <span class="method-start">14 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanesDelUsuarioTest</span>
+                <span class="method-start">14 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarPlanAOtroUsuarioTest</span>
+                <span class="method-start">14 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getPlanDeOtroUsuarioTest</span>
+                <span class="method-start">15 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarPlanDatosVaciosTest</span>
+                <span class="method-start">15 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearPlanAViajeNoEncontradoTest</span>
+                <span class="method-start">16 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarPlanNoEncontradoTest</span>
+                <span class="method-start">16 ms</span>
+              </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">edu.isistan.controller.ViajeControllerTest</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">getViajesDeUsuarioRealizadosTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getViajesDeUsuarioTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getViajeDeOtroUsuarioTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">borrarViajeDeOtroUsuarioTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getViajeTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getViajeNoEncontradoTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearViajeSinDatosTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarViajeDeOtroUsuarioTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarViajeTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">getViajesDeUsuarioPendientesTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">borrarViajeNoEncontradoTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearViajeTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">crearViajeConFinMayorAlInicioTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarViajeSinDatosTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">modificarViajeNoEncontradoTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">borrarViajeTest</span>
+                <span class="method-start">61068 ms</span>
+              </div> <!-- test-method -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+<script type="text/javascript" src="testng-reports2.js"></script>
+</html>
