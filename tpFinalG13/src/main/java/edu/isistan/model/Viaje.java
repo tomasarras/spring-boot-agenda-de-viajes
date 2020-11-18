@@ -23,7 +23,6 @@ import lombok.Data;
 public class Viaje {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@ApiModelProperty(notes = "Identificador del viaje",name = "id",required = false,value  = "5")
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Column(name = "id_viaje", nullable = false)
 	private Integer id;
@@ -38,14 +37,18 @@ public class Viaje {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "viaje")
 	private List<Plan> planes;
 	@Column(name = "ciudad_destino", nullable = false)
+	@ApiModelProperty(required = true)
 	private String ciudadDestino;
 	@Column(name = "fecha_inicio", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@ApiModelProperty(notes = "Fecha de inicio del viaje",name = "fechaInicio",required = true,value  = "yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaInicio;
 	@Column(name = "fecha_fin", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@ApiModelProperty(notes = "Fecha de fin del viaje",name = "fechaFin",required = true,value  = "yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaFin;
 	@Column(nullable = false)
+	@ApiModelProperty(required = true)
 	private String descripcion;
 	
 	public boolean esValido() {

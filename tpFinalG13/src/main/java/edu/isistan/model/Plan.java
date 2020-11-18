@@ -13,6 +13,8 @@ import org.springframework.util.StringUtils;
 import javax.persistence.InheritanceType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -24,7 +26,19 @@ import edu.isistan.model.planes.PlanViajeColectivo;
 import edu.isistan.model.planes.PlanViajeTren;
 import edu.isistan.model.planes.PlanVuelo;
 
+/**
+ * Plan comun del cual heredan otros tipos de planes que estan en el 
+ * package edu.isiatan.model.planes
+ * @author Tomas Arras
+ *
+ */
 
+@ApiModel(value="Plan", description="Plan comun que pertenece a un viaje",subTypes = {
+		PlanReservaHotel.class,
+		PlanViajeColectivo.class,
+		PlanViajeTren.class,
+		PlanVuelo.class
+})
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -38,20 +52,22 @@ import edu.isistan.model.planes.PlanVuelo;
 public class Plan {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	/*@ApiModelProperty(notes = "Identificador del plan",name = "id",required = false,value = "10")*/
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Column(name = "id_plan", nullable = false)
 	private Integer id;
-	@ApiModelProperty(notes = "Nombre del plan",name = "nombre",required = true,value = "nombre_plan")
 	@Column(name = "nombre_plan", nullable = false)
+	@ApiModelProperty(notes = "Nombre del plan",name = "nombre",required = true)
 	private String nombre;
 	@Column(nullable = false)
+	@ApiModelProperty(notes = "Compañia del plan",name = "compania",required = true)
 	private String compania;
 	@Column(name = "fecha_inicio", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@ApiModelProperty(notes = "Fecha de inicio del plan, debe estar en el rango de la fecha del viaje que lo contiene",name = "fechaInicio",required = true,value = "yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaInicio;
 	@Column(name = "fecha_fin", nullable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@ApiModelProperty(notes = "Fecha de fin del plan, debe estar en el rango de la fecha del viaje que lo contiene",name = "fechaFin",required = true,value = "yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaFin;
 	@JsonIgnore
 	@ManyToOne

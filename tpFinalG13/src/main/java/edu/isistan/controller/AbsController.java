@@ -1,9 +1,13 @@
 package edu.isistan.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import edu.isistan.model.Viaje;
-
+/**
+ * Contiene toda la logica repetida entre los controladores
+ * 
+ * @author Tomas Arras
+ *
+ */
 public abstract class AbsController {
 	
 	protected int getIdUsuarioDelToken() {

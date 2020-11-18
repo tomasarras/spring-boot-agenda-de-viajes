@@ -19,21 +19,24 @@ import lombok.Data;
 public class Usuario {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@ApiModelProperty(notes = "Identificador del usuario",name = "id",required = false,value = "10")
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
+	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "id_usuario", nullable = false)
 	private Integer id;
-	@ApiModelProperty(notes = "Contraseña del usuario",name = "password",required = true,value = "password")
+	@ApiModelProperty(required = true)
 	@Column(nullable = false)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@Column(nullable = false)
+	@ApiModelProperty(required = true)
 	private String email;
 	@Column(nullable = false)
 	@JsonIgnore
 	private boolean admin;
 	@Column(nullable = false)
+	@ApiModelProperty(required = true)
 	private String username;
 	@Transient
+	@JsonProperty(access = Access.READ_ONLY)
 	private String token;
 }

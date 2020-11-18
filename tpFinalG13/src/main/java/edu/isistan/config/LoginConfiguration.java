@@ -10,7 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import edu.isistan.filter.JWTAuthorizationFilter;
-
+/**
+ * Configuracion para las rutas o paths que esten permitidos
+ * @author Tomas Arras
+ *
+ */
 @EnableWebSecurity
 @Configuration
 @Order(1)

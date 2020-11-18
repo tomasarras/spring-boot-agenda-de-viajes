@@ -21,7 +21,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
-
+/**
+ * Filtro para validar el token por cada request
+ * @author Tomas Arras
+ *
+ */
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
 	@Override

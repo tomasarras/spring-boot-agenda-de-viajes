@@ -19,12 +19,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import edu.isistan.config.TokenConfig;
 import edu.isistan.model.Usuario;
 import edu.isistan.reportes.ReporteUsuario;
 import edu.isistan.repository.UsuarioRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * Controlador de usuarios para el sistema de logueo con json web token
+ * 
+ * @author Tomas Arras
+ *
+ */
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RestController
 @RequestMapping("/usuarios")
@@ -35,8 +43,17 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository repository;
 	
+	/**
+	 * registrar el usuario y obtener un token
+	 * @param u con el username, email y password en el json
+	 * @return 201 con el usuario creado y el token
+	 * @return 400 si algun dato esta vacio
+	 * @return 409 si el username o el email ya existe
+	 */
 	@CrossOrigin
 	@PostMapping("/registrar")
+	@ApiOperation(value = "Crear usuario y obtener token")
+	@ApiImplicitParam(name = "u", value = "json con los datos del usuario: username, email y password")
 	public ResponseEntity<Object> crearUsuario(@RequestBody Usuario u) {
 		if (!checkUsuarioValido(u)) {
 			return ResponseEntity
@@ -74,6 +91,16 @@ public class UsuarioController {
 				.body(usuario);
 	}
 	
+	/**
+	 * loguearse y obtener un token
+	 * @param u con el username y password en el json
+	 * @return 200 y el usuario con el token
+	 * @return 400 si algun dato esta vacio
+	 * @return 404 si el username no existe
+	 * @return 401 si la contraseña es incorrecta
+	 */
+	@ApiOperation(value = "Loguearse y obtener un token")
+	@ApiImplicitParam(name = "u", value = "json con los datos del usuario: username y el password, el email no va")
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Usuario u) {
 		if (StringUtils.isEmpty(u.getUsername()) || StringUtils.isEmpty(u.getPassword())) {
@@ -94,6 +121,7 @@ public class UsuarioController {
 			String data = Integer.toString(usuario.getId());
 			
 			usuario.setToken(getJWTToken(data,usuario.isAdmin()));
+			System.out.println(usuario);
 			return ResponseEntity
 					.status(Response.SC_OK)
 					.body(usuario);
@@ -106,8 +134,15 @@ public class UsuarioController {
 		
 	}
 	
+	/**
+	 * Obtener los usuarios con la cantidad de viajes que tengan y ordenados, solo si tiene el rol ADMIN en el token
+	 * @param token con el rol ADMIN
+	 * @return 200 y los usuarios con la cantidad de viajes ordenados
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping
+	@ApiOperation(value = "Obtener los usuarios con la cantidad de viajes que tengan y ordenados, solo si es ADMIN")
+	@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
 	public ResponseEntity<List<ReporteUsuario>> getUsuariosPorMasViajesRealizados() {
 		return ResponseEntity
 				.status(Response.SC_OK)

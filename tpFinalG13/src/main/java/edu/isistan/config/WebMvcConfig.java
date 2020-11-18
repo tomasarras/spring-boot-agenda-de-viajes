@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+/**
+ * Configuracion sobre el metodo de hash que se aplica a las passwords de los usuarios
+ * @author Tomas Arras
+ *
+ */
 @Configuration
 @Order(2)
 public class WebMvcConfig extends WebSecurityConfigurerAdapter  {

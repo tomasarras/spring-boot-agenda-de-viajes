@@ -2,6 +2,15 @@ package edu.isistan.reportes;
 
 import javax.persistence.MappedSuperclass;
 
+import io.swagger.annotations.ApiModel;
+/**
+ * Reporte de los usuarios que mas viajes tienen en total, utilizado por 
+ * UsuarioController
+ * @author Tomas
+ *
+ */
+@ApiModel(value="ReporteUsuario", description="Es el reporte que muestra la cantidad de viajes"
+		+ " que tiene un usuario")
 @MappedSuperclass
 public class ReporteUsuario {
 	private String username;

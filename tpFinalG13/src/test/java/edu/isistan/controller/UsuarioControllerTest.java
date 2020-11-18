@@ -16,6 +16,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import com.google.gson.Gson;
+
 import edu.isistan.model.Usuario;
 import edu.isistan.repository.UsuarioRepository;
 
@@ -42,9 +45,9 @@ public class UsuarioControllerTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		HttpEntity<String> request = new HttpEntity<String>(usuarioPost ,headers);
-		ResponseEntity<Usuario> response = testRestTemplate.postForEntity("/usuarios/registrar", request, Usuario.class);
+		ResponseEntity<String> response = testRestTemplate.postForEntity("/usuarios/registrar", request, String.class);
 		
-		Usuario usuarioResponse = response.getBody();
+		Usuario usuarioResponse = parseResponseToUsuario(response);
 		
 		Usuario uRepository = repository.findById(usuarioResponse.getId()).get();
 		
@@ -142,9 +145,9 @@ public class UsuarioControllerTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		HttpEntity<String> request = new HttpEntity<String>(usuarioPost ,headers);
-		ResponseEntity<Usuario> response = testRestTemplate.postForEntity("/usuarios/login", request, Usuario.class);
+		ResponseEntity<String> response = testRestTemplate.postForEntity("/usuarios/login", request, String.class);
 		
-		Usuario usuarioResponse = response.getBody();
+		Usuario usuarioResponse = parseResponseToUsuario(response);
 		
 		assertEquals(Response.SC_OK,response.getStatusCodeValue());
 		assertEquals("user@gmail.com",usuarioResponse.getEmail());
@@ -212,6 +215,10 @@ public class UsuarioControllerTest {
 		assertEquals(Response.SC_BAD_REQUEST,response2.getStatusCodeValue());
 	}
 	
-	
+	private Usuario parseResponseToUsuario(ResponseEntity<String> response) {
+		Gson g = new Gson();
+		Usuario usuarioResponse = g.fromJson(response.getBody(), Usuario.class);
+		return usuarioResponse;
+	}
 	
 }

@@ -22,6 +22,11 @@ import edu.isistan.model.Viaje;
 import edu.isistan.reportes.ReporteCiudad;
 import edu.isistan.repository.UsuarioRepository;
 import edu.isistan.repository.ViajeRepository;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,7 +39,19 @@ public class ViajeController extends AbsController {
 	@Autowired
 	private UsuarioRepository repositoryUsuarios;
 
+	/**
+	 * Obtener todos los viajes de un usuario y opcionalmente algun criterio
+	 * @param criterio opcional, puede ser 'realizados' o 'pendientes'
+	 * @param token con el id del usuario que se quiere obtener los viajes
+	 * @return 200 y los viajes
+	 */
+	
 	@GetMapping
+	@ApiOperation(value = "Obtener los viajes del usuario")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token"),
+		@ApiImplicitParam(name = "criterio", value = "un criterio por el cual obtener los viajes, puede ser 'realizados' o 'pendientes'", example = "realizados")
+	})
     public ResponseEntity<List<Viaje>> getViajesDeUsuario(@RequestParam(required = false) String criterio) {
 		int idUsuario = getIdUsuarioDelToken();
 		List<Viaje> viajes;
@@ -56,8 +73,17 @@ public class ViajeController extends AbsController {
 				.body(viajes);
 	}
 	
+	/**
+	 * Obtener las ciudades mas visitadas con la cantidad de viajes que tengan y ordenadas, 
+	 * solo disponible si es admin
+	 * @param token con el rol ADMIN
+	 * @return 200
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("/ciudades")
+	@ApiOperation(value = "Obtener las ciudades mas visitadas con la cantidad de viajes que tengan"
+			+ " y ordenadas, solo disponible si es admin")
+	@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
     public ResponseEntity<List<ReporteCiudad>> getCiudadesMasVisitadas() {
 		return ResponseEntity
 				.status(Response.SC_OK)
@@ -67,10 +93,22 @@ public class ViajeController extends AbsController {
 	/**
 	 * Obtiene un viaje por id
 	 * @param id del viaje
+	 * @param token con el id del usuario que quiere obtener el viaje
 	 * @return 200 y el viaje
 	 * @return 404 si el viaje no existe
+	 * @return 403 si se intenta acceder al viaje de otro usuario
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 404, message = "Not found"),
+			@ApiResponse(code = 403, message = "Se intenta acceder al viaje de otro usuario")
+	})
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Obtener un viaje por id")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token"),
+		@ApiImplicitParam(name = "id", value = "id del viaje", required = true)
+	})
     public ResponseEntity<Viaje> getViaje(@PathVariable int id) {
 		try {
 			Viaje viaje = repository.findById(id).get();
@@ -91,7 +129,19 @@ public class ViajeController extends AbsController {
 		}
     }
 	
+	/**
+	 * Crear un viaje
+	 * @param viaje con los datos
+	 * @param token con el id del usuario que quiere crear el viaje
+	 * @return 201 si se creo 
+	 * @return 400 si algun dato esta vacio
+	 */
 	@PostMapping
+	@ApiOperation(value = "Crear un viaje")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token"),
+		@ApiImplicitParam(name = "viaje", value = "json con los datos del viaje", required = true)
+	})
     public ResponseEntity<Viaje> crearViaje(@RequestBody Viaje viaje) {
 		if (!viaje.esValido()) {
 			return ResponseEntity
@@ -117,12 +167,24 @@ public class ViajeController extends AbsController {
     }
 	
 	/**
-	 * 
+	 * Borrar un viaje
 	 * @param id del viaje que se va a borrar
+	 * @param token con el id del usuario que quiere borrar el viaje
 	 * @return 204 si se borro el viaje
 	 * @return 404 si el viaje no existe
+	 * @return 403 si se intenta borrar el viaje de otro usuario
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(code = 204, message = "No content"),
+			@ApiResponse(code = 404, message = "Not found"),
+			@ApiResponse(code = 403, message = "Se intenta borrar el viaje de otro usuario")
+	})
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Borrar viaje")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token"),
+		@ApiImplicitParam(name = "id", value = "id del viaje que se quiere borrar", required = true)
+	})
 	public ResponseEntity<Void> borrarViaje(@PathVariable int id) {
 		try {
 			Viaje viaje = repository.findById(id).get();
@@ -149,10 +211,23 @@ public class ViajeController extends AbsController {
 	 * 
 	 * @param id del viaje que se va a modificar
 	 * @param viaje con los datos que se van a modificar
+	 * @param token con el id del usuario que quiere modificar el viaje
 	 * @return 200 y el viaje si se modifico
 	 * @return 404 si el viaje no existe
+	 * @return 403 si el viaje que se quiere modificar pertenece a otro usuario
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 404, message = "Not found"),
+			@ApiResponse(code = 403, message = "Se intenta modificar el viaje de otro usuario")
+	})
 	@PutMapping("/{id}")
+	@ApiOperation(value = "Modificar un viaje")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "id", value = "id del viaje que se modificar", required = true),
+		@ApiImplicitParam(name = "viaje", value = "json con los datos del viaje que se quieren modificar", required = true),
+		@ApiImplicitParam(name = "Authorization", value = "Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+	})
 	public ResponseEntity<Viaje> modificarViaje(@PathVariable int id,@RequestBody Viaje viaje) {
 		if (!viaje.esValido()) {
 			return ResponseEntity
