@@ -7,7 +7,8 @@
 Contiene las rutas publicas que se pueden acceder sin tener un token
 
 ### SpringFoxConfig
-Configuracion de Swagger
+Configuracion de [Swagger](https://tomasarras.github.io/arqui/)
+
 
 ### TokenConfig
 Configuraciones del token como tiempo de expiracion o clave privada
