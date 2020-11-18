@@ -10,5 +10,4 @@
 
 
 ## Vista de componentes y conectores
-
-## Vistas de asignacion
+* [Runtime](https://github.com/tomasarras/arqui/blob/main/docs/vistaRuntime.md)
