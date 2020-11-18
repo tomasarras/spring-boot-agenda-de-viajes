@@ -12,4 +12,4 @@ Para cambiar la manera de encriptar las password en la clase **WebMvcConfig** mo
 Para agregar o quitar rutas sin pasar por el filtro, en la clase **LoginConfiguration** agregar o quitar en el metodo **configure** donde estan las demas rutas
 
 ### Swagger
-Las configuracion de swagger estan en **SpringFoxConfig**
+Las configuraciones de [swagger](https://tomasarras.github.io/arqui/) estan en **SpringFoxConfig**
