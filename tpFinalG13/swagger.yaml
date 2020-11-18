@@ -1,0 +1,1041 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: plan-controller
+    description: Plan Controller
+  - name: usuario-controller
+    description: Usuario Controller
+  - name: viaje-controller
+    description: Viaje Controller
+paths:
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    head:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingDELETE
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    options:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - basic-error-controller
+      summary: error
+      operationId: errorUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /usuarios:
+    get:
+      tags:
+        - usuario-controller
+      summary: 'Obtener los usuarios con la cantidad de viajes que tengan y ordenados, solo si es ADMIN'
+      operationId: getUsuariosPorMasViajesRealizadosUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ReporteUsuario'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usuarios/login:
+    post:
+      tags:
+        - usuario-controller
+      summary: Loguearse y obtener un token
+      operationId: loginUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: u
+          description: 'json con los datos del usuario: username y el password, el email no va'
+          required: true
+          schema:
+            $ref: '#/definitions/Usuario'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usuarios/registrar:
+    post:
+      tags:
+        - usuario-controller
+      summary: Crear usuario y obtener token
+      operationId: crearUsuarioUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: u
+          description: 'json con los datos del usuario: username, email y password'
+          required: true
+          schema:
+            $ref: '#/definitions/Usuario'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usuarios/viajes:
+    get:
+      tags:
+        - viaje-controller
+      summary: Obtener los viajes del usuario
+      operationId: getViajesDeUsuarioUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: criterio
+          in: query
+          description: 'un criterio por el cual obtener los viajes, puede ser ''realizados'' o ''pendientes'''
+          required: false
+          type: string
+          x-example: realizados
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Viaje'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - viaje-controller
+      summary: Crear un viaje
+      operationId: crearViajeUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - in: body
+          name: viaje
+          description: json con los datos del viaje
+          required: true
+          schema:
+            $ref: '#/definitions/Viaje'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Viaje'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usuarios/viajes/ciudades:
+    get:
+      tags:
+        - viaje-controller
+      summary: 'Obtener las ciudades mas visitadas con la cantidad de viajes que tengan y ordenadas, solo disponible si es admin'
+      operationId: getCiudadesMasVisitadasUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ReporteCiudad'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usuarios/viajes/planes:
+    get:
+      tags:
+        - plan-controller
+      summary: Obtener todos los planes del usuario
+      operationId: getPlanesDelUsuarioUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: estado
+          in: query
+          description: puede ser 'realizados' o 'pendientes'
+          required: false
+          type: string
+          x-example: pendientes
+        - name: fechaFin
+          in: query
+          description: 'fecha de fin a partir del cual se buscan los planes, si hay fecha fin, debe ir una fecha de inicio tambien, formato yyyy-MM-dd HH:mm'
+          required: false
+          type: string
+        - name: fechaInicio
+          in: query
+          description: 'fecha de inicio a partir del cual se buscan los planes, si hay fecha inicio, debe ir una fecha de fin tambien, formato yyyy-MM-dd HH:mm'
+          required: false
+          type: string
+        - name: zona
+          in: query
+          description: los planes que esten en un viaje y que su ciudad de destino sea esa zona o ciudad
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/usuarios/viajes/planes/{idPlan}':
+    put:
+      tags:
+        - plan-controller
+      summary: Modificar plan
+      operationId: modificarPlanUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: idPlan
+          in: path
+          description: id del plan
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: plan
+          description: plan con los datos que se van a modificar
+          required: true
+          schema:
+            $ref: '#/definitions/Plan'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Plan'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Se intenta modificar un plan que pertenece a otro usuario
+        '404':
+          description: El plan que se intenta modificar no existe
+  '/usuarios/viajes/planes/{id}':
+    get:
+      tags:
+        - plan-controller
+      summary: Obtener un plan por id
+      operationId: getPlanUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: id
+          in: path
+          description: id del plan
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Plan'
+        '401':
+          description: Unauthorized
+        '403':
+          description: No se puede acceder al plan de otro usuario
+        '404':
+          description: Not found
+    delete:
+      tags:
+        - plan-controller
+      summary: Borrar plan
+      operationId: borrarPlanUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: id
+          in: path
+          description: id del plan
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Si se intenta borrar un plan a un viaje que pertenece a otro usuario
+        '404':
+          description: Not found
+  '/usuarios/viajes/{idViaje}/planes':
+    get:
+      tags:
+        - plan-controller
+      summary: Obtener los planes de un viaje
+      operationId: getPlanesDeViajeUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: idViaje
+          in: path
+          description: id del viaje que se quiere obtener los planes
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+        '401':
+          description: Unauthorized
+        '403':
+          description: No se puede acceder a los planes de otro usuario
+        '404':
+          description: Not found
+    post:
+      tags:
+        - plan-controller
+      summary: Crear un plan a un viaje
+      operationId: crearPlanUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: idViaje
+          in: path
+          description: id del viaje que se quiere agregar el plan
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: plan
+          description: 'json con los datos del plan comun o un plan especifico, usar el parametro ''type'' seguido del tipo de plan que se quiere agregar, ver en la documentacion para mas detalles'
+          required: true
+          schema:
+            $ref: '#/definitions/Plan'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '400':
+          description: Si la fecha de inicio y fin del plan no estan en el rango de las fechas del viaje
+        '401':
+          description: Unauthorized
+        '403':
+          description: Si se intenta crear un plan a un viaje que pertenece a otro usuario
+        '404':
+          description: El viaje al cual se le quiere agregar un plan no existe
+  '/usuarios/viajes/{id}':
+    get:
+      tags:
+        - viaje-controller
+      summary: Obtener un viaje por id
+      operationId: getViajeUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: id
+          in: path
+          description: id del viaje
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Viaje'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Se intenta acceder al viaje de otro usuario
+        '404':
+          description: Not found
+    put:
+      tags:
+        - viaje-controller
+      summary: Modificar un viaje
+      operationId: modificarViajeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: id
+          in: path
+          description: id del viaje que se modificar
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: viaje
+          description: json con los datos del viaje que se quieren modificar
+          required: true
+          schema:
+            $ref: '#/definitions/Viaje'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Viaje'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Se intenta modificar el viaje de otro usuario
+        '404':
+          description: Not found
+    delete:
+      tags:
+        - viaje-controller
+      summary: Borrar viaje
+      operationId: borrarViajeUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token
+          required: true
+          type: string
+          x-example: Bearer access_token
+        - name: id
+          in: path
+          description: id del viaje que se quiere borrar
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Se intenta borrar el viaje de otro usuario
+        '404':
+          description: Not found
+definitions:
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - ACCEPTED
+          - ALREADY_REPORTED
+          - BAD_GATEWAY
+          - BAD_REQUEST
+          - BANDWIDTH_LIMIT_EXCEEDED
+          - CHECKPOINT
+          - CONFLICT
+          - CONTINUE
+          - CREATED
+          - DESTINATION_LOCKED
+          - EXPECTATION_FAILED
+          - FAILED_DEPENDENCY
+          - FORBIDDEN
+          - FOUND
+          - GATEWAY_TIMEOUT
+          - GONE
+          - HTTP_VERSION_NOT_SUPPORTED
+          - IM_USED
+          - INSUFFICIENT_SPACE_ON_RESOURCE
+          - INSUFFICIENT_STORAGE
+          - INTERNAL_SERVER_ERROR
+          - I_AM_A_TEAPOT
+          - LENGTH_REQUIRED
+          - LOCKED
+          - LOOP_DETECTED
+          - METHOD_FAILURE
+          - METHOD_NOT_ALLOWED
+          - MOVED_PERMANENTLY
+          - MOVED_TEMPORARILY
+          - MULTIPLE_CHOICES
+          - MULTI_STATUS
+          - NETWORK_AUTHENTICATION_REQUIRED
+          - NON_AUTHORITATIVE_INFORMATION
+          - NOT_ACCEPTABLE
+          - NOT_EXTENDED
+          - NOT_FOUND
+          - NOT_IMPLEMENTED
+          - NOT_MODIFIED
+          - NO_CONTENT
+          - OK
+          - PARTIAL_CONTENT
+          - PAYLOAD_TOO_LARGE
+          - PAYMENT_REQUIRED
+          - PERMANENT_REDIRECT
+          - PRECONDITION_FAILED
+          - PRECONDITION_REQUIRED
+          - PROCESSING
+          - PROXY_AUTHENTICATION_REQUIRED
+          - REQUESTED_RANGE_NOT_SATISFIABLE
+          - REQUEST_ENTITY_TOO_LARGE
+          - REQUEST_HEADER_FIELDS_TOO_LARGE
+          - REQUEST_TIMEOUT
+          - REQUEST_URI_TOO_LONG
+          - RESET_CONTENT
+          - SEE_OTHER
+          - SERVICE_UNAVAILABLE
+          - SWITCHING_PROTOCOLS
+          - TEMPORARY_REDIRECT
+          - TOO_EARLY
+          - TOO_MANY_REQUESTS
+          - UNAUTHORIZED
+          - UNAVAILABLE_FOR_LEGAL_REASONS
+          - UNPROCESSABLE_ENTITY
+          - UNSUPPORTED_MEDIA_TYPE
+          - UPGRADE_REQUIRED
+          - URI_TOO_LONG
+          - USE_PROXY
+          - VARIANT_ALSO_NEGOTIATES
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  Plan:
+    type: object
+    required:
+      - compania
+      - fechaFin
+      - fechaInicio
+      - nombre
+    properties:
+      compania:
+        type: string
+        description: Compañia del plan
+      fechaFin:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      fechaInicio:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      id:
+        type: integer
+        format: int32
+      nombre:
+        type: string
+        description: Nombre del plan
+    title: Plan
+    description: Plan comun que pertenece a un viaje
+  PlanReservaHotel:
+    type: object
+    required:
+      - compania
+      - direccion
+      - fechaFin
+      - fechaInicio
+      - habitacion
+      - nombre
+    properties:
+      compania:
+        type: string
+        description: Compañia del plan
+      direccion:
+        type: string
+      fechaFin:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      fechaInicio:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      habitacion:
+        type: string
+      id:
+        type: integer
+        format: int32
+      nombre:
+        type: string
+        description: Nombre del plan
+    title: PlanReservaHotel
+    description: Plan que hereda de plan comun
+  PlanViajeColectivo:
+    title: PlanViajeColectivo
+    allOf:
+      - $ref: '#/definitions/Plan'
+      - type: object
+        required:
+          - asiento
+          - compania
+          - fechaFin
+          - fechaInicio
+          - nombre
+        properties:
+          asiento:
+            type: integer
+            format: int32
+          compania:
+            type: string
+            description: Compañia del plan
+          fechaFin:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          fechaInicio:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+            description: Nombre del plan
+        title: PlanViajeColectivo
+        description: Plan que hereda de plan comun
+    description: Plan que hereda de plan comun
+  PlanViajeTren:
+    title: PlanViajeTren
+    allOf:
+      - $ref: '#/definitions/Plan'
+      - type: object
+        required:
+          - asiento
+          - compania
+          - estacion
+          - fechaFin
+          - fechaInicio
+          - nombre
+        properties:
+          asiento:
+            type: integer
+            format: int32
+          compania:
+            type: string
+            description: Compañia del plan
+          estacion:
+            type: string
+          fechaFin:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          fechaInicio:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+            description: Nombre del plan
+        title: PlanViajeTren
+        description: Plan que hereda de plan comun
+    description: Plan que hereda de plan comun
+  PlanVuelo:
+    title: PlanVuelo
+    allOf:
+      - $ref: '#/definitions/Plan'
+      - type: object
+        required:
+          - aeronave
+          - aeropuertoLlegada
+          - aeropuertoSalida
+          - codigoReserva
+          - compania
+          - fechaFin
+          - fechaInicio
+          - nombre
+          - numeroVuelo
+        properties:
+          aeronave:
+            type: string
+          aeropuertoLlegada:
+            type: string
+          aeropuertoSalida:
+            type: string
+          codigoReserva:
+            type: integer
+            format: int32
+          compania:
+            type: string
+            description: Compañia del plan
+          fechaFin:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          fechaInicio:
+            type: string
+            format: date-time
+            description: 'yyyy-MM-dd HH:mm'
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+            description: Nombre del plan
+          numeroVuelo:
+            type: integer
+            format: int32
+          tiempoEscalas:
+            type: integer
+            format: int64
+        title: PlanVuelo
+        description: Plan que hereda de plan comun
+    description: Plan que hereda de plan comun
+  ReporteCiudad:
+    type: object
+    properties:
+      cantidadViajes:
+        type: integer
+        format: int64
+      ciudad:
+        type: string
+    title: ReporteCiudad
+    description: Es el reporte que muestra la cantidad de viajes que tiene una ciudad
+  ReporteUsuario:
+    type: object
+    properties:
+      cantidad_viajes:
+        type: integer
+        format: int64
+      email:
+        type: string
+      username:
+        type: string
+    title: ReporteUsuario
+    description: Es el reporte que muestra la cantidad de viajes que tiene un usuario
+  Usuario:
+    type: object
+    required:
+      - email
+      - password
+      - username
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    title: Usuario
+  Viaje:
+    type: object
+    required:
+      - ciudadDestino
+      - descripcion
+      - fechaFin
+      - fechaInicio
+      - nombre
+    properties:
+      ciudadDestino:
+        type: string
+      descripcion:
+        type: string
+      fechaFin:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      fechaInicio:
+        type: string
+        format: date-time
+        description: 'yyyy-MM-dd HH:mm'
+      id:
+        type: integer
+        format: int32
+      nombre:
+        type: string
+        description: nombre_viaje
+    title: Viaje
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View

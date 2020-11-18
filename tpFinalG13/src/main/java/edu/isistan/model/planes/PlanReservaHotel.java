@@ -20,21 +20,6 @@ public class PlanReservaHotel extends Plan {
 	@Column(nullable = false)
 	@ApiModelProperty(required = true)
 	private String direccion;
-	public PlanReservaHotel() {
-		super();
-	}
-	public String getHabitacion() {
-		return habitacion;
-	}
-	public void setHabitacion(String habitacion) {
-		this.habitacion = habitacion;
-	}
-	public String getDireccion() {
-		return direccion;
-	}
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
 	
 	@Override
 	public boolean esValido() {
