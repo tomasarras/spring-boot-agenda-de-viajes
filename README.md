@@ -5,7 +5,7 @@
 ## Documentacion
 - [Instalacion](docs/instalacion.md)
 - [Configuracion](docs/configuracion.md)
-- [Vistas basicas del sistema](docs/configuracion.md)
+- [Vistas basicas del sistema](docs/vistas.md)
 - [Trazabilidad](docs/configuracion.md)
 - [Analisis de impacto](docs/configuracion.md)
 - [Documentacion Swagger ui](https://tomasarras.github.io/arqui/)
