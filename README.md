@@ -6,6 +6,6 @@
 - [Instalacion](docs/instalacion.md)
 - [Configuracion](docs/configuracion.md)
 - [Vistas basicas del sistema](docs/vistas.md)
-- [Trazabilidad](docs/configuracion.md)
+- [Trazabilidad](https://github.com/tomasarras/arqui/blob/main/docs/trazabilidad)
 - [Analisis de impacto](https://github.com/tomasarras/arqui/blob/main/docs/analisisImpacto.md)
 - [Documentacion Swagger ui](https://tomasarras.github.io/arqui/)
