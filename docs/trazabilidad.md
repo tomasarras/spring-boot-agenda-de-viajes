@@ -8,7 +8,7 @@ este metodo usa los siguientes metodos de _ViajeRepository_ para traer los viaje
 <br>
 <br>
 
-**Feature:** _Cada viaje estará identificado por un nombre, ciudad de  destino, fechas de inicio y fin, y una descripción breve."_
+**Feature:** _"Cada viaje estará identificado por un nombre, ciudad de  destino, fechas de inicio y fin, y una descripción breve."_
 <br>
 Esta funcionalidad corresponde a la entidad [viaje](https://github.com/tomasarras/arqui/blob/main/docs/der.md) y a la clase _Viaje_ donde estan los atributos
 <br>
@@ -34,7 +34,7 @@ En el lado del cliente, el usuario podra hacer click en 'crear nuevo viaje' y ca
 
 **Feature:** _"o ii) enviando un archivo de texto, que contenga toda la confirmación de la reserva (ej. el emitido por la aerolinea, o por una pagina de viajes) de un vuelo. En este caso, el sistema debe extraer los datos del archivo y cargarlos."_
 <br>
-Esta funcionalidad esta del lado del cliente y no en el servidor, el cliente extrae la informacion de el viaje y los planes, comprueba que sean validos y el metodo _crearViaje(viaje)_ en _ViajeController_ del lado del servidor lo crea. <br>Para probar esta funcionalidad, en la raiz del proyecto, en la carpeta _archivos para importar_, contiene el archivo: _viaje de ejemplo.txt_ el cual se puede importar
+Esta funcionalidad esta del lado del cliente y no en el servidor, el cliente extrae la informacion de el viaje y los planes, comprueba que sean validos y el metodo _crearViaje(viaje)_ en _ViajeController_ del lado del servidor lo crea. <br>Para probar esta funcionalidad, en la raiz del proyecto, en la carpeta _"archivos para importar"_, contiene el archivo: _"viaje de ejemplo.txt"_ el cual se puede importar
 <br>
 <br>
 
@@ -64,7 +64,7 @@ Esta funcionalidad esta del lado del cliente, cuando el usuario crea un viaje pu
 
 **Feature:** _"En el caso de ser reservas de hoteles, el usuario contará con las mismas 2 opciones de carga manual o a través del envío de un archivo de texto."_
 <br>
-Para esta funcionalidad, la carga de hoteles se puede hacer de forma manual eligiendo desde el lado del cliente al viaje que se le quiere agregar o para importar un archivo con la reserva podra elegir el viaje y tendra una opcion especial por ser una reserva de hotel, donde si hace click podra importar el archivo, para poder probar esta funcionalidad, en la raiz del repositorio esta la carpeta _archivos para importar_ esta el archivo _hotel ejemplo.txt_, tener en cuenta de cambiar la fecha de inicio y fin en el archivo para que coincida con el rango del viaje. <br>Para la carga manual o por archivo en el lado del servidor se llama al metodo _crearPlan(idViaje,plan)_ en _PlanController_
+Para esta funcionalidad, la carga de hoteles se puede hacer de forma manual eligiendo desde el lado del cliente al viaje que se le quiere agregar o para importar un archivo con la reserva podra elegir el viaje y tendra una opcion especial por ser una reserva de hotel, donde si hace click podra importar el archivo, para poder probar esta funcionalidad, en la raiz del repositorio esta la carpeta _"archivos para importar"_ esta el archivo _"hotel ejemplo.txt"_, tener en cuenta de cambiar la fecha de inicio y fin en el archivo para que coincida con el rango del viaje. <br>Para la carga manual o por archivo en el lado del servidor se llama al metodo _crearPlan(idViaje,plan)_ en _PlanController_
 <br>
 <br>
 
@@ -89,7 +89,7 @@ _getPlanesDelUsuario(idUsuario)_ del repositorio _PlanRepository_
 
 **Feature:** _"Adicionalmente, la compañía dueña de la aplicación puede solicitar un reporte de los usuarios que mas viajes realizan, o también de las zonas geográficas más visitadas."_
 <br>
-Para esta funcionalidad la compañia debe tener el rol admin, para eso se puede modificar desde la base de datos o si se importaron los datos de prueba, usar el usuario admin, ver en [Instalacion](docs/instalacion.md), luego en la pestaña _admin_ se puede especificar el tipo de reporte, para el caso de los usuarios que mas viajes realizan se llama al metodo _getUsuariosPorMasViajesRealizados()_ en _UsuarioController_ que usa a la clase _ReporteUsuario_ para devolver el reporte, y para el caso de un reporte de zonas geograficas mas visitadas, se llama al metodo _getCiudadesMasVisitadas()_ en _ViajeController_
+Para esta funcionalidad la compañia debe tener el rol admin, para eso se puede modificar desde la base de datos o si se importaron los datos de prueba, usar el usuario admin, ver en [Instalacion](https://github.com/tomasarras/arqui/blob/main/docs/instalacion.md), luego en la pestaña _admin_ se puede especificar el tipo de reporte, para el caso de los usuarios que mas viajes realizan se llama al metodo _getUsuariosPorMasViajesRealizados()_ en _UsuarioController_ que usa a la clase _ReporteUsuario_ para devolver el reporte, y para el caso de un reporte de zonas geograficas mas visitadas, se llama al metodo _getCiudadesMasVisitadas()_ en _ViajeController_
 <br>
 <br>
 
