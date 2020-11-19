@@ -3,7 +3,7 @@
 **Feature:** _"La aplicación deberá mostrar tanto los viajes futuros como los ya realizados."_
 <br>
 Para esta funcionalidad, del lado del cliente el usuario podra ver sus viajes futuros o pendientes cuando ingrese al sistema y para poder ver sus viajes realizados puede ir a la pestaña 'Viajes realizados' y podra verlos, del lado del servidor se llama al metodo _getViajesDeUsuario(criterio)_ en el controlador _ViajeController_ donde el criterio puede ser 'realizados' o 'pendientes' o ningun criterio para traer todos,
-este metodo usa los siguientes metodos de _ViajeRepository_ para traer los viajes _buscarViajesDeUsuarioRealizados(idUsuario,now)_, _buscarViajesDeUsuarioPendientes_ y _buscarViajesDeUsuario_.
+este metodo usa los siguientes metodos de _ViajeRepository_ para traer los viajes _buscarViajesDeUsuarioRealizados(idUsuario,now)_, _buscarViajesDeUsuarioPendientes(idUsuario,now)_ y _buscarViajesDeUsuario(idUsuario)_.
 <br>El test de esta funcionalidad esta implementado
 <br>
 <br>
