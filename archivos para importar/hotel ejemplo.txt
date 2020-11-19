@@ -1,0 +1,8 @@
+{
+	"nombre": "Hotel San Carlos",
+	"compania": "Hoteles",
+	"fechaInicio": "2020-11-18 12:00",
+	"fechaFin": "2020-11-20 10:00",
+	"habitacion": "2D",
+	"direccion": "direccion 123"
+}

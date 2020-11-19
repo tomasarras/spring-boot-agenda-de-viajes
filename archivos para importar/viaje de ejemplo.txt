@@ -1,0 +1,25 @@
+{
+	"nombre": "Visita familiar",
+	"fechaInicio": "2021-08-15 12:00",
+	"fechaFin": "2021-08-25 12:00",
+	"ciudadDestino": "bolivar",
+	"descripcion" : "descripcion del viaje",
+	"planes" : [{
+		"type": "reservaHotel",
+		"nombre": "Hotel San Carlos",
+		"compania": "Hoteles",
+		"fechaInicio": "2021-08-15 12:00",
+		"fechaFin": "2021-08-25 10:00",
+		"habitacion": "2D",
+		"direccion": "direccion 123"
+	},
+	{
+		"type": "viajeTren",
+		"nombre": "Viaje en tren",
+		"compania": "Trenes",
+		"fechaInicio": "2021-08-20 12:00",
+		"fechaFin": "2021-08-20 15:00",
+		"asiento": 13,
+		"estacion": "estacion de tren"
+	}]
+}
