@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrador 4</title>
+    <script src="https://kit.fontawesome.com/a349ac397c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/Vue.js"></script>
+    <script type="module" src="../js/reportePlanes.js"></script>
+</head>
+<body>
+
+    <header class="container-fluid bg-inverse fixed-top bg-dark text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar navbar-dark bg-dark container">
+            <a class="navbar-brand titulo" href="../html/viajes.html">Entrega final</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav ml-auto" id="header-nav">
+    
+                    <a v-if="logeado" class="nav-item nav-link active" href="../html/viajes.html">Viajes pendientes</a>
+                    <a v-if="logeado" class="nav-item nav-link active" href="../html/viajesRealizados.html">Viajes realizados</a>
+                    <a v-if="admin" class="nav-item nav-link active" href="../html/admin.html">Admin</a>
+                    <div id="logout">
+                        <div class="log nav-item btn btn-danger" v-if="logeado">
+                            <img src="../img/newuser.png">
+                            Cerrar sesión
+                        </div>
+                    </div>
+    
+                        <a href="../html/login.html" v-if="!logeado" id="link-login">
+                            <div class="log nav-item btn btn-danger" id="btn-login">
+                                <img src="../img/lock.png">
+                                Login
+                            </div>
+                        </a>
+                        <a href="../index.html" v-if="!logeado">
+                            <div class="log nav-item btn btn-danger cd-signup">
+                                <img src="../img/newuser.png">
+                                Registro
+                            </div>
+                        </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="data" class="bg-dark borde grande margen">
+        <h1 class="centrar-contenido margen-abajo blanco">Agenda de viajes</h1>
+        
+        <div class="container flex">
+
+            <h2 class="blanco">Selecciona el reporte de planes que quieras ver</h2>
+            <label for="select-tipo-reporte" class="blanco">Tipo de reporte</label>
+            <select class="select-tipo-plan form-control form-control-lg margen-abajo" id="select-tipo-reporte">
+                <option value="0">Tipo de reporte...</option>
+                <option value="pendientes">Planes pendientes</option>
+                <option value="realizados">Planes realizados</option>
+                <option value="zona">Planes por zona geografica</option>
+                <option value="fecha">Planes por rango de fecha</option>
+            </select>
+
+            <ul class="acordeon reportePlan oculto" id="planesPendientes">
+                <h3 v-if="!planesPendientes.length" class="blanco">No hay planes pendientes</h3>
+                <li v-for="plan in planesPendientes">
+                    <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
+                        <h2 class="display-flex w-80 align-center margen-izq">
+                            <span class="nombre-plan">{{plan.nombre}}</span>
+                            <div class="form-group oculto input-plan">
+                                <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                            </div>
+                        </h2>
+                    </div>
+                    <div class="content width-95 shadow-">
+                        <div class="padding-5">
+                            <ul>
+                                <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                    <span v-if="key == 'type'">
+                                        <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
+                                        <div hidden></div>
+                                    </span>
+                                    <span v-if="key == 'fechaInicio'">
+                                        <span>Fecha de inicio: {{formatDate(value)}}</span>
+                                        <div class="form-group oculto">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="datetime-local" name="fechaInicio" class="form-control" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                    <span v-if="key == 'fechaFin'">
+                                        <span>Fecha de fin: {{formatDate(value)}}</span>
+                                        <div class="form-group oculto">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="datetime-local" name="fechaFin" class="form-control" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                    <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
+                                        <span>{{getPrettyKey(key)}}: {{value}}</span>
+                                        <div class="form-group oculto">
+                                            <label v-bind:for="key">{{getPrettyKey(key)}}</label>
+                                            <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="botones-plan margen-arriba">
+                                <button class="btn btn-primary width-45 oculto btn-editar-plan" v-on:click="editarPlan" v-bind:name="plan.id">Editar plan</button>
+                                <button class="btn btn-primary width-45 oculto btn-cancelar" v-on:click="cancelarEdicion">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="acordeon reportePlan oculto" id="planesRealizados">
+                <h3 v-if="!planesRealizados.length" class="blanco">No hay planes realizados</h3>
+                <li v-for="plan in planesRealizados">
+                    <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
+                        <h2 class="display-flex w-80 align-center margen-izq">
+                            <span class="nombre-plan">{{plan.nombre}}</span>
+                            <div class="form-group oculto input-plan">
+                                <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                            </div>
+                        </h2>
+                    </div>
+                    <div class="content width-95 shadow-">
+                        <div class="padding-5">
+                            <ul>
+                                <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                    <span v-if="key == 'type'">
+                                        <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
+                                        <div hidden></div>
+                                    </span>
+                                    <span v-if="key == 'fechaInicio'">
+                                        <span>Fecha de inicio: {{formatDate(value)}}</span>
+                                        <div class="form-group oculto">
+                                            <label for="fechaInicio">Fecha de inicio</label>
+                                            <input type="datetime-local" name="fechaInicio" class="form-control" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                    <span v-if="key == 'fechaFin'">
+                                        <span>Fecha de fin: {{formatDate(value)}}</span>
+                                        <div class="form-group oculto">
+                                            <label for="fechaFin">Fecha de fin</label>
+                                            <input type="datetime-local" name="fechaFin" class="form-control" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                    <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
+                                        <span>{{getPrettyKey(key)}}: {{value}}</span>
+                                        <div class="form-group oculto">
+                                            <label v-bind:for="key">{{getPrettyKey(key)}}</label>
+                                            <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                        </div>
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="botones-plan margen-arriba">
+                                <button class="btn btn-primary width-45 oculto btn-editar-plan" v-on:click="editarPlan" v-bind:name="plan.id">Editar plan</button>
+                                <button class="btn btn-primary width-45 oculto btn-cancelar" v-on:click="cancelarEdicion">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div id="planesZona" class="oculto reportePlan">
+
+                <div class="form-group">
+                    <label for="ciudad" class="blanco">Ingrese la ciudad para obtener el reporte</label><br>
+                    <input type="text" id="ciudad" class="form-control" name="ciudad" placeholder="Ciudad">
+                </div>
+                <button class="btn btn-primary display-flex align-center btn-crear-plan margen-arriba" id="btn-reporte-zona">
+                    Buscar reporte
+                </button>
+
+                <ul class="acordeon oculto" id="planes-zona">
+                    <h3 v-if="!planesZona.length" class="blanco">No hay planes que coincidan con la ciudad</h3>
+                    <li v-for="plan in planesZona">
+                        <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
+                            <h2 class="display-flex w-80 align-center margen-izq">
+                                <span class="nombre-plan">{{plan.nombre}}</span>
+                                <div class="form-group oculto input-plan">
+                                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="content width-95 shadow-">
+                            <div class="padding-5">
+                                <ul>
+                                    <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                        <span v-if="key == 'type'">
+                                            <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
+                                            <div hidden></div>
+                                        </span>
+                                        <span v-if="key == 'fechaInicio'">
+                                            <span>Fecha de inicio: {{formatDate(value)}}</span>
+                                            <div class="form-group oculto">
+                                                <label for="fechaInicio">Fecha de inicio</label>
+                                                <input type="datetime-local" name="fechaInicio" class="form-control" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                        <span v-if="key == 'fechaFin'">
+                                            <span>Fecha de fin: {{formatDate(value)}}</span>
+                                            <div class="form-group oculto">
+                                                <label for="fechaFin">Fecha de fin</label>
+                                                <input type="datetime-local" name="fechaFin" class="form-control" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                        <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
+                                            <span>{{getPrettyKey(key)}}: {{value}}</span>
+                                            <div class="form-group oculto">
+                                                <label v-bind:for="key">{{getPrettyKey(key)}}</label>
+                                                <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="botones-plan margen-arriba">
+                                    <button class="btn btn-primary width-45 oculto btn-editar-plan" v-on:click="editarPlan" v-bind:name="plan.id">Editar plan</button>
+                                    <button class="btn btn-primary width-45 oculto btn-cancelar" v-on:click="cancelarEdicion">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="planesFecha" class="oculto reportePlan">
+                <h2 class="blanco">Ingrese el rango de fechas</h2>
+
+                <div class="form-group">
+                    <label for="fechaInicio" class="blanco margen-arriba">Fecha de inicio</label><br>
+                    <input type="datetime-local" id="fechaInicio" class="form-control width-24" name="fechaInicio">
+                    <label for="fechaFin" class="blanco margen-arriba">Fecha final</label><br>
+                    <input type="datetime-local" id="fechaFin" class="form-control width-24" name="fechaFin">
+                </div>
+
+                <button class="btn btn-primary display-flex align-center btn-crear-plan margen-arriba" id="btn-reporte-fecha">
+                    Buscar reporte
+                </button>
+
+                <ul class="acordeon oculto margen-arriba" id="planes-fecha">
+                    <h3 v-if="!planesFecha.length" class="blanco">No hay planes que coincidan en el rango de fecha</h3>
+                    <li v-for="plan in planesFecha">
+                        <div class="title margen-arriba flex-row plan" v-on:click="abrirLista">
+                            <h2 class="display-flex w-80 align-center margen-izq">
+                                <span class="nombre-plan">{{plan.nombre}}</span>
+                                <div class="form-group oculto input-plan">
+                                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" v-bind:value="plan.nombre">
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="content width-95 shadow-">
+                            <div class="padding-5">
+                                <ul>
+                                    <li v-for="(value, key) in plan" v-if="key != 'id' && key != 'idViaje' && key != 'nombre'" class="nombre" v-bind:name="plan.nombre">
+                                        <span v-if="key == 'type'">
+                                            <span class="type" v-bind:name="value">Tipo de plan: {{getType(value)}}</span>
+                                            <div hidden></div>
+                                        </span>
+                                        <span v-if="key == 'fechaInicio'">
+                                            <span>Fecha de inicio: {{formatDate(value)}}</span>
+                                            <div class="form-group oculto">
+                                                <label for="fechaInicio">Fecha de inicio</label>
+                                                <input type="datetime-local" name="fechaInicio" class="form-control" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                        <span v-if="key == 'fechaFin'">
+                                            <span>Fecha de fin: {{formatDate(value)}}</span>
+                                            <div class="form-group oculto">
+                                                <label for="fechaFin">Fecha de fin</label>
+                                                <input type="datetime-local" name="fechaFin" class="form-control" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                        <span v-if="key != 'type' && key != 'fechaInicio' && key != 'fechaFin'">
+                                            <span>{{getPrettyKey(key)}}: {{value}}</span>
+                                            <div class="form-group oculto">
+                                                <label v-bind:for="key">{{getPrettyKey(key)}}</label>
+                                                <input type="text" v-bind:name="key" class="form-control" v-bind:placeholder="getPrettyKey(key)" v-bind:value="value">
+                                            </div>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="botones-plan margen-arriba">
+                                    <button class="btn btn-primary width-45 oculto btn-editar-plan" v-on:click="editarPlan" v-bind:name="plan.id">Editar plan</button>
+                                    <button class="btn btn-primary width-45 oculto btn-cancelar" v-on:click="cancelarEdicion">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+    
+    <footer class="container-fluid bg-dark text-white py-3 text-center">
+        <p>© 2015-2020 Integrador 4 | Design by Tomas Arras</p>
+    
+        <a href="https://github.com/tomasarras/" class="icon github" title="GitHub">
+            <svg viewBox="71 71 370 370">
+                <path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/>
+            </svg>
+        </a>
+    
+    </footer>
+
+
+    <div class="tipos-de-planes oculto" hidden>
+        <div class="tipo-plan" value="reservaHotel">
+            <div class="form-group completar-campos">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+                
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="habitacion">Habitacion</label>
+                <input type="text" name="habitacion" class="form-control campo-vacio" placeholder="Habitacion">
+                <div class="invalid-feedback">La habitacion no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Direccion</label>
+                <input type="text" name="direccion" class="form-control campo-vacio" placeholder="Direccion">
+                <div class="invalid-feedback">La direccion no puede quedar vacia</div>
+            </div>
+        </div>
+
+        <div class="tipo-plan completar-campos" value="viajeColectivo">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="asiento">Numero de asiento</label>
+                <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
+            </div>
+        </div>
+
+        <div class="tipo-plan" value="Plan">
+            <div class="form-group completar-campos">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+                
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+        </div>
+
+        <div class="tipo-plan completar-campos" value="viajeTren">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="asiento">Numero de asiento</label>
+                <input type="number" name="asiento" class="form-control campo-vacio" placeholder="Asiento">
+                <div class="invalid-feedback">El numero de asiento no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="estacion">Estacion de tren</label>
+                <input type="text" name="estacion" class="form-control campo-vacio" placeholder="Estacion">
+                <div class="invalid-feedback">La estacion de tren no puede quedar vacio</div>
+            </div>
+        </div>
+        
+        <div class="tipo-plan completar-campos" value="vuelo">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control campo-vacio" placeholder="Nombre">
+                <div class="invalid-feedback">El nombre del plan no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="compania">Compañia</label>
+                <input type="text" name="compania" class="form-control campo-vacio" placeholder="Compania">
+                <div class="invalid-feedback">La compañia del plan no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaInicio">Fecha de inicio</label>
+                <input type="datetime-local" name="fechaInicio" class="form-control campo-vacio" placeholder="Fecha de inicio">
+                <div class="invalid-feedback">La fecha de inicio no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group width-24">
+                <label for="fechaFin">Fecha de fin</label>
+                <input type="datetime-local" name="fechaFin" class="form-control campo-vacio" placeholder="Fecha de fin">
+                <div class="invalid-feedback">La fecha de fin no puede quedar vacia</div>
+            </div>
+
+            <div class="form-group">
+                <label for="numeroVuelo">Numero de vuelo</label>
+                <input type="number" name="numeroVuelo" class="form-control campo-vacio" placeholder="Numero vuelo">
+                <div class="invalid-feedback">El numero de vuelo no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="aeropuertoSalida">Aeropuerto de salida</label>
+                <input type="text" name="aeropuertoSalida" class="form-control campo-vacio" placeholder="Aeropuerto">
+                <div class="invalid-feedback">El aeropuerto de salida no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="aeropuertoLlegada">Aeropuerto de llegada</label>
+                <input type="text" name="aeropuertoLlegada" class="form-control campo-vacio" placeholder="Aeropuerto de llegada">
+                <div class="invalid-feedback">El aeropuerto de llegada no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="codigoReserva">Codigo de reserva</label>
+                <input type="number" name="codigoReserva" class="form-control campo-vacio" placeholder="Codigo de reserva">
+                <div class="invalid-feedback">El codigo de reserva no puede quedar vacio</div>
+            </div>
+
+            <div class="form-group">
+                <label for="tiempoEscalas">Tiempo entre escalas (opcional)</label>
+                <input type="number" name="tiempoEscalas" class="form-control" placeholder="Tiempo entre escalas">
+            </div>
+
+            <div class="form-group">
+                <label for="aeronave">Aeronave</label>
+                <input type="text" name="aeronave" class="form-control campo-vacio" placeholder="Aeronave">
+                <div class="invalid-feedback">La aeronave no puede quedar vacia</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

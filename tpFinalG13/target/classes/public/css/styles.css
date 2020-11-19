@@ -1,0 +1,662 @@
+footer {
+    border-radius: 15px 15px 0 0;
+    position: relative;
+    bottom: 0;
+}
+
+section.registro, section.login {
+    width: 30vw;
+    margin-right: 10%;
+}
+
+section.login {
+    margin-bottom: 10%;
+}
+
+section.viajes {
+    width: 80vw;
+}
+
+.content.width-95 {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.width-80 {
+    width: 80%;
+}
+
+.text-black {
+    color: black;
+}
+
+.shadow- {
+    -webkit-box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+    box-shadow: 6px 6px 17px 0px rgba(0,0,0,0.75);
+}
+
+.padding-5 {
+    padding: 2% 5% 5% 5%;
+}
+
+.width-45 {
+    width: 45%;
+}
+
+.botones-plan {
+    display: flex;
+    justify-content: space-between;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.btn-crear-plan {
+    width: 150px;
+}
+
+html {
+    margin: 9.6vh 0 0 0;
+}
+
+.none, p.none, h4.none,input.none {
+    display: none;
+}
+
+#input-carrera,#input-ciudad {
+    width: 150px;
+    margin: 0 2% 2% 2%;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.tablas {
+    display: flex;
+    flex-direction: column;
+}
+
+section.grande {
+    padding: 2%;
+}
+
+.botonera-admin a {
+    width: 100%;
+    margin: 3% 0;
+}
+
+#btn-reportes-ganancias,#btn-reportes-clientes {
+    margin-bottom: 3%;
+}
+
+#btn-reportes-clientes {
+    width: 100%;
+}
+
+
+button.accordion {
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+section#reportes {
+    display: flex;
+    justify-content: center;
+}
+section#reportes .reportes {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 3%;
+}
+
+.negrita {
+    font-weight: bold;
+}
+
+button.accordion:after {
+    content: '\f055';
+    font-family: "fontawesome";
+    font-size: 14px;
+    float: right;
+}
+
+button.accordion.is-open:after {
+    content: '\f056';
+}
+
+button.accordion:hover, button.accordion.is-open {
+    background-color: #ddd;
+}
+
+.accordion-content {
+    background-color: white;
+    border-left: 1px solid whitesmoke;
+    border-right: 1px solid whitesmoke;
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+}
+  
+.mitad-alto {
+    height: 50%;
+}
+.blanco,
+#btn-borrar {
+    color: white !important;
+}
+
+.btn-ancho {
+    width: 100%;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+#btn-registrarse,#btn-iniciar {
+    margin-top: 8%;
+}
+
+.navbar-expand-lg .navbar-nav {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+}
+
+body {
+    background-image: url(../img/fondo.jpg);
+    background-size: 100vw 100vh;
+}
+
+#link-login {
+    margin: 0 3%;
+}
+
+.navbar-expand-lg .navbar-nav{
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show>.nav-link {
+    color: white;
+    font-weight: bold;
+}
+
+.borde {
+    border-radius: 16px 16px 16px 16px;
+    -moz-border-radius: 16px 16px 16px 16px;
+    -webkit-border-radius: 16px 16px 16px 16px;
+    border: 0px solid #000000;
+}
+
+.fondo-blanco {
+    padding: 2%;
+    margin-bottom: 2%;
+    background-color: #FFF;
+}
+
+a.icon,svg {
+    display: block
+}
+
+a.icon {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+svg {
+    height: 100%;
+    width: 100%;
+}
+
+.icon {
+    background: black;
+    border-radius: 100%;
+    color: white;
+    fill: white;
+}
+
+.icon:hover {
+    background: white;
+    color: black;
+    fill: black;
+}
+
+.github {
+    background: white;
+    color: black;
+    fill: black;
+}
+
+.github:hover {
+    background: #6441a5;
+    color: white;
+    fill: white;
+}
+
+.link {
+    cursor: pointer;
+}
+
+tr.no-link th a {
+    color: white;
+}
+
+td.link {
+    cursor: pointer;
+    color: #007bff;
+}
+
+td.link:hover {
+    text-decoration: underline;
+}
+
+.min-size {
+    min-width: 500px;
+}
+
+.centrar-contenido {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-group label {
+    margin-bottom: 0;
+}
+
+
+
+button.accordion {
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+.invalid-rojo {
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+button.accordion:after {
+    content: '\f055';
+    font-family: "fontawesome";
+    font-size: 14px;
+    float: right;
+}
+
+button.accordion.is-open:after {
+    content: '\f056';
+}
+
+button.accordion:hover, button.accordion.is-open {
+    background-color: #ddd;
+}
+
+.accordion-content {
+    background-color: white;
+    border-left: 1px solid whitesmoke;
+    border-right: 1px solid whitesmoke;
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+}
+
+.popup {
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90%;
+    opacity: 0;
+    padding: 20px;
+    text-align: center;
+    transform: scale(0.7);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 500px;
+}
+
+.popup .btn-cerrar-popup {
+    display: block;
+    color: #bbbbbb;
+    line-height: 16px;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.popup .btn-cerrar-popup:hover,
+.popup .btn-cerrar-popup:focus,
+.popup .btn-cerrar-popup:active {
+    color: #000000;
+}
+
+.popup form .btn-submit:hover,
+.popup form .btn-submit:focus,
+.popup form .btn-submit:active {
+    background-color: rgba(94, 125, 227, 0.9);
+}
+
+
+/* Animaciones */
+
+.popup.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.popup .btn-cerrar-popup {
+    display: block;
+    color: #bbbbbb;
+    line-height: 16px;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.popup .btn-cerrar-popup:hover,
+.popup .btn-cerrar-popup:focus,
+.popup .btn-cerrar-popup:active {
+    color: #000000;
+}
+.margen {
+    margin: 5%;
+}
+
+.resaltar:hover {
+    color: red;
+    cursor: pointer;
+}
+
+/* /popup */
+
+.margen-arriba {
+    margin-top: 3% !important;
+}
+
+.margen-abajo {
+    margin-bottom: 5%;
+}
+
+.margen-vertical {
+    margin: 5% 0;
+}
+
+.margen-horizontal {
+    margin: 0 5%;
+}
+
+.margen-der {
+    margin: 0 1% 0 0;
+}
+
+.margen-izq {
+    margin: 0 0% 0 1%;
+}
+
+.botonera-admin a {
+    width: 100%;
+    margin: 3% 0;
+}
+
+.overlay {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+.overlay.active {
+    visibility: visible;
+}
+
+.view-fixed {
+    height: 63.6vh;
+}
+
+.icono {
+    font-size: 24px;
+}
+
+.rojo {
+    color: red;
+}
+
+.padding-arriba {
+    padding-top: 3%;
+}
+
+/* tabla bootstrap */
+
+.table {
+    box-shadow: rgba(121, 121, 121, .35) 1px 10px 20px;
+}
+
+.table tr th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 20px;
+}
+
+.table th:first-of-type {
+    border-radius: 10px 0 0 0;
+}
+
+.table th:last-of-type {
+    border-radius: 0 10px 0 0;
+}
+
+.table tbody tr:last-of-type td:last-of-type {
+    border-radius: 0 0 10px 0;
+}
+
+.table tbody tr:last-of-type td:first-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.table td {
+    background-color: white;
+}
+
+.table .thead-dark th {
+    border: none;
+    border-bottom: 2px solid #454d55;
+}
+
+.table .thead-dark th {
+    border: none;
+    border-bottom: 2px solid #454d55;
+}
+
+tr.no-link th a {
+    color: white;
+}
+
+.tabla-bandas,
+.tabla-eventos {
+    margin-top: 6%;
+}
+
+ul.acordeon {
+    list-style: none;
+}
+
+div.title {
+    background-color: white;
+    padding: 1%;
+    margin-top: 1%;
+    border-radius: 10px;
+}
+
+.content {
+    background-color: #aaa69d;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.align-center {
+    align-items: center;
+}
+
+#plus-icon,.plane-icon {
+    width: 28px;
+    height: 28px;
+    margin: 0 1%;
+}
+
+.container.active {
+    opacity: 1;
+}
+
+ul.acordeon li div.title {
+    cursor: pointer;
+    color: black;
+}
+
+.width-24 {
+    width: 24%;
+}
+
+.flex-row {
+    display: flex;
+}
+
+.w-80 {
+    width: 90%;
+}
+
+.btns-borrar {
+    font-size: 1.5em;
+}
+
+
+ul.acordeon li div.content {
+    color: white;
+    display: none;
+    overflow: hidden;
+    transition: max-height .3s ease-out;
+}
+
+ul.acordeon li div.content.active {
+    display: block;
+}
+
+#img-event-1 {
+    width: 45%;
+    height: auto;
+}
+
+.margin-left {
+    margin-left: 3%;
+}
+
+.width-auto {
+    width: 100%;
+}
+
+#back-to-the-future {
+    width: 20%;
+    height: auto;
+    margin-bottom: 2%;
+}
+
+#bttf-the-musical {
+    width: 35%;
+    height: auto;
+    margin-right: 5%;
+}
+
+.events .expositors {
+    margin-top: 3%;
+    padding-bottom: 5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.events img.expositor {
+    width: 100px;
+    height: auto;
+}
+
+.card img.restaurar-posicion {
+    transition: transform .3s,box-shadow .3s,-webkit-box-shadow .3s,-moz-box-shadow .3s;
+}
+
+
+@media only screen and (min-width:1000px) {
+    .tablas {
+        flex-direction: row;
+    }
+    .tabla-bandas {
+        margin-left: 1%;
+    }
+    .tabla-eventos {
+        margin-right: 1%;
+    }
+}
+
+
+@media only screen and (max-width:800px) {
+    .table tr th,
+    .table td {
+        padding: 13px;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    .table tr th,
+    .table td {
+        font-size: 0.8em;
+        padding: 7px;
+    }
+    nav a.titulo {
+        font-size: 0.8em;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    .table tr th,
+    .table td {
+        font-size: 0.8em;
+        padding: 2px;
+    }
+}

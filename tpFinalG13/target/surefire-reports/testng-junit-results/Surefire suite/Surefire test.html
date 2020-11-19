@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>TestNG:  Surefire test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Surefire test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>37/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Wed Nov 18 14:08:58 ART 2020</td>
+</tr>
+<tr><td>Total time:</td><td>96 seconds (96431 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.borrarPlanDeOtroUsuarioTest()'><b>borrarPlanDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>16</td>
+<td>borrarPlanDeOtroUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.borrarPlanNoEncontradoTest()'><b>borrarPlanNoEncontradoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>40</td>
+<td>borrarPlanNoEncontradoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.borrarPlanTest()'><b>borrarPlanTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>29</td>
+<td>borrarPlanTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.borrarViajeDeOtroUsuarioTest()'><b>borrarViajeDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>8</td>
+<td>borrarViajeDeOtroUsuarioTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.borrarViajeNoEncontradoTest()'><b>borrarViajeNoEncontradoTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>24</td>
+<td>borrarViajeNoEncontradoTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.borrarViajeTest()'><b>borrarViajeTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>34</td>
+<td>borrarViajeTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanAOtroUsuarioTest()'><b>crearPlanAOtroUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>46</td>
+<td>crearPlanAOtroUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanAViajeNoEncontradoTest()'><b>crearPlanAViajeNoEncontradoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>59</td>
+<td>crearPlanAViajeNoEncontradoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanDatosVaciosTest()'><b>crearPlanDatosVaciosTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>38</td>
+<td>crearPlanDatosVaciosTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanReservaHotelTest()'><b>crearPlanReservaHotelTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>36</td>
+<td>crearPlanReservaHotelTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanViajeColectivoTest()'><b>crearPlanViajeColectivoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>44</td>
+<td>crearPlanViajeColectivoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanViajeTrenTest()'><b>crearPlanViajeTrenTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>27</td>
+<td>crearPlanViajeTrenTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.crearPlanVueloTest()'><b>crearPlanVueloTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>24</td>
+<td>crearPlanVueloTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.crearViajeConFinMayorAlInicioTest()'><b>crearViajeConFinMayorAlInicioTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>28</td>
+<td>crearViajeConFinMayorAlInicioTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.crearViajeSinDatosTest()'><b>crearViajeSinDatosTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>14</td>
+<td>crearViajeSinDatosTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.crearViajeTest()'><b>crearViajeTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>26</td>
+<td>crearViajeTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanDeOtroUsuarioTest()'><b>getPlanDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>54</td>
+<td>getPlanDeOtroUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanNoEncontradoTest()'><b>getPlanNoEncontradoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>31</td>
+<td>getPlanNoEncontradoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanTest()'><b>getPlanTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>42</td>
+<td>getPlanTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanesDeViajeDeOtroUsuarioTest()'><b>getPlanesDeViajeDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>48</td>
+<td>getPlanesDeViajeDeOtroUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanesDeViajeNoEncontradoTest()'><b>getPlanesDeViajeNoEncontradoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>21</td>
+<td>getPlanesDeViajeNoEncontradoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanesDeViajeTest()'><b>getPlanesDeViajeTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>19</td>
+<td>getPlanesDeViajeTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.getPlanesDelUsuarioTest()'><b>getPlanesDelUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>50</td>
+<td>getPlanesDelUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajeDeOtroUsuarioTest()'><b>getViajeDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>6</td>
+<td>getViajeDeOtroUsuarioTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajeNoEncontradoTest()'><b>getViajeNoEncontradoTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>12</td>
+<td>getViajeNoEncontradoTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajeTest()'><b>getViajeTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>10</td>
+<td>getViajeTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajesDeUsuarioPendientesTest()'><b>getViajesDeUsuarioPendientesTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>21</td>
+<td>getViajesDeUsuarioPendientesTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajesDeUsuarioRealizadosTest()'><b>getViajesDeUsuarioRealizadosTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>2</td>
+<td>getViajesDeUsuarioRealizadosTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.getViajesDeUsuarioTest()'><b>getViajesDeUsuarioTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>4</td>
+<td>getViajesDeUsuarioTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.modificarPlanAOtroUsuarioTest()'><b>modificarPlanAOtroUsuarioTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>52</td>
+<td>modificarPlanAOtroUsuarioTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.modificarPlanDatosVaciosTest()'><b>modificarPlanDatosVaciosTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>56</td>
+<td>modificarPlanDatosVaciosTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.modificarPlanNoEncontradoTest()'><b>modificarPlanNoEncontradoTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>61</td>
+<td>modificarPlanNoEncontradoTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.PlanControllerTest.modificarPlanTest()'><b>modificarPlanTest</b><br>Test class: edu.isistan.controller.PlanControllerTest</td>
+<td></td>
+<td>34</td>
+<td>modificarPlanTest(edu.isistan.controller.PlanControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.modificarViajeDeOtroUsuarioTest()'><b>modificarViajeDeOtroUsuarioTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>17</td>
+<td>modificarViajeDeOtroUsuarioTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.modificarViajeNoEncontradoTest()'><b>modificarViajeNoEncontradoTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>32</td>
+<td>modificarViajeNoEncontradoTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.modificarViajeSinDatosTest()'><b>modificarViajeSinDatosTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>30</td>
+<td>modificarViajeSinDatosTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+<tr>
+<td title='edu.isistan.controller.ViajeControllerTest.modificarViajeTest()'><b>modificarViajeTest</b><br>Test class: edu.isistan.controller.ViajeControllerTest</td>
+<td></td>
+<td>19</td>
+<td>modificarViajeTest(edu.isistan.controller.ViajeControllerTest)</td></tr>
+</table><p>
+</body>
+</html>

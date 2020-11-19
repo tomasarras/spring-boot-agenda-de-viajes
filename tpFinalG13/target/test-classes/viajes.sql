@@ -1,0 +1,6 @@
+insert into usuario(id_usuario,email,password,username,admin) values (10,'user1@gmail.com','$2a$10$vQDheJgpbwoxe/NYzU7VZO.pE3jMBS.NE0mfSlPFwaRLukw0W5CDO','user1',0)
+insert into usuario(id_usuario,email,password,username,admin) values (11,'user2@gmail.com','$2a$10$vQDheJgpbwoxe/NYzU7VZO.pE3jMBS.NE0mfSlPFwaRLukw0W5CDO','user2',0)
+insert into viaje(id_viaje,ciudad_destino,descripcion,fecha_fin,fecha_inicio,nombre_viaje,id_usuario) values (4,'ciudad1','descripcion1','2020-11-14 01:01:00.000000','2020-11-14 01:01:00.000000','nombre1',10)
+insert into viaje(id_viaje,ciudad_destino,descripcion,fecha_fin,fecha_inicio,nombre_viaje,id_usuario) values (5,'ciudad2','descripcion1','2020-11-14 01:01:00.000000','2020-11-14 01:01:00.000000','nombre2',10)
+insert into viaje(id_viaje,ciudad_destino,descripcion,fecha_fin,fecha_inicio,nombre_viaje,id_usuario) values (6,'ciudad3','descripcion1','2020-11-14 01:01:00.000000','2020-11-14 01:01:00.000000','nombre3',11)
+insert into viaje(id_viaje,ciudad_destino,descripcion,fecha_fin,fecha_inicio,nombre_viaje,id_usuario) values (7,'ciudad4','descripcion1','2020-11-14 01:01:00.000000','2020-11-14 01:01:00.000000','nombre4',11)
