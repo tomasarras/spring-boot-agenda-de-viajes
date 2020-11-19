@@ -19,6 +19,10 @@ La base de datos es autogenerada.
 5. **Start import**
 <br>
 
+~~~~sql
+SELECT * FROM usuario
+~~~~
 La contraseña de todos los usuarios es **password**
+
 <br>
 El usuario con rol admin es, usuario: **admin** - contraseña : **admin**
