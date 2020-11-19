@@ -18,5 +18,7 @@ La base de datos es autogenerada.
 4. Ingresar la ruta de la carpeta **datos de prueba** que esta en el proyecto de GitHub
 5. **Start import**
 <br>
+
 La contraseña de todos los usuarios es **password**
+<br>
 El usuario con rol admin es, usuario: **admin** - contraseña : **admin**
