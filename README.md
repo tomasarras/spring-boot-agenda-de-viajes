@@ -7,4 +7,4 @@
 - [Configuracion](docs/configuracion.md)
 - [Vistas basicas del sistema](docs/vistas.md)
 - [Trazabilidad](https://github.com/tomasarras/arqui/blob/main/docs/trazabilidad.md)
-- [Documentacion Swagger ui](https://tomasarras.github.io/arqui/)
+- [Documentacion Swagger ui](https://tomasarras.github.io/spring-boot-agenda-de-viajes/)
